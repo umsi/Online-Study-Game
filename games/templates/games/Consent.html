@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Consent to Participate in a Research Study!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-10 ">
+      <h2>Consent to Participate in a Research Study</h2>
+      <p><b>Title of the Project:</b> Security and decision making</p>
+      <p><b>Principal Investigator:</b> Yan Chen, PhD, School of Information, University of Michigan</p>
+      <p><b>Co-investigator:</b> Alex Halderman, PhD, Department of Computer Science and Engineering, University of
+    Michigan</p>
+      <h3>Invitation to Participate in a Research Study</h3>
+      <p>We invite you to be part of a research study about IT security and decision making. The study is funded by the
+    University of Michigan.</p>
+      <h3>Description of Your Involvement</h3>
+      <p>If you agree to be part of the research study, you will be asked to complete a computerized experiment, which
+    involves a series of decision making involving lotteries. The experiment will take approximately 20 minutes. At
+    the end of the experiment, you will be asked to fill out a short survey on your demographic information and
+    work load.</p>
+      <h3>Benefits of Participation</h3>
+      <p>While you may not receive any direct benefit from your participation, others may ultimately benefit from the
+    knowledge obtained in this study.</p>
+      <h3>Risks and Discomforts of Participation</h3>
+      <p>The experiment does not involve deception of any kind, nor physical discomfort. The study poses no more than
+    minimal risk. As each participant might receive different amount of payment depending on his or her decisions
+    and those of other participants, some participants might feel frustrated if their payment is below average. To
+    minimize this risk, your earnings will be kept private.</p>
+      <h3>Compensation for Participation</h3>
+      <p>The average payment expected for this experiment is approximately $20, depending on the decisions you and
+    other participants make. You will be paid the amount you have earned in a check mailed to your home address.</p>
+      <h3>Confidentiality</h3>
+      <p>We plan to merge each participant’s employment and personnel information to the research record for our
+    aggregate statistical analysis. We will not include any information that would identify you. Your privacy will
+    be protected and your research records will be confidential. We plan to publish the aggregate analysis results of
+    this study.</p>
+      <p>It is possible that other people may need to see the information you give us as part of the study, such as
+    organizations responsible for making sure the research is done safely and properly like the University of
+    Michigan, and government offices. However, no one will be able to link the data to individual participants.</p>
+      <h3>Storage and Future Use of Data</h3>
+      <p>We will store your data for five years for record keeping purposes. The data may be shared with investigators
+    and research assistants, but will never contain any information that could identify you. However, the
+    Institutional Review Board, the sponsor of the study, or university and government officials responsible for
+    monitoring this study may inspect these records.</p>
+      <h3>Voluntary Nature of the Study</h3>
+      <p>Participating in this study is completely voluntary. Even if you decide to participate now, you may change your
+    mind and stop at any time. You do not have to answer a question you do not want to answer. Just go to the next
+    question. If you decide to withdraw before this study is completed, your data will be kept together with other
+    data. You will be compensated for the amount of money you have earned up to the point when you stop.</p>
+      <h3>Contact Information for the Study Team</h3>
+      <p>If you have questions about this research, including questions about scheduling or your compensation for
+    participating, you may contact Yan Chen, Ph.D., School of Information, University of Michigan. 734-764-9488,
+    or yanchen@umich.edu.</p>
+      <h3>Contact Information for Questions about Your Rights as a Research Participant</h3>
+      <p>If you have questions about your rights as a research participant, or wish to obtain information, ask questions or
+    discuss any concerns about this study with someone other than the researcher(s), please contact the:</p>
+      <br>
+      <p>University of Michigan Health Sciences and Behavioral Sciences Institutional Review Board</p>
+      <p>2800 Plymouth Road</p>
+      <p>Building 520, Room 1169</p>
+      <p>Ann Arbor, MI 48109-2800</p>
+      <p>Phone: (734) 936-0933 or toll free, (866) 936-0933</p>
+      <p>Email: <a href="mailto:irbhsbs@umich.edu">irbhsbs@umich.edu</a></p>
+      <h3>Consent</h3>
+      <p>By clicking the button below, you are agreeing to be in the study. Be sure that we have answered any questions
+    you have about the study and that you understand what you are being asked to do. You may contact the
+    researcher if you think of a question later.</p>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="ConsentSignature" id="ConsentSignature" value="">
+          I agree to participate in the study.
+        </label>
+      </div>
+    <div class="col-md-1 ">
+    </div>
+  </div>
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-xs-5 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="Continue" href="/gameselection/" class="btn btn-lg btn-success" style="display:none;">Continue to Games</a>
+    </div>
+    <div class="col-xs-5 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $('input[type="checkbox"][name="ConsentSignature"]').change(function() {
+           if(this.checked) {
+               $("#Continue").show();
+           }
+           else {
+               $("#Continue").hide();
+           }
+      });
+    });
+
+  </script>
+{% endblock %}

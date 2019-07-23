@@ -1,0 +1,1395 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Phishing Study Results{% endblock %}
+
+{% block welcontent %}
+  <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+    <h1>{{ version }} Phishing Study Results - {{ page }}</h3>
+    <h3>There are {{ allUsers|length }} participants in this phase.</h2>
+    {% if page == 'Overview' %}
+    <div id="accordion">
+      <h1>Earnings Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Earnings</th>
+                <td>${{ experimentEarningsTotal }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Mean</th>
+                <td>${{ experimentEarningsMean }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Min</th>
+                <td>${{ experimentEarningsMin }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Max</th>
+                <td>${{ experimentEarningsMax }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Standard Deviation</th>
+                <td>${{ experimentEarningsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Median</th>
+                <td>${{ experimentEarningsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Earnings Mode</th>
+                <td>${{ experimentEarningsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="StudyEarningsDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Study Duration Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Study Duration Mean (Minutes)</th>
+                <td>{{ minutesDurationsMean }}</td>
+              </tr>
+              <tr>
+                <th>Study Duration Min (Minutes)</th>
+                <td>{{ minutesDurationsMin }}</td>
+              </tr>
+              <tr>
+                <th>Study Duration Max (Minutes)</th>
+                <td>{{ minutesDurationsMax }}</td>
+              </tr>
+              <tr>
+                <th>Study Duration Standard Deviation</th>
+                <td>{{ minutesDurationsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Study Duration Median (Minutes)</th>
+                <td>{{ minutesDurationsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Study Duration Mode (Minutes)</th>
+                <td>{{ minutesDurationsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="StudyDurationDiagram">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% elif page == 'Pretest' %}
+    <div id="accordion">
+      <h1>Effects of Hover time and Duration of Answering Questions on the # of Correct Answers (Regression Analysis)</h1>
+      <div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="PretestUsersHoverDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="PretestUsersDurationDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="PretestQ2Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="PretestQ3Diagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="PretestQ4Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="PretestQ5Diagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="PretestQ6Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="PretestQ7Diagram"></div>
+          </div>
+        </div>
+      </div>
+      <h1>Question / Answer Statistics</h1>
+      <div>
+        <table class="table table-striped report">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Q. 1</th>
+              <th>Q. 2</th>
+              <th>Q. 3</th>
+              <th>Q. 4</th>
+              <th>Q. 5</th>
+              <th>Q. 6</th>
+              <th>Q. 7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th># of Correct Answers</th>
+              {% for correct in corrects|slice:"1:" %}
+                  <td>{{ correct }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th># of Link Clicks</th>
+              {% for click in clicks|slice:"1:" %}
+                  <td>{{ click }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th># of Link Right Clicks</th>
+              {% for rightClick in rightClicks|slice:"1:" %}
+                  <td>{{ rightClick }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th># of Link Hovers</th>
+              {% for questionhovered in questionhovereds|slice:"1:" %}
+                  <td>{{ questionhovered }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Mean (Seconds)</th>
+              {% for hoveredsecondsMean in hoveredssecondsMean|slice:"1:" %}
+                  <td>{{ hoveredsecondsMean }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Max (Seconds)</th>
+              {% for hoveredsecondsMax in hoveredssecondsMax|slice:"1:" %}
+                  <td>{{ hoveredsecondsMax }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Min (Seconds)</th>
+              {% for hoveredsecondsMin in hoveredssecondsMin|slice:"1:" %}
+                  <td>{{ hoveredsecondsMin }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Standard Deviation</th>
+              {% for hoveredsecondsStdev in hoveredssecondsStdev|slice:"1:" %}
+                  <td>{{ hoveredsecondsStdev }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Median (Seconds)</th>
+              {% for hoveredsecondsMedian in hoveredssecondsMedian|slice:"1:" %}
+                  <td>{{ hoveredsecondsMedian }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Hover Time Mode (Seconds)</th>
+              {% for hoveredsecondsMode in hoveredssecondsMode|slice:"1:" %}
+                  <td>{{ hoveredsecondsMode }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Mean (Seconds)</th>
+              {% for secondsDurationMean in secondsDurationsMean|slice:"1:" %}
+                  <td>{{ secondsDurationMean }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Min (Seconds)</th>
+              {% for secondsDurationMin in secondsDurationsMin|slice:"1:" %}
+                  <td>{{ secondsDurationMin }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Max (Seconds)</th>
+              {% for secondsDurationMax in secondsDurationsMax|slice:"1:" %}
+                  <td>{{ secondsDurationMax }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Standard Deviation</th>
+              {% for secondsDurationStdev in secondsDurationsStdev|slice:"1:" %}
+                  <td>{{ secondsDurationStdev }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Median (Seconds)</th>
+              {% for secondsDurationMedian in secondsDurationsMedian|slice:"1:" %}
+                  <td>{{ secondsDurationMedian }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Duration Mode (Seconds)</th>
+              {% for secondsDurationMode in secondsDurationsMode|slice:"1:" %}
+                  <td>{{ secondsDurationMode }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% elif page == 'Lottery' %}
+    <div id="accordion">
+      <h1>Risk Aversion and Curiosity Effects on the # of Correct Answers (Regression Analysis)</h1>
+      <div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="LotteryRiskAversionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="LotteryCuriosityDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="LotteryDurationRegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="LotteryRiskAversionDurationDiagram"></div>
+          </div>
+        </div>
+      </div>
+      <h1># of Participants Who Chose Option B in Each Lottery</h1>
+      <div>
+        <table class="table table-striped report">
+          <tbody>
+            <tr>
+              <th>Lottery 1</th>
+              <th>Lottery 2</th>
+              <th>Lottery 3</th>
+              <th>Lottery 4</th>
+              <th>Lottery 5</th>
+              <th>Lottery 6</th>
+              <th>Lottery 7</th>
+              <th>Lottery 8</th>
+              <th>Lottery 9</th>
+              <th>Lottery 10</th>
+            </tr>
+            <tr>
+              {% for option in options|slice:"1:" %}
+                  <td>{{ option }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h1>Holt-Laury Lottery Earnings Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Lottery Earnings</th>
+                <td>${{ totalPoints }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Mean</th>
+                <td>${{ pointsMean }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Min</th>
+                <td>${{ pointsMin }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Max</th>
+                <td>${{ pointsMax }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Standard Deviation</th>
+                <td>${{ pointsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Median</th>
+                <td>${{ pointsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Mode</th>
+                <td>${{ pointsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="LotteryEarningsDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Holt-Laury Lottery Original Earnings Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Lottery Earnings</th>
+                <td>${{ totalOriginalPoints }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Mean</th>
+                <td>${{ originalPointsMean }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Min</th>
+                <td>${{ originalPointsMin }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Max</th>
+                <td>${{ originalPointsMax }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Standard Deviation</th>
+                <td>${{ originalPointsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Median</th>
+                <td>${{ originalPointsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Earnings Mode</th>
+                <td>${{ originalPointsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="LotteryOriginalEarningsDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Holt-Laury Lottery Willingness to Pay Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Lottery Willingness</th>
+                <td>${{ totalWillingness }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Mean</th>
+                <td>${{ willingnessMean }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Min</th>
+                <td>${{ willingnessMin }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Max</th>
+                <td>${{ willingnessMax }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Standard Deviation</th>
+                <td>${{ willingnessStdev }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Median</th>
+                <td>${{ willingnessMedian }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Willingness Mode</th>
+                <td>${{ willingnessMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="LotteryWillingnessDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Holt-Laury Lottery Duration Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Lottery Duration Mean (Seconds)</th>
+                <td>{{ secondsDurationsMean }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Duration Min (Seconds)</th>
+                <td>{{ secondsDurationsMin }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Duration Max (Seconds)</th>
+                <td>{{ secondsDurationsMax }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Duration Standard Deviation</th>
+                <td>{{ secondsDurationsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Duration Median (Seconds)</th>
+                <td>{{ secondsDurationsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Lottery Duration Mode (Seconds)</th>
+                <td>{{ secondsDurationsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="LotteryDurationDiagram">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% elif page == 'Gamble' %}
+    <div id="accordion">
+      <h1>Risk Seeking Effects on the # of Correct Answers (Regression Analysis)</h1>
+      <div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="GambleRiskSeekingDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="GambleLotteryRiskSeekingDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="GambleDurationRegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="GambleRiskSeekingDurationDiagram"></div>
+          </div>
+        </div>
+      </div>
+      <h1>Eckel-Grossman Gamble Choices Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Gamble Choices Mean</th>
+                <td>{{ chosensMean }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Choices Min</th>
+                <td>{{ chosensMin }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Choices Max</th>
+                <td>{{ chosensMax }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Choices Standard Deviation</th>
+                <td>{{ chosensStdev }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Choices Median</th>
+                <td>{{ chosensMedian }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Choices Mode</th>
+                <td>{{ chosensMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="GambleChoicesDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Eckel-Grossman Gamble Earnings Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Gamble Earnings</th>
+                <td>${{ totalPoints }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Mean</th>
+                <td>${{ pointsMean }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Min</th>
+                <td>${{ pointsMin }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Max</th>
+                <td>${{ pointsMax }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Standard Deviation</th>
+                <td>${{ pointsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Median</th>
+                <td>${{ pointsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Earnings Mode</th>
+                <td>${{ pointsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="GambleEarningsDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Eckel-Grossman Gamble Duration Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Gamble Duration Mean (Seconds)</th>
+                <td>{{ secondsDurationsMean }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Duration Min (Seconds)</th>
+                <td>{{ secondsDurationsMin }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Duration Max (Seconds)</th>
+                <td>{{ secondsDurationsMax }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Duration Standard Deviation</th>
+                <td>{{ secondsDurationsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Duration Median (Seconds)</th>
+                <td>{{ secondsDurationsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Gamble Duration Mode (Seconds)</th>
+                <td>{{ secondsDurationsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="GambleDurationDiagram">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% elif page == 'Investment' %}
+    <div id="accordion">
+      <h1>Trust Effects on the # of Correct Answers (Regression Analysis)</h1>
+      <div class="row">
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameInvestmentRegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameInvestmentDurationDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn0RegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn1RegressionDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn2RegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn3RegressionDiagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn4RegressionDiagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn5RegressionDiagram"></div>
+          </div>
+        </div>
+      </div>
+      <h1>Trust Game Investment Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Trust Game Investment Mean</th>
+                <td>${{ investedMean }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Investment Min</th>
+                <td>${{ investedMin }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Investment Max</th>
+                <td>${{ investedMax }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Investment Standard Deviation</th>
+                <td>${{ investedStdev }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Investment Median</th>
+                <td>${{ investedMedian }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Investment Mode</th>
+                <td>${{ investedMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="TrustGameInvestmentDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Trust Game Returns Statistics</h1>
+      <div>
+        <table class="table table-striped report">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Return 0</th>
+              <th>Return 1</th>
+              <th>Return 2</th>
+              <th>Return 3</th>
+              <th>Return 4</th>
+              <th>Return 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Trust Game Return Mean</th>
+            {% for returnedMeanObj in returnedMean %}
+              <td>${{ returnedMeanObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Return Min</th>
+            {% for returnedMinObj in returnedMin %}
+              <td>${{ returnedMinObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Return Max</th>
+            {% for returnedMaxObj in returnedMax %}
+              <td>${{ returnedMaxObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Return Standard Deviation</th>
+            {% for returnedStdevObj in returnedStdev %}
+              <td>${{ returnedStdevObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Return Median</th>
+            {% for returnedMedianObj in returnedMedian %}
+              <td>${{ returnedMedianObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Return Mode</th>
+            {% for returnedModeObj in returnedMode %}
+              <td>${{ returnedModeObj }}</td>
+            {% empty %}
+              <td>There is no user in this phase.</td>
+            {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn0Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn1Diagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn2Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn3Diagram"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn4Diagram"></div>
+          </div>
+          <div class="col-sm-6 ">
+            <div id="TrustGameReturn5Diagram"></div>
+          </div>
+        </div>
+      </div>
+      <h1>Trust Game Earnings Statistics</h1>
+      <div class="row">
+        <div class="col-sm-5 ">
+          <table class="table table-striped report">
+            <tbody>
+              <tr>
+                <th>Total Trust Game Earnings</th>
+                <td>${{ totalPoints }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Mean</th>
+                <td>${{ pointsMean }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Min</th>
+                <td>${{ pointsMin }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Max</th>
+                <td>${{ pointsMax }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Standard Deviation</th>
+                <td>${{ pointsStdev }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Median</th>
+                <td>${{ pointsMedian }}</td>
+              </tr>
+              <tr>
+                <th>Trust Game Earnings Mode</th>
+                <td>${{ pointsMode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-7 ">
+          <div id="TrustGameEarningsDiagram">
+          </div>
+        </div>
+      </div>
+      <h1>Trust Game Duration Statistics</h1>
+      <div>
+        <table class="table table-striped report">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Return 0</th>
+              <th>Return 1</th>
+              <th>Return 2</th>
+              <th>Return 3</th>
+              <th>Return 4</th>
+              <th>Return 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Trust Game Duration Mean (Seconds)</th>
+              {% for secondsReturnedDurationMean in secondsReturnedDurationsMean %}
+                  <td>{{ secondsReturnedDurationMean }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Duration Min (Seconds)</th>
+              {% for secondsReturnedDurationMin in secondsReturnedDurationsMin %}
+                  <td>{{ secondsReturnedDurationMin }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Duration Max (Seconds)</th>
+              {% for secondsReturnedDurationMax in secondsReturnedDurationsMax %}
+                  <td>{{ secondsReturnedDurationMax }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Duration Standard Deviation</th>
+              {% for secondsReturnedDurationStdev in secondsReturnedDurationsStdev %}
+                  <td>{{ secondsReturnedDurationStdev }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Duration Median (Seconds)</th>
+              {% for secondsReturnedDurationMedian in secondsReturnedDurationsMedian %}
+                  <td>{{ secondsReturnedDurationMedian }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <th>Trust Game Duration Mode (Seconds)</th>
+              {% for secondsReturnedDurationMode in secondsReturnedDurationsMode %}
+                  <td>{{ secondsReturnedDurationMode }}</td>
+              {% empty %}
+                <td>There is no user in this phase.</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% elif page == 'Comments' %}
+    <div id="accordion">
+      <h1>Raw Comments</h1>
+      <div>
+        <table class="table table-striped report">
+          <thead>
+            <th>User</th>
+            <th>Pretest Comments</th>
+            <th>Training Comments</th>
+            <th>Games Comments</th>
+          </thead>
+          <tbody>
+          {% for userComment in comments %}
+            <tr>
+            {% for comment in userComment %}
+              <td>{{ comment }}</td>
+            {% endfor %}
+            </tr>
+          {% empty %}
+            <tr><td>There is no user in this phase.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <h1>Categorized (Coded) Comments, asking for improvements</h1>
+      <div id="CommentsCategories">
+        <p><i>Improving the Pre-test module</i></p>
+        <ul>
+          <li>Pre-test module was good, but I would have liked to know which ones I got wrong.</li>
+          <li>I liked the pre-test module a lot but I was a little confused because i wasn't sure if that was being part of the experiment.</li>
+          <li>On the "Pre-test Results" page, the "phishing awareness module" should be called "phishing awareness training module" to be consistent.</li>
+          <li>Maybe by providing a hint that "not all of them are phishing"? I'm not sure.</li>
+        </ul>
+        <p><i>Improving the Training module</i></p>
+        <ul>
+          <li>I liked the emails provided, but maybe have a few more that are with different things, such as facebook passwords or a wolverine access email that is fake about account balance.</li>
+          <li>showing how to report phishing email</li>
+          <li>improve the quality of the picture, it looks like a phishing website.</li>
+          <li>Perhaps include more URL tips (e.g. that for google doc, google drive may also be taught to students since I find I'm not sure about how the true URL should look like).</li>
+        </ul>
+        <p><i>Improving the Games module</i></p>
+        <ul>
+          <li>Slightly more clear instructions that the computer randomly chooses a lottery.</li>
+        </ul>
+      </div>
+      <h1>Iman's Observational Comments</h1>
+      <div id="ImansComments">
+        <p>Subjects had a difficult time understanding the Holt-Laury Lottery instructions. After reading the instructions of the game, 3 of them opended the experiment instructions sheet, trying to find more instructions about this game.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+  <!-- JavaScript code for this project -->
+  <script>
+    function minFinder(dataArray) {
+      var minDataArray = -1;
+      for (var i = 0; i <= dataArray.length; i++) {
+        if (minDataArray > dataArray[i]) {
+          minDataArray = dataArray[i];
+        }
+      }
+      return minDataArray;
+    }
+    
+    function maxFinder(dataArray) {
+      var maxDataArray = -1;
+      for (var i = 0; i <= dataArray.length; i++) {
+        if (maxDataArray < dataArray[i]) {
+          maxDataArray = dataArray[i];
+        }
+      }
+      return maxDataArray;
+    }
+
+    function drawHistorgam(dataArray, histogramID, chartWidth, histogramTitle, histogramTitleX, histogramSubTitle, histogramSubTitleX, yAxisTitle, tooltipHeaderFormat, tooltipPointFormat, seriesName, seriesColor) {
+      var minDataArray = minFinder(dataArray);
+      var maxDataArray = maxFinder(dataArray);
+      var earningsCategories = [];
+      for(var i = 0; i <= maxDataArray; i++) {
+        earningsCategories[i] = 0;
+      }
+      for (i = 0; i < dataArray.length; i++) { 
+        for (j = minDataArray; j <= maxDataArray; j++) { 
+          if (dataArray[i] >= j && dataArray[i] < j + 1) {
+            earningsCategories[j] += 1;
+          }
+        }
+      }
+      $(histogramID).highcharts({
+          chart: {
+              type: 'column',
+              width: chartWidth
+          },
+          title: {
+              text: histogramTitle,
+              x: histogramTitleX //center
+          },
+          subtitle: {
+              text: histogramSubTitle,
+              x: histogramSubTitleX
+          },
+          xAxis: {
+            tickInterval: 1,
+            breaks: [{
+                from: minDataArray,
+                to: maxDataArray,
+                breakSize: 1
+            }]
+          },
+          yAxis: {
+              title: {
+                  text: yAxisTitle
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#f7a35c'
+              }]
+          },
+          tooltip: {
+              headerFormat: tooltipHeaderFormat,
+              pointFormat: tooltipPointFormat,
+          },
+          series: [{
+              name: seriesName,
+              color: seriesColor,
+              data: earningsCategories
+          }]
+      });
+    }
+
+    function drawRegression(xAxisData, yAxisData, diagramID, diagramTitle, diagramTitleX, slope, intercept, r_value, p_value, std_err, xAxisTitle, yAxisTitle, categoriesNum, totalCorrectsPerOption = false, numOfCorrectsPerOption = false ) {
+      
+      var dataDictArray = [];
+      var averageCorrectsPerOption = [];
+      var catNum = -1;
+      var colors = ["#FF634D", "#90ed7d", "#9295CA", "#F47D43", "#FFEC94", "#FFAEAE", "#B0E57C", "#56BAEC"];
+
+      if (totalCorrectsPerOption != false && numOfCorrectsPerOption != false) {
+        for (i = 0; i < 11; i++) {
+          averageCorrectsPerOption.push({
+            x: i,
+            y: ( numOfCorrectsPerOption[i] != 0 ? totalCorrectsPerOption[i] / (numOfCorrectsPerOption[i] + 0.0) : 0),
+            name: "Avg" + (i).toString(),
+            color: colors[1]
+          });
+        }
+      }
+
+      for (i = 0; i < xAxisData.length; i++) {
+        if (categoriesNum == 1) {
+          catNum = 0;
+        }
+        else if (i % categoriesNum == 0) {
+          catNum += 1;
+        }
+        dataDictArray.push({
+          x: xAxisData[i],
+          y: yAxisData[i],
+          name: (i + 1).toString(),
+          color: colors[catNum]
+        });
+      }
+
+      var minXAxisDataArray = minFinder(xAxisData);
+      var maxXAxisDataArray = maxFinder(xAxisData) + 1;
+
+      var minYLineValue = slope * minXAxisDataArray + intercept;
+      var maxYLineValue = slope * maxXAxisDataArray + intercept;
+
+      var minYAxisDataArray = minFinder(yAxisData);
+      var maxYAxisDataArray = maxFinder(yAxisData) + 1;
+
+      var minYAxisDataArray = minFinder(yAxisData);
+
+      var series = [{
+              type: 'line',
+              name: 'Regression Line',
+              data: [[minXAxisDataArray, minYLineValue], [maxXAxisDataArray, maxYLineValue]],
+              marker: {
+                  enabled: false
+              },
+              states: {
+                  hover: {
+                      lineWidth: 0
+                  }
+              },
+              enableMouseTracking: false
+          }, {
+              type: 'scatter',
+              name: 'Observations',
+              marker: {
+                  radius: 4
+              },
+              data: dataDictArray
+          }];
+
+      if (totalCorrectsPerOption != false && numOfCorrectsPerOption != false) {
+          series.push({
+              type: 'scatter',
+              name: 'Averages',
+              marker: {
+                  radius: 7
+              },
+              data: averageCorrectsPerOption
+          });
+      }
+
+      $(diagramID).highcharts({
+          title: {
+              text: diagramTitle,
+              x: diagramTitleX //center
+          },
+          subtitle: {
+              text: "y = " + slope + "x + " + intercept + "<br>R_value=" + r_value + "<br>P-value = " + p_value + "<br>Std Err = " + std_err,
+              x: -25
+          },
+          xAxis: {
+              title: {
+                  text: xAxisTitle
+              },
+              min: minXAxisDataArray,
+              max: maxXAxisDataArray
+          },
+          yAxis: {
+              title: {
+                  text: yAxisTitle
+              },
+              min: minYAxisDataArray
+          },
+          series: series
+      });
+    }
+
+    $(document).ready(function(){
+      var icons = {
+        header: "ui-icon-circle-arrow-e",
+        activeHeader: "ui-icon-circle-arrow-s"
+      };
+      $( "#accordion" ).accordion({
+        icons: icons,
+        heightStyle: "content",
+        event: "click",
+      });
+
+    {% if page == 'Overview' %}
+      var earnings = [];
+      {% for user in allUsers %}
+        earnings[{{ forloop.counter }}] = {{ user.experimentearning }};
+      {% endfor %}
+
+      drawHistorgam(earnings, '#StudyEarningsDiagram', '', 'Earnings Histogram', -20, 'Total Earnings from All 3 Games', -20, '# of Participants', '', '<b>{point.y} participant(s) earned ${point.x}.</b><br/>', 'Earnings (USD)', '#f7a35c');
+
+      var durations = [];
+      {% for duration in minutesDurations %}
+        durations[{{ forloop.counter }}] = {{ duration }};
+      {% endfor %}
+
+      drawHistorgam(durations, '#StudyDurationDiagram', '', 'Duration Histogram', -20, 'Total Duration of the 3 Modules', -20, '# of Participants', '', '<b>{point.y} participant(s) finished in {point.x} minutes.</b><br/>', 'Duration (minutes)', '#f7a35c');
+
+    {% elif page == 'Pretest' %}
+      var xAxisData = [];
+      {% for xAxisPoint in usersHovers %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      var yAxisData = [];
+      {% for yAxisPoint in usersCorrects %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#PretestUsersHoverDiagram", "Total Hover Time Effect on # of Correct Answers", -25, {{ usersHoversSlope }}, {{ usersHoversIntercept }}, {{ usersHoversR_value }}, {{ usersHoversP_value }}, {{ usersHoversStd_err }}, "Cumulative Hover Time (Seconds)", "Total # Correct Answers", 1);
+
+      xAxisData = [];
+      {% for xAxisPoint in usersDurations %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#PretestUsersDurationDiagram", "Total Pre-test Time Effect on # of Correct Answers", -25, {{ usersDurationsSlope }}, {{ usersDurationsIntercept }}, {{ usersDurationsR_value }}, {{ usersDurationsP_value }}, {{ usersDurationsStd_err }}, "Cumulative Pre-test Duration (Seconds)", "Total # Correct Answers", 1);
+
+    {% elif page == 'Lottery' %}
+      var yAxisData = [];
+      {% for yAxisPoint in usersCorrects %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      var xAxisData = [];
+      {% for xAxisPoint in usersRiskAversion %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      var totalCorrectsPerOption = [];
+      {% for totalCorrect in totalCorrectsPerOption %}
+        totalCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ totalCorrect }};
+      {% endfor %}
+
+      var numOfCorrectsPerOption = [];
+      {% for numOfCorrect in numOfCorrectsPerOption %}
+        numOfCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ numOfCorrect }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#LotteryRiskAversionDiagram", "Risk Aversion Effect on # of Correct Answers", -25, {{ usersRiskAversionSlope }}, {{ usersRiskAversionIntercept }}, {{ usersRiskAversionR_value }}, {{ usersRiskAversionP_value }}, {{ usersRiskAversionStd_err }}, "Risk Aversion (Option #)", "Total # Correct Answers", 1, totalCorrectsPerOption, numOfCorrectsPerOption);
+
+      xAxisData = [];
+      {% for xAxisPoint in usersWillingness %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#LotteryCuriosityDiagram", "Curiosity Effect on # of Correct Answers", -25, {{ usersWillingnessSlope }}, {{ usersWillingnessIntercept }}, {{ usersWillingnessR_value }}, {{ usersWillingnessP_value }}, {{ usersWillingnessStd_err }}, "Willingness to Pay (USD)", "Total # Correct Answers", 1);
+
+      xAxisData = [];
+      {% for xAxisPoint in usersLotteryDurations %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#LotteryDurationRegressionDiagram", "Total Lottery Time Effect on # of Correct Answers", -25, {{ usersLotteryDurationsSlope }}, {{ usersLotteryDurationsIntercept }}, {{ usersLotteryDurationsR_value }}, {{ usersLotteryDurationsP_value }}, {{ usersLotteryDurationsStd_err }}, "Lottery Duration (Seconds)", "Total # Correct Answers", 1);
+
+      yAxisData = [];
+      {% for yAxisPoint in usersRiskAversion %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#LotteryRiskAversionDurationDiagram", "Total Lottery Time Effect on Risk Aversion", -25, {{ usersLotteryDurationsRiskAversionSlope }}, {{ usersLotteryDurationsRiskAversionIntercept }}, {{ usersLotteryDurationsRiskAversionR_value }}, {{ usersLotteryDurationsRiskAversionP_value }}, {{ usersLotteryDurationsRiskAversionStd_err }}, "Lottery Duration (Seconds)", "Risk Aversion (Option #)", 1);
+
+      var earnings = [];
+      {% for point in points %}
+        earnings[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(earnings, '#LotteryEarningsDiagram', '', 'Holt-Laury Lottery Earnings Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) earned ${point.x}.</b><br/>', 'Holt-Laury Lottery Earnings (USD)', '#f7a35c');
+
+      var originalEarnings = [];
+      {% for point in originalPoints %}
+        originalEarnings[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(originalEarnings, '#LotteryOriginalEarningsDiagram', '', 'Holt-Laury Lottery Original Earnings Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) earned ${point.x}.</b><br/>', 'Holt-Laury Lottery Original Earnings (USD)', '#f7a35c');
+
+      var willingnessArray = [];
+      {% for point in willingness %}
+        willingnessArray[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(willingnessArray, '#LotteryWillingnessDiagram', '', 'Holt-Laury Lottery Willingness Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) paid ${point.x}.</b><br/>', 'Holt-Laury Lottery Willingness to Pay', '#f7a35c');
+
+      var durations = [];
+      {% for duration in secondsDurations %}
+        durations[{{ forloop.counter }}] = {{ duration }};
+      {% endfor %}
+
+      drawHistorgam(durations, '#LotteryDurationDiagram', '', 'Holt-Laury Lottery Duration Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) finished in {point.x} seconds.</b><br/>', 'Holt-Laury Lottery Duration (seconds)', '#f7a35c');
+
+    {% elif page == 'Gamble' %}
+      var yAxisData = [];
+      {% for yAxisPoint in usersCorrects %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      var xAxisData = [];
+      {% for xAxisPoint in chosens %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      var totalCorrectsPerOption = [];
+      {% for totalCorrect in totalCorrectsPerOption %}
+        totalCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ totalCorrect }};
+      {% endfor %}
+
+      var numOfCorrectsPerOption = [];
+      {% for numOfCorrect in numOfCorrectsPerOption %}
+        numOfCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ numOfCorrect }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#GambleRiskSeekingDiagram", "Risk Loving Effect on # of Correct Answers", -25, {{ usersRiskSeekingSlope }}, {{ usersRiskSeekingIntercept }}, {{ usersRiskSeekingR_value }}, {{ usersRiskSeekingP_value }}, {{ usersRiskSeekingStd_err }}, "Risk Loving (Option #)", "Total # Correct Answers", 1, totalCorrectsPerOption, numOfCorrectsPerOption);
+
+      yAxisData = [];
+      {% for yAxisPoint in usersRiskAversion %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#GambleLotteryRiskSeekingDiagram", "Eckel-Grossman Risk Loving Effect on Holt-Laury Risk Aversion", -25, {{ usersRiskSeekingRiskAversionSlope }}, {{ usersRiskSeekingRiskAversionIntercept }}, {{ usersRiskSeekingRiskAversionR_value }}, {{ usersRiskSeekingRiskAversionP_value }}, {{ usersRiskSeekingRiskAversionStd_err }}, "Eckel-Grossman Risk Loving (Option #)", "Holt-Laury Risk Aversion (Option #)", 1);
+
+      xAxisData = [];
+      {% for xAxisPoint in secondsDurations %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      yAxisData = [];
+      {% for yAxisPoint in usersCorrects %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#GambleDurationRegressionDiagram", "Eckel-Grossman Gamble Time Effect on # of Correct Answers", -25, {{ usersGambleDurationsSlope }}, {{ usersGambleDurationsIntercept }}, {{ usersGambleDurationsR_value }}, {{ usersGambleDurationsP_value }}, {{ usersGambleDurationsStd_err }}, "Gamble Duration (Seconds)", "Total # Correct Answers", 1);
+
+      yAxisData = [];
+      {% for yAxisPoint in chosens %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#GambleRiskSeekingDurationDiagram", "Eckel-Grossman Gamble Time Effect on Risk Loving", -25, {{ usersGambleDurationsRiskSeekingSlope }}, {{ usersGambleDurationsRiskSeekingIntercept }}, {{ usersGambleDurationsRiskSeekingR_value }}, {{ usersGambleDurationsRiskSeekingP_value }}, {{ usersGambleDurationsRiskSeekingStd_err }}, "Gamble Duration (Seconds)", "Risk Loving (Option #)", 1);
+
+      var earnings = [];
+      {% for point in chosens %}
+        earnings[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(earnings, '#GambleChoicesDiagram', '', 'Eckel-Grossman Chosen Gamble Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) chose gamble #{point.x}.</b><br/>', 'Eckel-Grossman Chosen Gamble', '#f7a35c');
+
+      var earnings = [];
+      {% for point in points %}
+        earnings[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(earnings, '#GambleEarningsDiagram', '', 'Eckel-Grossman Gamble Earnings Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) earned ${point.x}.</b><br/>', 'Eckel-Grossman Gamble Earnings (USD)', '#f7a35c');
+
+      var durations = [];
+      {% for duration in secondsDurations %}
+        durations[{{ forloop.counter }}] = {{ duration }};
+      {% endfor %}
+
+      drawHistorgam(durations, '#GambleDurationDiagram', '', 'Eckel-Grossman Gamble Duration Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) finished in {point.x} seconds.</b><br/>', 'Eckel-Grossman Gamble Duration (seconds)', '#f7a35c');
+
+    {% elif page == 'Investment' %}
+      var investments = [];
+      {% for point in invested %}
+        investments[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(investments, '#TrustGameInvestmentDiagram', '', 'Trust Game Investment Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) invested ${point.x}.</b><br/>', 'Trust Game Investment', '#f7a35c');
+
+      var yAxisData = [];
+      {% for yAxisPoint in usersCorrects %}
+        yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
+      {% endfor %}
+
+      drawRegression(investments, yAxisData, "#TrustGameInvestmentRegressionDiagram", "Trust Effect on # of Correct Answers", -25, {{ usersTrustInvestmentSlope }}, {{ usersTrustInvestmentIntercept }}, {{ usersTrustInvestmentR_value }}, {{ usersTrustInvestmentP_value }}, {{ usersTrustInvestmentStd_err }}, "Investment (USD)", "Total # Correct Answers", 1);
+
+      var xAxisData = [];
+      {% for xAxisPoint in secondsInvestedDurations %}
+        xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
+      {% endfor %}
+
+      drawRegression(xAxisData, investments, "#TrustGameInvestmentDurationDiagram", "Investment Duration Effect on Trust", -25, {{ usersInvestmentDurationsSlope }}, {{ usersInvestmentDurationsIntercept }}, {{ usersInvestmentDurationsR_value }}, {{ usersInvestmentDurationsP_value }}, {{ usersInvestmentDurationsStd_err }}, "Investment Duration (seconds)", "Investment (USD)", 1);
+
+      var returnedSlope = []; 
+      {% for point in usersTrustreturnedSlope %}
+        returnedSlope[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      var returnedIntercept = []; 
+      {% for point in usersTrustreturnedIntercept %}
+        returnedIntercept[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      var returnedR_value = []; 
+      {% for point in usersTrustreturnedR_value %}
+        returnedR_value[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      var returnedP_value = []; 
+      {% for point in usersTrustreturnedP_value %}
+        returnedP_value[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      var returnedStd_err = []; 
+      {% for point in usersTrustreturnedStd_err %}
+        returnedStd_err[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      var chartWidth = 0.46 * $('.row').width();
+
+      {% for returnedObj in returned %}
+        var returnedList = [];
+        {% for point in returnedObj %}
+          returnedList[{{ forloop.counter|add:"-1" }}] = {{ point }};
+        {% endfor %}
+
+        drawHistorgam(returnedList, '#TrustGameReturn' + {{ forloop.counter|add:"-1" }} + 'Diagram', chartWidth, 'Participants Returned to the Investment of $' + {{ forloop.counter|add:"-1" }}, -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) returned ${point.x}.</b><br/>', 'Return to the Investment of $' + {{ forloop.counter|add:"-1" }}, '#f7a35c');
+
+        drawRegression(returnedList, yAxisData, '#TrustGameReturn' + {{ forloop.counter|add:"-1" }} + 'RegressionDiagram', 'Return to the Investment of $' + {{ forloop.counter|add:"-1" }} + ' Effect on # of Correct Answers', -25, returnedSlope[{{ forloop.counter }}], returnedIntercept[{{ forloop.counter }}], returnedR_value[{{ forloop.counter }}], returnedP_value[{{ forloop.counter }}], returnedStd_err[{{ forloop.counter }}], 'Return to the Investment of $' + {{ forloop.counter|add:"-1" }} + ' (USD)', "Total # Correct Answers", 1);
+
+      {% endfor %}
+
+      var earnings = [];
+      {% for point in points %}
+        earnings[{{ forloop.counter }}] = {{ point }};
+      {% endfor %}
+
+      drawHistorgam(earnings, '#TrustGameEarningsDiagram', '', 'Trust Game Earnings Histogram', -20, '', -20, '# of Participants', '', '<b>{point.y} participant(s) earned ${point.x}.</b><br/>', 'Trust Game Earnings (USD)', '#f7a35c');
+
+    {% endif %}
+    });
+  </script>
+{% endblock %}

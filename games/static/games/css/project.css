@@ -1,0 +1,678 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 52px;
+  padding-bottom: 52px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navbar-inverse {
+  background-color: #0E284B;
+  background-image: none;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+.WelcomeText h1, .WelcomeText p, .WelcomeText ul {
+  margin-bottom:28px;
+}
+
+ul li {
+  font-size: 16px;
+}
+
+ul ul {
+  margin-bottom: 10px;
+}
+
+.text-center td,th {
+   text-align: center;
+}
+
+.centered {
+   text-align: center;
+}
+
+.text-center tr td {
+   width: 50%;
+}
+
+.text-center table {
+  background-color: none;
+  width: 100%;
+}
+
+h4, p, .alert {
+   line-height: 160%;
+}
+
+.navbar-fixed-bottom p {
+  color: white;
+  margin-bottom: 0px;
+  margin-right: 70px;
+  margin-left: 70px;
+  margin-top: 13px;
+}
+
+.container-fluid, .theme-showcase {
+  height: 100%;
+}
+
+.transBackground {
+  background: rgba(255, 255, 255, 0.79);
+  height: 100%;
+}
+
+#InstructionsDIV {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+#InstructionsDIV ul {
+  padding-left: 18px;
+}
+
+.ColumnHeader {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+#InstructionsDIV p, .alert, .AnswerDescription p {
+  font-size: 19px;
+}
+
+.AnswerDescription, .AnswerDescription img {
+  margin-bottom: 28px;
+}
+
+#WarningInResults {
+  margin-bottom: 28px;
+}
+
+#NextTraining {
+  margin-top: 28px;
+}
+
+#GoldenFish {
+  position:fixed;
+  bottom:70px;
+  left:-130px;
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+#HookedLine {
+  position:fixed;
+  bottom:923px;
+  left:-341px;
+  -moz-transform: rotate(315deg) scale(-1, 1);
+  -webkit-transform: rotate(315deg) scale(-1, 1);
+  -o-transform: rotate(315deg) scale(-1, 1);
+  -ms-transform: rotate(315deg) scale(-1, 1);
+  transform: rotate(315deg) scale(-1, 1);
+}
+
+#TropicalFishes {
+  position:fixed;
+  bottom:130px;
+  right:-130px;
+}
+
+#GotoTrainingDIV {
+  margin-bottom: 28px;
+}
+
+#PhishingEmailTitle1 {
+  position: absolute;
+  top: 12.1%;
+  left: 22%;
+  width: 40%;
+  height: 4.3%;
+}
+
+#PhishingEmailAddress1 {
+  position: absolute;
+  top: 19.6%;
+  left: 36.1%;
+  width: 22%;
+  height: 4%;
+}
+
+#PhishingEmail1stLine1 {
+  position: absolute;
+  top: 28.6%;
+  left: 25%;
+  width: 34%;
+  height: 7%;
+}
+
+#PhishingEmailAdminSignature1 {
+  position: absolute;
+  top: 64%;
+  left: 25%;
+  width: 16.3%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink1 {
+  position: absolute;
+  top: 52%;
+  left: 34%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink1Hint {
+  position: absolute;
+  top: 49%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailAddress2 {
+  position: absolute;
+  top: 22%;
+  left: 46%;
+  width: 13%;
+  height: 4%;
+}
+
+#PhishingEmail1stLine2 {
+  position: absolute;
+  top: 37%;
+  left: 28.9%;
+  width: 52.9%;
+  height: 7%;
+}
+
+#PhishingEmailVerification2 {
+  position: absolute;
+  top: 43.9%;
+  left: 64%;
+  width: 10%;
+  height: 4%;
+}
+
+#PhishingEmailManagementCenter2 {
+  position: absolute;
+  top: 46.9%;
+  left: 28.9%;
+  width: 16%;
+  height: 4%;
+}
+
+#PhishingEmailAdminSignature2 {
+  position: absolute;
+  top: 64.9%;
+  left: 28.9%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink2 {
+  position: absolute;
+  top: 49.9%;
+  left: 39.1%;
+  width: 25%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink2Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink2AnswerHint {
+  position: absolute;
+  top: 36.9%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3 {
+  position: absolute;
+  top: 16%;
+  left: 40%;
+  width: 11.8%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint {
+  position: absolute;
+  top: 14.2%;
+  left: 0%;
+  width: 67%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink31 {
+  position: absolute;
+  top: 41.8%;
+  left: 37.3%;
+  width: 22%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint1 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint1 {
+  position: absolute;
+  top: 19%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink32 {
+  position: absolute;
+  top: 52%;
+  left: 33.7%;
+  width: 13.9%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint2 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint2 {
+  position: absolute;
+  top: 31.9%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink33 {
+  position: absolute;
+  top: 72.4%;
+  left: 19.9%;
+  width: 28.9%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint3 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint3 {
+  position: absolute;
+  top: 49%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmail1stLine3 {
+  position: absolute;
+  top: 34%;
+  left: 19.9%;
+  width: 31%;
+  height: 4.3%;
+}
+
+#PhishingEmailAthenticity3 {
+  position: absolute;
+  top: 63.4%;
+  left: 19.9%;
+  width: 76%;
+  height: 6.7%;
+}
+
+#PhishingEmailLink4 {
+  position: absolute;
+  top: 32.5%;
+  left: 34.9%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink4Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink4AnswerHint {
+  position: absolute;
+  top: 13%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailAddress4 {
+  position: absolute;
+  top: 19%;
+  left: 25%;
+  width: 46%;
+  height: 4.3%;
+}
+
+#PhishingEmail1stLine4 {
+  position: absolute;
+  top: 28.6%;
+  left: 34%;
+  width: 49%;
+  height: 4.3%;
+}
+
+td.slim {
+  padding: 4px !important;
+  line-height: 13px;
+}
+
+td.slim button {
+  padding: 7px !important;
+}
+
+.holt-laury-table {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#PartSection {
+  font-weight: bold;
+}
+
+#UpperArrow {
+  position: absolute;
+  top: 0px;
+  right: 16%;
+  width: 65.5%;
+  height: 130px;
+}
+
+#LowerArrow {
+  position: absolute;
+  top: 160px;
+  right: 16.4%;
+  width: 65.5%;
+  height: 130px;
+}
+
+#InvestmentCalc {
+  position: absolute;
+  top: 100px;
+  right: 34%;
+  color: orange;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+#ReturnCalc {
+  position: absolute;
+  top: 160px;
+  right: 46%;
+  color: orange;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+#InvestmentAmount {
+  color: green;
+}
+
+#InvestmentResult, #RightCoinsAmountNum {
+  color: blue;
+}
+
+#LeftCoins {
+  position: absolute;
+  top: 70px;
+  right: 97%;
+}
+
+#RightCoins {
+  position: absolute;
+  top: 70px;
+  right: 1%;
+}
+
+#LeftCoin1, #LeftCoin2, #LeftCoin3, #LeftCoin4, #LeftCoin5, #LeftCoin6, #LeftCoin7, #LeftCoin8, #LeftCoin9, #LeftCoin10, 
+#LeftCoin11, #LeftCoin12, #LeftCoin13, #LeftCoin14, #LeftCoin15, #LeftCoin16, #LeftCoin17, #LeftCoin18, #LeftCoin19, #LeftCoin20 {
+  position: absolute;
+  left: 0px;
+}
+
+#LeftCoin6, #LeftCoin7, #LeftCoin8, #LeftCoin9, #LeftCoin10, 
+#LeftCoin11, #LeftCoin12, #LeftCoin13, #LeftCoin14, #LeftCoin15, #LeftCoin16, #LeftCoin17, #LeftCoin18, #LeftCoin19, #LeftCoin20 {
+  display: none;
+}
+
+#RightCoin1, #RightCoin2, #RightCoin3, #RightCoin4, #RightCoin5, #RightCoin6, #RightCoin7, #RightCoin8, #RightCoin9, #RightCoin10, 
+#RightCoin11, #RightCoin12, #RightCoin13, #RightCoin14, #RightCoin15, #RightCoin16, #RightCoin17, #RightCoin18, #RightCoin19, #RightCoin20 {
+  position: absolute;
+  right: 0px;
+}
+
+#RightCoin6, #RightCoin7, #RightCoin8, #RightCoin9, #RightCoin10, 
+#RightCoin11, #RightCoin12, #RightCoin13, #RightCoin14, #RightCoin15, #RightCoin16, #RightCoin17, #RightCoin18, #RightCoin19, #RightCoin20 {
+  position: absolute;
+  right: 0px;
+  display: none;
+}
+
+#LeftCoinsLabel {
+  position: absolute;
+  top: 220px;
+  left: 13px;
+  color: green;
+}
+
+#RightCoinsLabel {
+  position: absolute;
+  top: 220px;
+  right: 7px;
+  color: blue;
+}
+
+#LeftCoinsLabel p, #RightCoinsLabel p {
+  line-height: 70%;
+  font-weight: bold;
+  text-align: center;
+}
+
+#LeftCoinsAmount {
+  position: absolute;
+  top: 76px;
+  left: 22px;
+  color: black;
+}
+
+#RightCoinsAmount {
+  position: absolute;
+  top: 76px;
+  right: 22px;
+  color: black;
+}
+
+#LeftCoinsAmount span, #RightCoinsAmount span {
+  line-height: 91%;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+}
+
+#SliderContainer {
+  position: absolute;
+  top: 310px;
+  right: 22%;
+  height: 40px;
+  width: 55%;
+}
+
+#SliderSubmitBtn {
+  position: absolute;
+  right: 41.5%;
+  top: 340px;
+}
+
+.ui-accordion-content
+{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    border-style: none;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+.report thead tr th, .report tbody tr th, .report tbody tr td
+{
+    text-align: left;
+}
+
+#CommentsCategories ul, #CommentsCategories p, #ImansComments ul, #ImansComments p
+{
+  padding-right:40px;
+  padding-left:40px;
+}
+@media(max-width: 767px){
+    .btn-lg {
+      font-size: 16px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    .ColumnHeader {
+      font-weight: bold;
+      font-size: 13px;
+    }
+    h3, h4, p {
+      font-size: 13px;
+    }
+    ul li {
+      font-size: 13px;
+    }
+    .jumbotron p {
+      font-size: 13px;
+    }
+    #RightCoins {
+      position: absolute;
+      top: 70px;
+      right: 10px;
+    }
+    #LeftCoins {
+      position: absolute;
+      top: 70px;
+      left: 10px;
+    }
+}
+
+@media(max-width: 520px){
+    .btn-lg {
+      font-size: 10px;
+    }
+
+    #UpperArrow {
+      position: absolute;
+      top: 0px;
+      right: 30.1%;
+      width: 40%;
+      height: 70px;
+    }
+
+    #LowerArrow {
+      position: absolute;
+      top: 160px;
+      right: 30.4%;
+      width: 40%;
+      height: 70px;
+    }
+
+    #InvestmentCalc {
+      position: absolute;
+      top: 70px;
+      right: 34%;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #ReturnCalc {
+      position: absolute;
+      top: 130px;
+      right: 46%;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+}
+

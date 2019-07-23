@@ -1,0 +1,129 @@
+{% extends "games/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block leftcontent %}
+  <div>
+    <h3>  Let’s first find out who your Responder is. Click on one of the boxes on the right.</h3>
+
+
+    <div class="step_by_step">
+          
+    <h3 style="display:inline" >  Your Responder’s name is <h3 class = "responder_name" style="display:inline">    </h3>    .</h3>
+    <h3>Here’s how the game works:</h3>
+    <ul>
+      <li>  <h4 style="display:inline">Each of you – the Investor and <h4 class = "responder_name" style="display:inline"> </h4> </h4>     <h4 style="display:inline"> will be given $5.</h4>
+      </li>
+      <li>
+           <h4  style="display:inline">As the Investor, you will then have the opportunity to pass some, all or none of your $5 to <h4 class = "responder_name" style="display:inline"> </h4> </h4> <h4  style="display:inline">, as you like.</h4>
+      </li>
+      <li>
+        <h4 style="display:inline">Then we will triple the amount you give and pass it to <h4 class = "responder_name" style="display:inline">    </h4> </h4>
+        <br>
+      </li>
+      <li>
+        <h4 style="display:inline">After that, <h4 class = "responder_name" style="display:inline"> </h4> </h4> 
+        <h4 style="display:inline"> will give some of the money they have at that point to you.</h4>        
+      </li>
+      <li>
+        <h4>OK, let’s play.</h4>    
+      </li>
+    </ul>
+ 
+    </div>
+
+
+  </div>
+{% endblock %}
+
+{% block rightcontent %}
+  <div id="RightContentContainer">
+
+
+  <div class="row" style="padding: 20px">
+    <h3>Please choose a person & Click submit to move to Invest Game</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <img class="respondent_img" id="Ibrahim" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <div>
+        <br>
+      </div>
+      <img class="respondent_img" id="Sahr" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+    </div>
+    <div class="col-md-2">
+      <img class="respondent_img" id="Sahal" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <div>
+        <br>
+      </div>
+      <img class="respondent_img" id="Omar" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+    </div>
+    <div class="col-md-2">
+      <img class="respondent_img" id="Eman" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <div>
+        <br>
+      </div>
+      <img class="respondent_img" id="Douglas" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+    </div>
+    <div class="col-md-2">
+      <img class="respondent_img" id="Christopher" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <div>
+        <br>
+      </div>
+      <img class="respondent_img" id="Philip" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+    </div>
+    <div class="col-md-2">
+      <img class="respondent_img" id="Tracy" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <div>
+        <br>
+      </div>
+      <img class="respondent_img" id="Theresa" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+    </div>
+  </div>
+
+  <div class="row" style="padding: 20px">
+    <form action="{% url 'investment' %}" method="post">{% csrf_token %}
+      <input class="respondent_input" type="hidden" name="respondent_pick" value="xxx">
+      <button  style="position: absolute; right: 120px; top: 300px" type="submit">Next</button>
+    </form>
+  </div>
+
+  </div>
+
+
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+
+
+
+    $(document).ready(function(){
+
+      $(".step_by_step").hide();
+
+      $(".respondent_img").click(function(){
+        cur_id = $(this).attr("id")
+        $(".respondent_input").val(cur_id)
+        $(".responder_name").text(cur_id)
+        $(".step_by_step").show(); 
+        $(".respondent_img").off('click')
+      })
+    });
+
+  </script>
+{% endblock %}
+
+
+
+
+
+<!--       names = ["Ibrahim", "Sahr", "Sahal", "Omar", "Euser"]
+      $(".respondent_img").click(function(){      
+        random_idx = Math.floor(Math.random() * 5);
+        console.log(random_idx)
+        $(".respondent_input").val(names[random_idx])
+      }) -->

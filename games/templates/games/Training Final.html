@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Start Phishing Research Study!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-10 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+        <h1>Please Participate in the Phishing Research Study</h1>
+        <p>All B&amp;F staff are encouraged to take a few extra minutes to participate in the research.</p>
+        <ul>
+          <li>Complete some brief exercises involving decisions and choices related to coin tosses, investments, and more. These exercises should take 10-20 minutes to complete.</li>
+          <li>Get paid up to $42 based on your choices. Average payment is $20. Payment will be sent to the mailing address you provide.</li>
+          <li>The researchers will remove any identifying information from any submitted data, so your participation is anonymous.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-1 ">
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-xs-2 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="ParticipateBtn" href="../../consent/" class="btn btn-lg btn-success">Participate Now</a>
+    </div>
+    <div class="col-xs-1 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="PostponeBtn" href="../../postpone/" class="btn btn-lg btn-warning">Participate Later</a>
+    </div>
+    <div class="col-xs-1 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="QuitBtn" href="../../optout/" class="btn btn-lg btn-danger">Not Interested</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+    });
+  </script>
+{% endblock %}

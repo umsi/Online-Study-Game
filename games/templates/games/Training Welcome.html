@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Welcome to the Training Module!{% endblock %}
+
+{% block leftcontent %}
+  <div class="row">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-10 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+        <h1>Phishing Awareness Training Module</h1>
+        <p><b>Test Your Phishing Knowledge!</b></p>
+        <p>Can you recognize phishing emails that try to steal your password and personal information and compromise your U-M account?</p>
+        <p>Will you take the bait and get hooked?</p>
+        <p>Or will you avoid the trap and swim free?</p>
+        <!--<div class="alert alert-warning" role="alert">
+          <strong>Attention Keyboard-only users!</strong> Use <b>Tab</b>, <b>Enter</b>, and <b>Arrow</b> keys to interact with the website.
+        </div>-->
+      </div>
+    </div>
+    <div class="col-md-1 ">
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block rightcontent %}
+  <div style="margin:40px;">
+    <img src="{% static 'games/media/19910_416_322.png' %}" class="img-responsive center-block" alt="Welcome Page Fish Image" height="100%">
+  </div>
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-xs-5 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="StartBtn" href="/training/1/intro" class="btn btn-lg btn-success">Start Training</a>
+    </div>
+    <div class="col-xs-5 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+    });
+  </script>
+{% endblock %}

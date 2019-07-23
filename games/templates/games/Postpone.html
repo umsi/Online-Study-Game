@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Thank you!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-10 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+        <h1>Thanks For Your Participation</h1>
+        <p>Thank you for completing the phishing training! We will send you an email message within the next week reminding you to participate in the research study.</p>
+        <p>If you don't want to wait for the email, save this URL and use it to participate in the research anytime before end-of-day May 13: <a href="https://bftrain.miserver.it.umich.edu/consent/">https://bftrain.miserver.it.umich.edu/consent/</a></p>
+        <p>You can close your web browser now. If you would like to learn more about phishing, please click the button below to go to the Spam, Phishing, and Suspicious Email page on the Safe Computing website.</p>
+      </div>
+    <div class="col-md-1 ">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="StartBtn" href="http://safecomputing.umich.edu/main/phishing_alerts/" class="btn btn-lg btn-success">Safe Computing Website</a>
+    </div>
+    <div class="col-xs-6 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+  </script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Training Question Introduction!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-8 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+          
+          
+        {% if question == 1 %}
+        <h1>Phishing Awareness Training!</h1>
+        <h2>About this Training</h2>
+            <p>In this training, you will look at email messages and decide whether they are phishing attempts. You will begin with a practice email that shows you clues to watch for. Then you will test your phish detection skills on three emails. Good luck!</p>
+        {% elif question == 2 %}
+        <h1>Now Test Your Skills</h1>
+            <p><b>Can You Identify Phishing Emails?</b></p>
+            <p>Next, you will examine three emails and decide if they are phishing attempts.</p>
+            <p>Move your mouse over each message just as you would with your own email to see what URLs the links go to.</p>
+        {% elif question == 3 %}
+        <!--<h2>Question {{ question }}</h2>-->
+          <div style="margin-bottom:19px">
+            <h1>What about emails with multiple links?</h1>
+            <p>Again, move your mouse over each link just as you would with your own email to see what URLs the links go to.</p>
+          </div>
+        {% elif question == 4 %}
+        <h2>Question {{ question }}</h2>
+          <div style="margin-bottom:19px">
+            <p><b>What if someone has shared an important document with you?</b></p>
+            <p>Again, move your mouse over each link just as you would with your own email to see what URLs the links go to.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-2 ">
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-xs-5 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="Continue" href="/training/{{ question }}" class="btn btn-lg btn-success">Continue</a>
+    </div>
+    <div class="col-xs-5 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+  </script>
+{% endblock %}
