@@ -16,7 +16,7 @@ from django.shortcuts import render, redirect
 from django.utils.six.moves import range
 from django.http import StreamingHttpResponse
 from InvestGame.settings import BASE_DIR, DATA_ADDR
-
+from django.core.files.storage import FileSystemStorage
 import os
 from .models import User
 from .models import HoltLaury
@@ -29,6 +29,7 @@ from .models import Thankyou
 
 
 def compare(request):
+
     if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
     (request.session.get('umid', False) and request.session['umid'] != "")):
         if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
@@ -54,8 +55,7 @@ def compare(request):
         # print(user_invested)
         # print(user_guess_returned)
 
-
-        context = { 'umid': umid, 'invested': user_invested, 'guess_returned':user_guess_returned, 'real_returned': real_returned, 'received': user_received, 'respondent': respondent, 'guess_flag': guess_flag}
+        context = { 'umid': umid, 'invested': user_invested, 'guess_returned':user_guess_returned, 'real_returned': real_returned, 'received': user_received, 'respondent': respondent, 'guess_flag': guess_flag, 'nodata' : False}
         return render(request, 'games/compare.html', context)
 
 
@@ -67,7 +67,8 @@ def compare(request):
 @ensure_csrf_cookie
 def login(request):
     if request.method == 'POST':
-        umid = time.time()
+        umid = request.GET.get("id")
+        # umid = time.time()
         user, created = User.objects.get_or_create(username=umid)
         request.session['umid'] = user.username
         print(request.session['umid'])
@@ -79,19 +80,28 @@ def logout(request):
     return welcome(request)
 
 def welcome(request):
-    if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
-        if ('REMOTE_USER' in request.META):
-            umid = request.META['REMOTE_USER']
-        if (request.session.get('umid', False)):
-            umid = request.session['umid']
+    # if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
+    #     if ('REMOTE_USER' in request.META):
+    #         umid = request.META['REMOTE_USER']
+    #     if (request.session.get('umid', False)):
+    #         umid = request.session['umid']
+    #     user, created = User.objects.get_or_create(username=umid)
+    #     user.version = "AfterExperiment"
+    #     user.save()
+    #     request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+    # else:
+    if request.method == 'GET':
+        umid = request.GET.get("id")
+        # umid = time.time()
         user, created = User.objects.get_or_create(username=umid)
-        user.version = "AfterExperiment"
-        user.save()
-        request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        request.session['umid'] = user.username
+        loginid = ""
+        context = { 'umid': loginid, 'welcomepage': 1}
+        return render(request, 'games/Welcome.html', context)
     else:
-        umid = ""
-    context = { 'umid': umid, 'welcomepage': 1 }
-    return render(request, 'games/Welcome.html', context)
+        umid = request.session['umid']
+        context = { 'umid': umid, 'welcomepage': 1}
+        return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def pretest(request, question):
