@@ -11,6 +11,9 @@ urlpatterns = [
     path('returnedSubmit/', views.returnedSubmit, name='returnedSubmit'),
     path('final/', views.final, name='final'),
     path('returning/', views.returned, name='returned'),
-    path('compare/', views.compare, name='compare')
+    path('compare/', views.compare, name='compare'),
+    path('question/', views.question, name='question'),
+    path('record/', views.record, name='record')
+
     # path('', views.p, name='welcome'),    
 ]

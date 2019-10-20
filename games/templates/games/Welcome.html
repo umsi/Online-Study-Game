@@ -47,39 +47,39 @@
   </div>
   <div class="row">
     <div class="col-md-2">
-      <img class="respondent_img" id="Ibrahim" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
       <div>
         <br>
       </div>
-      <img class="respondent_img" id="Sahr" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
     </div>
     <div class="col-md-2">
-      <img class="respondent_img" id="Sahal" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
       <div>
         <br>
       </div>
-      <img class="respondent_img" id="Omar" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
     </div>
     <div class="col-md-2">
-      <img class="respondent_img" id="Eman" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
       <div>
         <br>
       </div>
-      <img class="respondent_img" id="Douglas" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
     </div>
     <div class="col-md-2">
-      <img class="respondent_img" id="Christopher" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
       <div>
         <br>
       </div>
-      <img class="respondent_img" id="Philip" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
     </div>
     <div class="col-md-2">
-      <img class="respondent_img" id="Tracy" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
       <div>
         <br>
       </div>
-      <img class="respondent_img" id="Theresa" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
     </div>
   </div>
 
@@ -98,17 +98,23 @@
 {% block scontent %}
   <!-- JavaScript code for this project -->
   <script>
+history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event)
+{
+  history.pushState(null, document.title, location.href);
+});
 
 
 
     $(document).ready(function(){
-
+      var names = ["Ibrahim", "Sahr", "Sahal", "Omar", "Eman", "Douglas", "Christopher", "Philip", "Tracy", "Theresa"]
       $(".step_by_step").hide();
 
       $(".respondent_img").click(function(){
-        cur_id = $(this).attr("id")
-        $(".respondent_input").val(cur_id)
-        $(".responder_name").text(cur_id)
+        // cur_id = $(this).attr("id")
+        var random_id = Math.floor(Math.random()*10)
+        $(".respondent_input").val(names[random_id])
+        $(".responder_name").text(names[random_id])
         $(".step_by_step").show(); 
         $(".respondent_img").off('click')
       })

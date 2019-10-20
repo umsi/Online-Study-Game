@@ -41,7 +41,7 @@
 
   </head>
 
-  <body role="document" style="background-image:url({% static 'games/media/Main_Backgound_Image.jpg' %})">
+  <body role="document" >
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -143,10 +143,22 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/static/games/js/ie10-viewport-bug-workaround.js"></script>
 
+
     <script src="/static/games/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script type="text/javascript">
+      history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event)
+{
+  history.pushState(null, document.title, location.href);
+});
+    </script>
 
   {% if correct and not correctResult and not wrongResult %}
     <script type="text/javascript">
+
+
+
       var windowWidth = $( window ).width() + 160;
       var windowHeight = $( window ).height() + 160;
       $( "#TropicalFishes" ).animate({

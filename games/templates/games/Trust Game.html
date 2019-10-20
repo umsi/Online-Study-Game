@@ -8,6 +8,27 @@
   <div id="InstructionsDIV">
     {% if gameNum == 1 %}
     <div id="Instructions3" >
+
+
+    <h3>Here’s how the game works:</h3>
+    <ul>
+      <li>  <h4 style="display:inline">Each of you – the Investor and {{respondent}} </h4>     <h4 style="display:inline"> will be given $5.</h4>
+      </li>
+      <li>
+           <h4  style="display:inline">As the Investor, you will then have the opportunity to pass some, all or none of your $5 to {{respondent}} </h4> <h4  style="display:inline">, as you like.</h4>
+      </li>
+      <li>
+        <h4 style="display:inline">Then we will triple the amount you give and pass it to {{respondent}} </h4>
+        <br>
+      </li>
+      <li>
+        <h4 style="display:inline">After that, {{respondent}} </h4> 
+        <h4 style="display:inline"> will give some of the money they have at that point to you.</h4>        
+      </li>
+      <li>
+        <h4>OK, let’s play.</h4>    
+      </li>
+    </ul>
       <h3>You now have $5. How much you would like to pass to {{respondent}} ?</h3>
     </div>
     {% else %}
@@ -210,12 +231,12 @@
       </table> -->
     <div id="parent" style="display: table; table-layout: fixed;">
       <div class="childwrap" style="display: table-row;">
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">0</div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">1</div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">2</div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">3</div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">4</div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">5</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
+        <div class="child" style="display: table-cell; width: calc(100% / 5)">|</div>
       </div>
     </div>
 
@@ -242,6 +263,12 @@
 {% block scontent %}
   <!-- JavaScript code for this project -->
   <script>
+history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event)
+{
+  history.pushState(null, document.title, location.href);
+});
+
     $(document).ready(function(){
 
 
@@ -249,7 +276,7 @@
         ruler_num = {{invested}} * 3 + 5
         for (var i = 0; i <= ruler_num; i++) {
           var elm = '<div class="child" ' +
-          'style="display: table-cell; width: calc(100% / ' + ruler_num +  ');">' + i + 
+          'style="display: table-cell; width: calc(100% / ' + ruler_num +  ');">' + '|' + 
           '</div>';
           $(elm).appendTo($(".childwrap2"))
         }

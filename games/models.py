@@ -16,7 +16,10 @@ class User(models.Model):
     postpone = models.BooleanField(default=0)
     age = models.IntegerField(default=-1)
     gender = models.CharField(max_length=127, default="")
-    emailsperday = models.CharField(max_length=25, default="")
+    q1answer = models.CharField(max_length=25, default="")
+    q2answer = models.CharField(max_length=25, default="")
+    q3answer = models.CharField(max_length=25, default="")
+    q4answer = models.CharField(max_length=25, default="")
     ownpc = models.BooleanField(default=0)
     ownsmartphone = models.BooleanField(default=0)
     ownpda = models.BooleanField(default=0)
@@ -226,6 +229,9 @@ class Investment(models.Model):
     otherreturned = models.IntegerField(default=-1)
     otherinvested = models.IntegerField(default=-1)
     points = models.IntegerField(default=-1)
+
+
+    
     startedinvested = models.DateTimeField(default=timezone.now)
     finishedinvested = models.DateTimeField(default=timezone.now)
     startedreturned0 = models.DateTimeField(default=timezone.now)

@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.six.moves import range
 from django.http import StreamingHttpResponse
-from InvestGame.settings import BASE_DIR, DATA_ADDR
+from InvestGame.settings import BASE_DIR, DATA_ADDR, INFO_STORE
 from django.core.files.storage import FileSystemStorage
 import os
 from .models import User
@@ -46,20 +46,72 @@ def compare(request):
         with open(data_path) as json_file:
             data = json.load(json_file)
         real_returned = data[respondent][str(user_invested)]
+        investment.returned1 = real_returned
+        user.investment_set.update(
+                    returned1=real_returned)
         user_received = real_returned
         guess_flag = "not within"
         if abs(real_returned - user_guess_returned) <= 1:
             user_received += 2
             guess_flag = "within"
         user_received += (5-user_invested)
-        # print(user_invested)
-        # print(user_guess_returned)
-
+        investment.returned2 = user_received
+        user.investment_set.update(
+                    returned2=user_received)
+        user.save()
         context = { 'umid': umid, 'invested': user_invested, 'guess_returned':user_guess_returned, 'real_returned': real_returned, 'received': user_received, 'respondent': respondent, 'guess_flag': guess_flag, 'nodata' : False}
         return render(request, 'games/compare.html', context)
 
+@ensure_csrf_cookie
+def question(request):
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+    context = { 'umid': umid, 'nodata' : False}
+    return render(request, 'games/Question.html', context)
 
 
+@ensure_csrf_cookie
+def record(request):
+    if request.method == 'POST':
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+                q1answer = request.POST['question1']
+                q2answer = request.POST['question2']
+                q3answer = request.POST['question3']
+                q4answer = request.POST['question4']
+                q5answer = request.POST['question5']
+                q6answer = request.POST['question6']
+                q7answer = request.POST['question7']
+                q8answer = request.POST['question8']
+                q9answer = request.POST['question9']
+                q10answer = request.POST['question10']
+                q11answer = request.POST['question11']
+                q12answer = request.POST['question12']
+                q13answer = request.POST['question13']
+                q14answer = request.POST['question14']
+                q15answer = request.POST['question15']
+
+                user = User.objects.get(username=umid)
+                investment = user.investment_set.all()[0]
+                userinfo = {"umid": umid, "user_invested": investment.invested, "user_guess_returned": investment.returned0,
+                "respondent": investment.respondent, "respondent_returned": investment.returned1, "user_received" : investment.returned2, "question1": q1answer, "question2": q2answer, "question3": q3answer, "question4": q4answer, "question5": q5answer, "question6": q6answer, "question7": q7answer, "question8": q8answer, "question9": q9answer, "question10": q10answer, "question11": q11answer, "question12": q12answer, "question13": q13answer, "question14": q14answer, "question15": q15answer}
+                filename = "user" + umid
+                path= os.path.join(INFO_STORE, filename+ ".json")
+                with open(path, 'w+') as f:
+                    json.dump(userinfo, f)
+                response = HttpResponse()
+                return response
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 
 
@@ -984,7 +1036,6 @@ def investment(request):
             investment = user.investment_set.all()[0]
             invested = investment.invested
             respondent = request.POST.get("respondent_pick", "")
-            print(respondent)
             user.investment_set.update(respondent= respondent) 
             context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum, 'respondent':respondent }
             return render(request, 'games/Trust Game.html', context)
@@ -1034,7 +1085,7 @@ def returned(request):
         investment = user.investment_set.all()[0]
         invested = investment.invested
         respondent = investment.respondent
-        print(respondent)
+        # print(respondent)
 
         context = { 'umid': umid, 'invested': invested, 'returned':returned, 'part':part, 'gameNum':gameNum, 'respondent': respondent}
         return render(request, 'games/Trust Game.html', context)
