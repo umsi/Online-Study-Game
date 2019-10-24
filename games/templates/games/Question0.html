@@ -1,0 +1,244 @@
+{% extends "games/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block leftcontent %}
+
+<br>
+<br>
+
+
+<form action="{% url 'question1' %}" method="post" id="questionform">
+  {% csrf_token %}
+
+  <p><b>Are you a U.S. citizen?</b></p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question1" id="question1A" value="A">
+      Yes 
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question1" id="question1B" value="B">
+      No
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question1" id="question1C" value="C">
+      Don't know
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question1" id="question1D" value="D">
+      Refuse to answer
+    </label>
+  </div>
+
+
+  <p><b>Did you vote for a presidential candidate in the last election?</b></p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question2" id="question2A" value="A">
+      Yes 
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question2" id="question2B" value="B">
+      No
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question2" id="question2C" value="C">
+      Don't know
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question2" id="question2D" value="D">
+      Refuse to answer
+    </label>
+  </div>
+
+  <p><b>How did you vote for?</b></p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question3" id="question3A" value="A">
+      Donald Trump  
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question3" id="question3B" value="B">
+      Hillary Clinton  
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question3" id="question3C" value="C">
+      Other
+    </label>
+  </div>  
+  <div class="radio">
+    <label>
+      <input type="radio" name="question3" id="question3D" value="C">
+      Don't know
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question3" id="question3E" value="D">
+      Refuse to answer
+    </label>
+  </div>
+
+  <p><b>Are your political views generally closer to </b></p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4A" value="A">
+      The Democrats  
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4B" value="B">
+      The Republicans  
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4C" value="C">
+      Other
+    </label>
+  </div> 
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4B" value="B">
+      No preference   
+    </label>
+  </div> 
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4D" value="C">
+      Don't know
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="question4" id="question4E" value="D">
+      Refuse to answer
+    </label>
+  </div>
+
+
+
+  <button  style="position: relative; right: 0px; top: 10px" type="submit">Next</button>
+</form>
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block rightcontent %}
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+
+<script type="text/javascript">
+
+        
+history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event)
+{
+  history.pushState(null, document.title, location.href);
+});
+        
+      var keep = Math.floor(Math.random() * 3); 
+
+      $( document ).ready(function() {
+                      
+          var elems = $(".random");
+          for (var i = 0; i < elems.length; ++i) {
+              if (i !== keep) {
+                $(elems[i]).hide();
+              }
+          }
+
+      });
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+
+      $( "#questionform" ).submit(function( event ) {
+          event.preventDefault();
+
+          var errorInPage = false;
+
+          var q1answer = $('input[name=question1]:checked').val();
+
+          var q2answer = $('input[name=question2]:checked').val();
+
+          var q3answer = $('input[name=question3]:checked').val();
+
+          var q4answer = $('input[name=question4]:checked').val();
+
+
+          if (!q1answer || !q2answer || !q3answer || !q4answer) {
+            alert("Please check all the anwsers")
+          } else {
+
+            request = $.ajax({
+                url: "{% url 'question0_store' %}",
+                method: "POST",
+                data:
+                { 'question1': q1answer, 'question2': q2answer, 'question3': q3answer, 'question4': q4answer}
+                ,
+                datatype: "json"
+            });
+            
+            request.done(function(msg) {
+                var url = "{% url 'question1' %}";
+                window.location.href = url; 
+            });
+          }
+        })
+    
+
+</script>
+
+
+
+{% endblock %}
