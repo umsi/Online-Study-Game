@@ -51,15 +51,18 @@ def compare(request):
                     returned1=real_returned)
         user_received = real_returned
         guess_flag = "not within"
+        bonus = 0
         if abs(real_returned - user_guess_returned) <= 1:
             user_received += 2
             guess_flag = "within"
+            bonus = 2
         user_received += (5-user_invested)
+        user_left = (5-user_invested)
         investment.returned2 = user_received
         user.investment_set.update(
                     returned2=user_received)
         user.save()
-        context = { 'umid': umid, 'invested': user_invested, 'guess_returned':user_guess_returned, 'real_returned': real_returned, 'received': user_received, 'respondent': respondent, 'guess_flag': guess_flag, 'nodata' : False}
+        context = { 'umid': umid, 'invested': user_invested, 'guess_returned':user_guess_returned, 'real_returned': real_returned, 'received': user_received, 'respondent': respondent, 'guess_flag': guess_flag, 'nodata' : False, 'user_left': user_left, 'bonus': bonus}
         return render(request, 'games/compare.html', context)
 
 @ensure_csrf_cookie
@@ -1112,7 +1115,7 @@ def investment(request):
             context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum, 'respondent':respondent }
             return render(request, 'games/Trust Game.html', context)
     
-        context = { 'umid': umid, 'gameNum':gameNum }
+        context = { 'umid': umid, 'gameNum':gameNum, 'respondent':respondent}
         return render(request, 'games/Trust Game.html', context)
 
     context = { 'umid': '', 'welcomepage': 1 }
