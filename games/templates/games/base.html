@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
-    <meta name="author" content="Iman YeckehZaare">
 
     <link rel="shortcut icon" type="image/png" href="/static/games/media/blockm.png">
 
@@ -116,14 +115,15 @@
           <div class="col-md-6">
             {% block rightcontent %}{% endblock %}
           </div>
+        <h4 style="padding: 35px; color: red">WARNING: Please do not use the browser buttons to go back or forward, or we might not be able to retrieve your responses and pay you!</h4>
+      
         </div>
-        <div class="row">
-          <br><br>
-        </div>
+        
       </div>
+
       {% endif %}
 
-      
+     
 
       <div class="navbar navbar-inverse navbar-fixed-bottom">
         <p>&copy; University of Michigan, School of Information 2019</p>
@@ -147,11 +147,6 @@
     <script src="/static/games/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
     <script type="text/javascript">
-      history.pushState(null, document.title, location.href);
-      window.addEventListener('popstate', function (event)
-      {
-        history.pushState(null, document.title, location.href);
-      });
     </script>
 
   {% if correct and not correctResult and not wrongResult %}

@@ -6,10 +6,10 @@
 
 {% block leftcontent %}
 
-<br>
-<br>
 
-
+<div id="questionnaire_si1">
+  <br>
+  <br>
 <form action="{% url 'question1_store' %}" method="post" id="questionform">
   {% csrf_token %}
 
@@ -221,9 +221,13 @@
 <br>
 <br>
 <br>
+</div>
+
 {% endblock %}
 
 {% block rightcontent %}
+    <div id="RightContentContainer">
+    </div>
 {% endblock %}
 
 {% block scontent %}
@@ -231,12 +235,8 @@
 
 <script type="text/javascript">
 
-        
-history.pushState(null, document.title, location.href);
-window.addEventListener('popstate', function (event)
-{
-  history.pushState(null, document.title, location.href);
-});
+      $("#RightContentContainer").height($("#questionnaire_si1").height()*0.4);
+      // $("#RightContentContainer").width($(window).width()/2);
         
       var keep = Math.floor(Math.random() * 3); 
 
@@ -250,7 +250,7 @@ window.addEventListener('popstate', function (event)
           }
 
       });
-        function getCookie(name) {
+       function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
                 var cookies = document.cookie.split(';');

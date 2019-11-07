@@ -14,16 +14,14 @@
 {% endblock %}
 
 {% block rightcontent %}
+    <div id="RightContentContainer">
+    </div>
 {% endblock %}
 
 {% block scontent %}
   <!-- JavaScript code for this project -->
 <script type="text/javascript">
-history.pushState(null, document.title, location.href);
-window.addEventListener('popstate', function (event)
-{
-  history.pushState(null, document.title, location.href);
-});
-
+      $("#RightContentContainer").height($(window).height()*0.7);
+      $("#RightContentContainer").width($(window).width()/2);
 </script>
 {% endblock %}

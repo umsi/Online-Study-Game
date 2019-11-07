@@ -263,11 +263,7 @@
 {% block scontent %}
   <!-- JavaScript code for this project -->
   <script>
-history.pushState(null, document.title, location.href);
-window.addEventListener('popstate', function (event)
-{
-  history.pushState(null, document.title, location.href);
-});
+
 
     $(document).ready(function(){
 
@@ -312,7 +308,7 @@ window.addEventListener('popstate', function (event)
             }
         });
 
-        $("#RightContentContainer").height($(window).height());
+        $("#RightContentContainer").height($(window).height()*0.75);
         $("#RightContentContainer").width($(window).width()/2);
 
         var part = 1;

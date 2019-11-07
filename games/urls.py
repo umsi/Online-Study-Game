@@ -18,7 +18,8 @@ urlpatterns = [
     path('question1_store/', views.question1_store, name='question1_store'),
     path('question2/', views.question2, name='question2'),
     path('question2_store/', views.question2_store, name='question2_store'),
-    path('finish/', views.finish, name='finish')
+    path('finish/', views.finish, name='finish'),
+    path('respondent_store/', views.respondent_store, name='respondent_store')
 
     # path('', views.p, name='welcome'),    
 ]

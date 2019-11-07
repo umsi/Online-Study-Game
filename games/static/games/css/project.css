@@ -13,10 +13,13 @@ body {
   background-size: cover;
 }
 
+
+
 .navbar-inverse {
   background-color: #0E284B;
   background-image: none;
 }
+
 
 .theme-dropdown .dropdown-menu {
   position: static;
@@ -111,6 +114,7 @@ h4, p, .alert {
 #NextTraining {
   margin-top: 28px;
 }
+
 
 #GoldenFish {
   position:fixed;

@@ -8,26 +8,26 @@
     <div>
       <ul>
         <li>
-          <h3>You decided to pass ${{invested}} to  {{respondent}}</h3>
+          <h3>You decided to pass ${{invested}} to  {{respondent}}.</h3>
         </li>
       	<li>
-      		<h3>{{respondent}} decided to return back ${{real_returned}}</h3>
+      		<h3>{{respondent}} decided to return back ${{real_returned}}.</h3>
       	</li>
       	<li>
-      		<h3>You guessed that {{respondent}} would return ${{guess_returned}}</h3>
+      		<h3>You guessed that {{respondent}} would return ${{guess_returned}}.</h3>
       	</li>
       	<li>
  
-      		<h3>Your guess is {{guess_flag}} the $1 of how much {{respondent}} decided to give back to you</h3>
+      		<h3>Your guess is {{guess_flag}} the $1 of how much {{respondent}} decided to give back to you.</h3>
       	</li>
       	<li>
-      		<h3>Therefore you earned ${{real_returned}} + ${{user_left}} + ${{bonus}} = ${{received}} in total</h3>
+      		<h3>Therefore you earned ${{user_left}} + ${{real_returned}} + ${{bonus}} = ${{received}} in total.</h3>
       	</li>
       </ul>
     </div>
     <div>
     <form action="{% url 'question0' %}" >{% csrf_token %}
-      <button  type="submit">Go to Questions</button>
+      <button  type="submit">Go to Questions!</button>
     </form>
     </div>
   
@@ -36,16 +36,16 @@
 {% endblock %}
 
 {% block rightcontent %}
+
+  <div id="RightContentContainer">
+  </div>
+
 {% endblock %}
 
 {% block scontent %}
   <!-- JavaScript code for this project -->
 <script type="text/javascript">
-history.pushState(null, document.title, location.href);
-window.addEventListener('popstate', function (event)
-{
-  history.pushState(null, document.title, location.href);
-});
-
+  $("#RightContentContainer").height($(window).height()*0.75);
+  $("#RightContentContainer").width($(window).width()/2);
 </script>
 {% endblock %}
