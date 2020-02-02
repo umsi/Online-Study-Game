@@ -1,0 +1,5 @@
+Django==2.2.9
+numpy==1.18.1
+pytz==2019.3
+scipy==1.4.1
+sqlparse==0.3.0
