@@ -6,7 +6,10 @@ This application uses [`virtualenv`](https://virtualenv.pypa.io/en/latest/) to m
 
 1. If you do not have `pip` installed, follow the instructions [here](https://pip.pypa.io/en/stable/installing/).
 2. Install `virtualenv`: `pip3 install virtualenv`
-3. Set up you virtual environment. From the root directory of this repository, run: `virtualenv --python=$(which python3) env`
+3. Set up you virtual environment. From the root directory of this repository, run: 
+```
+virtualenv --python=$(which python3) env
+```
 4. Enter your new virtual environment: `source ./env/bin/activate` 
 5. Install dependencies: `pip install -r requirements.txt` 
 6. If running the app for the first time, build the database: `python manage.py migrate`
@@ -21,7 +24,7 @@ Start Django's development server with the following command:
 python manage.py runserver
 ```
 
-You can then run the application at `localhost:8001?id=<some_id>`.
+You can then run the application at `localhost:8000?id=<some_id>`.
 
 ## Cleaning up
 
