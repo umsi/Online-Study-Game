@@ -195,7 +195,6 @@ def respondent_store(request):
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if (request.session.get('umid', False) and request.session['umid'] != ""):
-                print("fdgfds")
                 umid = request.session['umid']
                 user = User.objects.get(username=umid)
                 if user.investment_set.count() == 0:
@@ -314,6 +313,7 @@ def welcome(request):
         # umid = time.time()
         user, created = User.objects.get_or_create(username=umid)
         request.session['umid'] = user.username
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         loginid = ""
         context = { 'umid': loginid, 'welcomepage': 1}
         return render(request, 'games/Welcome.html', context)
