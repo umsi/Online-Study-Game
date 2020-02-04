@@ -8,8 +8,7 @@ from django.shortcuts import render, redirect
 from django.utils.six.moves import range
 
 from config.settings import DATA_ADDR, INFO_STORE
-from games.core.models import GamesUser
-from .models import Investment
+from .models import Investment, InvestmentUser
 
 
 def compare(request):
@@ -19,7 +18,7 @@ def compare(request):
             umid = request.META['REMOTE_USER']
         if (request.session.get('umid', False) and request.session['umid'] != ""):
             umid = request.session['umid']
-        user = GamesUser.objects.get(username=umid)
+        user = InvestmentUser.objects.get(username=umid)
         investment = user.investment_set.all()[0]
         user_invested = investment.invested
         user_guess_returned = investment.returned0
@@ -67,7 +66,7 @@ def question0_store(request):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 investment = user.investment_set.all()[0]
                 q1answer = request.POST['question1']
                 q2answer = request.POST['question2']
@@ -122,7 +121,7 @@ def question1_store(request):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 investment = user.investment_set.all()[0]
                 q5answer = request.POST['question5']
                 q5type = request.POST['questiontype']
@@ -177,7 +176,7 @@ def respondent_store(request):
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 if user.investment_set.count() == 0:
                     user.investment_set.create(invested=0,
                         startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
@@ -201,7 +200,7 @@ def question2_store(request):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 investment = user.investment_set.all()[0]
                 q6answer = request.POST['question6']
                 q7answer = request.POST['question7']
@@ -262,7 +261,7 @@ def question2_store(request):
 def login(request):
     if request.method == 'POST':
         umid = request.GET.get("id")
-        user, created = GamesUser.objects.get_or_create(username=umid)
+        user, created = InvestmentUser.objects.get_or_create(username=umid)
         request.session['umid'] = user.username
         print(request.session['umid'])
 
@@ -284,7 +283,7 @@ def welcome(request):
     if request.method == 'GET':
         umid = request.GET.get("id")
         # umid = time.time()
-        user, created = GamesUser.objects.get_or_create(username=umid)
+        user, created = InvestmentUser.objects.get_or_create(username=umid)
         request.session['umid'] = user.username
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         loginid = ""
@@ -304,7 +303,7 @@ def investment(request):
         if (request.session.get('umid', False) and request.session['umid'] != ""):
             umid = request.session['umid']
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-        user = GamesUser.objects.get(username=umid)
+        user = InvestmentUser.objects.get(username=umid)
         gameNum = 1
         invested = 0
         if user.investment_set.count() == 0:
@@ -336,7 +335,7 @@ def investmentSubmit(request):
                 umid = request.session['umid']
             if ('invested' in request.POST and request.POST['invested'] != ''):
                 invested = request.POST['invested']
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 if user.investment_set.count() == 0:
                     user.investment_set.create(invested=invested,
                         startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
@@ -358,7 +357,7 @@ def returned(request):
         if (request.session.get('umid', False) and request.session['umid'] != ""):
             umid = request.session['umid']
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-        user = GamesUser.objects.get(username=umid)
+        user = InvestmentUser.objects.get(username=umid)
         gameNum = 2
         part = 6
         returned = 0
@@ -389,7 +388,7 @@ def returnedSubmit(request):
              'part' in request.POST and request.POST['part'] != ''):
                 returned = int(request.POST['returned'])
                 part = int(request.POST['part'])
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 investment = user.investment_set.all()[0]  
                 if investment.donereturn == -1:
                     user.investment_set.update(returned0=returned, donereturn=1)
@@ -411,7 +410,7 @@ def final(request):
             if ('returned' in requestPost and requestPost['returned'] != ''):
                 returned = int(requestPost['returned'])
                 part = 7
-                user = GamesUser.objects.get(username=umid)
+                user = InvestmentUser.objects.get(username=umid)
                 gameNum = 1
                 if user.firstgame == "investment":
                     gameNum = 1

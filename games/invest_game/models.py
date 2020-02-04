@@ -10,7 +10,6 @@ class InvestmentUser(GamesUser):
 
 class Investment(TimeStampedModel):
     user = models.ForeignKey(InvestmentUser, on_delete=models.CASCADE)
-    # otheruser = models.ForeignKey(User, related_name="otherreturned_set", null=True, on_delete=models.CASCADE)
     invested = models.IntegerField(default=-1)
     doneinvest = models.IntegerField(default=-1)
     donereturn = models.IntegerField(default=-1)
