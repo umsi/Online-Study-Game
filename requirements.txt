@@ -3,3 +3,6 @@ numpy==1.18.1
 pytz==2019.3
 scipy==1.4.1
 sqlparse==0.3.0
+
+# code formatting
+black==19.10b0
