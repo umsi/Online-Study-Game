@@ -1,171 +1,25 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
-{% load staticfiles %}
-
-{% block title %}Welcome!{% endblock %}
-
-{% block leftcontent %}
-  <div>
-    <h3>  Let’s first find out who your Responder is. Click on one of the boxes on the right.</h3>
-
-
-    <div class="step_by_step">
-          
-    <h3 style="display:inline" >  Your Responder’s name is <h3 class = "responder_name" style="display:inline">    </h3>    .</h3>
-    <h3>Here’s how the game works:</h3>
-    <ul>
-      <li>  <h4 style="display:inline">Each of you – the Investor and <h4 class = "responder_name" style="display:inline"> </h4> </h4>     <h4 style="display:inline"> will be given $5.</h4>
-      </li>
-      <li>
-           <h4  style="display:inline">As the Investor, you will then have the opportunity to pass some, all or none of your $5 to <h4 class = "responder_name" style="display:inline"> </h4> </h4> <h4  style="display:inline">, as you like.</h4>
-      </li>
-      <li>
-        <h4 style="display:inline">Then we will triple the amount you give and pass it to <h4 class = "responder_name" style="display:inline">    </h4>. </h4>
-        <br>
-      </li>
-      <li>
-        <h4 style="display:inline">After that, <h4 class = "responder_name" style="display:inline"> </h4> </h4> 
-        <h4 style="display:inline"> will give some of the money they have at that point to you.</h4>        
-      </li>
-      <li>
-        <h4>OK, let’s play.</h4>    
-      </li>
-    </ul>
-    </div>
-
-
-  </div>
-{% endblock %}
-
-{% block rightcontent %}
-  <div id="RightContentContainer">
-
-  <div class="row" style="padding: 20px">
-    <h3>Please choose a person & Click submit to move to Invest Game</h3>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-      <div>
-        <br>
-      </div>
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-    </div>
-    <div class="col-md-2">
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-      <div>
-        <br>
-      </div>
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-    </div>
-    <div class="col-md-2">
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-      <div>
-        <br>
-      </div>
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-    </div>
-    <div class="col-md-2">
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-      <div>
-        <br>
-      </div>
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-    </div>
-    <div class="col-md-2">
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
-      <div>
-        <br>
-      </div>
-      <img class="respondent_img" src="{% static 'games/media/user.svg' %}" style="width:70% ">
+{% block content %}
+<div class="row transBackground">
+  <div
+    class="col-md-8"
+    style="padding: 50px; left: 200px; top: 40px; height: 100%"
+  >
+    <h3>
+      Next, we will ask you to play a game in which you have the opportunity to
+      earn a little bit of cash. You are an Investor, investing in another
+      person called the Responder. The Responder is someone from an American
+      city who has already played their part of the game.
+    </h3>
+    <div style="margin-left:30%; margin-right: 30%; width: 100%">
+      <form style="width: 30%" class="form-signin" action={% url "invest_game:sign_in" %} method="post">
+        {% csrf_token %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+          Begin Game
+        </button>
+      </form>
     </div>
   </div>
-
-  <div class="row" style="padding: 20px">
-    <form action="{% url 'investment' %}" method="post" id="nameform">{% csrf_token %}
-      <input class="respondent_input" type="hidden" name="respondent_pick" value="xxx">
-      <button  style="position: absolute; right: 120px; top: 300px" type="submit">Next</button>
-    </form>
-  </div>
-
-  </div>
-
-
-{% endblock %}
-
-{% block scontent %}
-  <!-- JavaScript code for this project -->
-  <script>
-
-
-    $(document).ready(function(){
-      $("#RightContentContainer").height($(window).height()*0.75);
-      var names = ["Ibrahim", "Sahr", "Sahal", "Omar", "Eman", "Douglas", "Christopher", "Philip", "Tracy", "Theresa"]
-      $(".step_by_step").hide();
-
-      $(".respondent_img").click(function(){
-        // cur_id = $(this).attr("id")
-        var random_id = Math.floor(Math.random()*10)
-        var respondent_name = names[random_id]
-
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        var csrftoken = getCookie("um-online-study-game-csrftoken");
-
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-
-        request = $.ajax({
-            url: "{% url 'respondent_store' %}",
-            method: "POST",
-            data:
-            { 'respondent': respondent_name}
-            ,
-            datatype: "json"
-        });
-        
-        request.done(function(data) {
-            console.log(data)
-            $(".respondent_input").val(data)
-            $(".responder_name").text(data)
-            $(".step_by_step").show(); 
-            $(".respondent_img").off('click')
-        });
-    });
-  });
-
-  </script>
-{% endblock %}
-
-
-
-
-
-<!--       names = ["Ibrahim", "Sahr", "Sahal", "Omar", "Euser"]
-      $(".respondent_img").click(function(){      
-        random_idx = Math.floor(Math.random() * 5);
-        console.log(random_idx)
-        $(".respondent_input").val(names[random_idx])
-      }) -->
+</div>
+{% endblock content %}

@@ -1,11 +1,14 @@
-from django.contrib import admin
 from django.urls import path
+from django.contrib import admin
 
 from . import views
 
+
+app_name = "invest_game"
 urlpatterns = [
     path('', views.welcome, name='welcome'),   
-    path('login/', views.login, name='login'),
+    path('sign-in/', views.sign_in, name='sign_in'),
+    path('select-respondent/', views.select_respondent, name='select_respondent'),
     path('investment/', views.investment, name='investment'),
     path('investmentSubmit/', views.investmentSubmit, name='investmentSubmit'),
     path('returnedSubmit/', views.returnedSubmit, name='returnedSubmit'),
@@ -19,7 +22,4 @@ urlpatterns = [
     path('question2/', views.question2, name='question2'),
     path('question2_store/', views.question2_store, name='question2_store'),
     path('finish/', views.finish, name='finish'),
-    path('respondent_store/', views.respondent_store, name='respondent_store')
-
-    # path('', views.p, name='welcome'),    
 ]

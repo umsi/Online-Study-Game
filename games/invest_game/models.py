@@ -4,16 +4,62 @@ from django.utils import timezone
 from games.core.models import GamesUser, TimeStampedModel
 
 
-class InvestmentUser(GamesUser):
+class InvestmentGameUser(GamesUser):
     pass
 
 
 class Investment(TimeStampedModel):
-    user = models.ForeignKey(InvestmentUser, on_delete=models.CASCADE)
+    # Valid experiment stage options
+    SELECT_RESPONDENT = "select-respondent"
+    USER_INVESTMENT = "user-investment"
+    RESPONDENT_INVESTMENT = "respondent-invenstment"
+    COMPARISON = "comparison"
+    THANK_YOU = "thank-you"
+    STAGE_CHOICES = (
+        (SELECT_RESPONDENT, "Reached respondent selection stage"),
+        (USER_INVESTMENT, "Reached user investment stage"),
+        (RESPONDENT_INVESTMENT, "Reached respondent investment stage"),
+        (COMPARISON, "Reached comparison stage"),
+        (THANK_YOU, "Reached thank you stage"),
+    )
+
+    # Valid respondent options
+    RESPONDENT_IBRAHIM = "Ibrahim"
+    RESPONDENT_SAHR = "Sahr"
+    RESPONDENT_SAHAL = "Sahal"
+    RESPONDENT_OMAR = "Omar"
+    RESPONDENT_EMAN = "Eman"
+    RESPONDENT_DOUGLAS = "Douglas"
+    RESPONDENT_CHRISTOPHER = "Christopher"
+    RESPONDENT_PHILIP = "Philip"
+    RESPONDENT_TRACY = "Tracy"
+    RESPONDENT_THERESA = "Theresa"
+    RESPONDENT_CHOICES = (
+        (RESPONDENT_IBRAHIM, "Ibrahim"),
+        (RESPONDENT_SAHR, "Sahr"),
+        (RESPONDENT_SAHAL, "Sahal"),
+        (RESPONDENT_OMAR, "Omar"),
+        (RESPONDENT_EMAN, "Eman"),
+        (RESPONDENT_DOUGLAS, "Douglas"),
+        (RESPONDENT_CHRISTOPHER, "Christopher"),
+        (RESPONDENT_PHILIP, "Philip"),
+        (RESPONDENT_THERESA, "Theresa"),
+        (RESPONDENT_TRACY, "Tracy"),
+    )
+
+    user = models.OneToOneField(
+        InvestmentGameUser, on_delete=models.CASCADE, primary_key=True
+    )
+    reached_stage = models.CharField(
+        max_length=256, choices=STAGE_CHOICES, default=None, null=True,
+    )
+    respondent = models.CharField(
+        max_length=256, choices=RESPONDENT_CHOICES, null=True, blank=True
+    )
+
     invested = models.IntegerField(default=-1)
     doneinvest = models.IntegerField(default=-1)
     donereturn = models.IntegerField(default=-1)
-    respondent = models.TextField(default=" ",null=True, blank=True)
     returned0 = models.IntegerField(default=-1)
     returned1 = models.IntegerField(default=-1)
     returned2 = models.IntegerField(default=-1)

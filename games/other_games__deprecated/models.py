@@ -1,5 +1,33 @@
 from djnago.db import models
 
+from games.core.models import GamesUser
+
+
+class OtherGamesUser(GamesUser)
+    # NOTE: These fields were moved from the generic User model previously in
+    # use. The don't seem necessary to running the main `invest_game` app, so
+    # they've been collected here for possible future use.
+    age = models.IntegerField(blank=True)
+    gender = models.CharField(max_length=127, blank=True)
+    q1answer = models.CharField(max_length=25, blank=True)
+    q2answer = models.CharField(max_length=25, blank=True)
+    q3answer = models.CharField(max_length=25, blank=True)
+    q4answer = models.CharField(max_length=25, blank=True)
+    ownpc = models.NullBooleanField()
+    ownsmartphone = models.NullBooleanField()
+    ownpda = models.NullBooleanField()
+    ownotherdevice = models.NullBooleanField()
+    otherdevice = models.CharField(max_length=255, blank=True)
+    internetuse = models.CharField(max_length=25, blank=True)
+    fullname = models.CharField(max_length=255, default="")
+    street = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
+    zipcode = models.CharField(max_length=255, blank=True)
+    yearsofeduction = models.CharField(max_length=127, blank=True)
+    ethnicity = models.CharField(max_length=127, blank=True)
+    maritalstatus = models.CharField(max_length=127, blank=True)
+
 
 class Pretest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
