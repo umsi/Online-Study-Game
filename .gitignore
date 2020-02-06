@@ -4,6 +4,9 @@
 # development databases
 *.sqlite3
 
+# user data
+games/userdata
+
 # Below is a standard Django gitignore, taken from https://github.com/jpadilla/django-project-template/blob/master/.gitignore
 # Created by https://www.gitignore.io
 

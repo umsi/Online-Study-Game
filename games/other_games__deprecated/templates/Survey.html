@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Thank you!{% endblock %}
+
+{% block leftcontent %}
+  <h1>Post-Study Survey</h1>
+<!--   <p><i>Note: It is required to answer all the questions.</i></p>
+  <br>
+   <div class="form-group">
+    <label for="AgeInput">What is your age?</label>
+    <input type="text" class="form-control number-only" style="width:97%;" id="AgeInput" placeholder="Please enter your age."></input>
+  </div>
+  <div id="AgeInputError" role="alert" class="alert alert-danger" style="display:none;">
+    <b>Please specify your age.</b>
+  </div>
+  <p><b>What is your gender?</b></p>
+  <label class="radio-inline">
+    <input type="radio" name="Gender" id="Female" value="Female">
+    Female
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="Gender" id="Male" value="Male">
+    Male
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="Gender" id="OtherGender" value="Other">
+    Other
+  </label>
+  <br><br>
+  <div id="GenderError" role="alert" class="alert alert-danger" style="display:none;">
+    <b>Please specify your gender.</b>
+  </div>
+  <p><b>What is your ethnicity/race?</p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="White">
+      White
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="Hispanic or Latino">
+      Hispanic or Latino
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="Black or African American">
+      Black or African American
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="Native American or American Indian">
+      Native American or American Indian
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="Asian / Pacific Islander">
+      Asian / Pacific Islander
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Ethnicity" value="Other">
+      Other
+    </label>
+  </div>
+  <div id="EthnicityError" role="alert" class="alert alert-danger" style="display:none;">
+    Please specify your ethnicity.
+  </div>
+  <p><b>What is the highest degree or level of school you have completed?</b> If you are currently enrolled, what is the highest degree you have received?</p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="No schooling completed">
+      No schooling completed
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Nursery school to 8th grade">
+      Nursery school to 8th grade
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Some high school, no diploma">
+      Some high school, no diploma
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="High school graduate, diploma or the equivalent (for example: GED)">
+      High school graduate, diploma or the equivalent (for example: GED)
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Some college credit, no degree">
+      Some college credit, no degree
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Trade/technical/vocational training">
+      Trade/technical/vocational training
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Associate degree">
+      Associate degree
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Bachelor’s degree">
+      Bachelor’s degree
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Master’s degree">
+      Master’s degree
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Professional degree">
+      Professional degree
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="YearsOfEducation" value="Doctorate degree">
+      Doctorate degree
+    </label>
+  </div>
+  <div id="YearsOfEducationError" role="alert" class="alert alert-danger" style="display:none;">
+    Please specify the highest degree or level of school you have completed.
+  </div>
+ -->
+  <p><b>On average, how many emails do you process on a typical work day?</b></p>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Emailsperday" id="LessThan5EmailsPerDay" value="Less than 5">
+      Less than 5
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Emailsperday" id="FiveToTen" value="5 - 10">
+      5 - 10
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Emailsperday" id="TenToTwenty" value="10 - 20">
+      10 - 20
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Emailsperday" id="TwentyToFifty" value="20 - 50">
+      20 - 50
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="Emailsperday" id="MoreThan50" value="More than 50">
+      More than 50
+    </label>
+  </div>
+  <div id="EmailsperdayError" role="alert" class="alert alert-danger" style="display:none;">
+    Please specify the average number of emails you process on a typical work day.
+  </div>
+  <p><b>Which of the following devices do you own?</b></p>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="PCLaptop" id="PCLaptop" value="">
+      PC / Laptop
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="Smartphone" id="Smartphone" value="">
+      Smart-phone (e.g., iPhone)
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="PAD" id="PAD" value="">
+      Tablet
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="OtherDevices" id="OtherDevices" value="">
+      Other; please specify
+    </label>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" style="width:97%; display:none;" id="OtherDeviceInput" placeholder="Please specify the other device(s) you own." maxlength="255"></input>
+  </div>
+{% endblock %}
+
+{% block rightcontent %}
+<!--   <div style="margin:40px;">
+    <img src="{% static 'games/media/271145_327_218.png' %}" alt="Thank you Fish Image" height="100%">
+  </div> -->
+  <form id="ThankYouForm" action="/Submit" method="post" style="margin-top:70px">
+<!--     <p><b>What is your marital status?</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="MaritalStatus" value="Single, never married">
+        Single, never married
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="MaritalStatus" value="Married or domestic partnership">
+        Married or domestic partnership
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="MaritalStatus" value="Widowed">
+        Widowed
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="MaritalStatus" value="Divorced">
+        Divorced
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="MaritalStatus" value="Separated">
+        Separated
+      </label>
+    </div>
+    <div id="MaritalStatusError" role="alert" class="alert alert-danger" style="display:none;">
+      Please specify your marital status.
+    </div> -->
+    <p><b>How many years have you been using the Internet?</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="YearsOfInternet" id="Over20Years" value="Over 20 years">
+        Over 20 years
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="YearsOfInternet" id="10to20Years" value="10 - 20 years">
+        10 - 20 years
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="YearsOfInternet" id="5to10Years" value="5 - 10 years">
+        5 - 10 years
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="YearsOfInternet" id="LessThan5Years" value="Less than 5 years">
+        Less than 5 years
+      </label>
+    </div>
+    <div id="YearsOfInternetError" role="alert" class="alert alert-danger" style="display:none;">
+      Please specify the number of years you have been using the Internet.
+    </div>
+    <div class="row" style="margin-bottom:40px;">
+      <div class="col-xs-4 ">
+      </div>
+      <div class="col-xs-4 ">
+        <button id="SubmitBtn" type="submit" class="btn btn-lg btn-success">Submit &amp; Quit</button>
+      </div>
+      <div class="col-xs-4 ">
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie("um-online-study-game-csrftoken");
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $('.number-only').keypress(function(e) {
+        if(isNaN(this.value+""+String.fromCharCode(e.charCode))) return false;
+      })
+      .on("cut copy paste",function(e){
+        e.preventDefault();
+      });
+       
+      $('input[type="checkbox"][name="OtherDevices"]').change(function() {
+           if(this.checked) {
+               $("#OtherDeviceInput").show();
+           }
+           else {
+               $("#OtherDeviceInput").hide();
+           }
+      });
+
+      $( "#ThankYouForm" ).submit(function( event ) {
+       
+          // Stop form from submitting normally
+          event.preventDefault();
+
+          var errorInPage = false;
+
+          // Get some values from elements on the page:
+          var age = $('#AgeInput').val();
+          // if (age == "" || parseInt(age) > 400 || parseInt(age) < 4 ) {
+          //   $("#AgeInputError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#AgeInputError").hide();
+          // }
+          var gender = $('input[name=Gender]:checked').val();
+          // if (!gender || gender == "") {
+          //   $("#GenderError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#GenderError").hide();
+          // }
+          var ethnicity = $('input[name=Ethnicity]:checked').val();
+          // if (!ethnicity || ethnicity == "") {
+          //   $("#EthnicityError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#EthnicityError").hide();
+          // }
+          var maritalstatus = $('input[name=MaritalStatus]:checked').val();
+          // if (!maritalstatus || maritalstatus == "") {
+          //   $("#MaritalStatusError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#MaritalStatusError").hide();
+          // }
+          var yearsOfEducation = $('input[name=YearsOfEducation]:checked').val();
+          // if (!yearsOfEducation || yearsOfEducation == "") {
+          //   $("#YearsOfEducationError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#YearsOfEducationError").hide();
+          // }
+          var emailsperday = $('input[name=Emailsperday]:checked').val();
+          // if (!emailsperday || emailsperday == "") {
+          //   $("#EmailsperdayError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#EmailsperdayError").hide();
+          // }
+          var PCLaptop = $('#PCLaptop').is(':checked');
+          var smartphone = $('#Smartphone').is(':checked');
+          var PAD = $('#PAD').is(':checked');
+          var otherDevices = $('#OtherDevices').is(':checked');
+          var otherDeviceText = $("#OtherDeviceInput").val();
+          var yearsOfInternet = $('input[name=YearsOfInternet]:checked').val();
+          // if (!yearsOfInternet || yearsOfInternet == "") {
+          //   $("#YearsOfInternetError").show();
+          //   errorInPage = true;
+          // }
+          // else {
+          //   $("#YearsOfInternetError").hide();
+          // }
+
+          if (!errorInPage) {
+            // Send the data using post
+            var jqxhr = $.post( "{% url 'games:surveysubmit' %}", { 'age': age, 'gender': gender, 'emailsperday': emailsperday, 'PCLaptop': PCLaptop, 'smartphone': smartphone, 'PAD': PAD, 'otherDevices': otherDevices, 'otherDeviceText': otherDeviceText, 'yearsOfInternet': yearsOfInternet, 'yearsOfEducation': yearsOfEducation, 'ethnicity': ethnicity, 'maritalstatus': maritalstatus })
+                .done(function(data) {
+                    window.location.href = "https://www.umich.edu/";
+                })
+                .fail(function() {
+                    alert("Unfortunately your feedback has not been received. Please submit your feedback again. If you have seen this message repeatedly, please make sure you are connected to the Internet, Refresh the page and Submit your feedback again. Also, please feel free to contact us at: oneweb@umich.edu");
+                });
+          }
+      });
+    });
+  </script>
+{% endblock %}

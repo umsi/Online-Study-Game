@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block title %}{{ gameNum }}{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %} Game{% endblock %}
+
+{% block leftcontent %}
+  <div class="" id="InstructionsDIV">
+    <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
+    <p>Please follow the steps below to play.</p>
+    <ul>
+      <li>Please choose one of the nine 50-50 lotteries. Each lottery is represented on a separate row.</li>
+      <li>The computer will toss a fair coin that will be applied to your chosen lottery.
+        <ul>
+          <li>If the coin comes up heads, you will receive the amount under the “Heads” column.</li>
+          <li>If the coin comes up tails, you will receive the amount under the “Tails” column.</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Please choose your lottery and then click the Submit button to continue.</p>
+  </div>
+{% endblock %}
+
+{% block rightcontent %}
+  <input type="hidden" name="GambleChoice" id="GambleChoice" value="">
+
+  <table class="table holt-laury-table">
+    <thead>
+      <tr id="row0" class="text-center">
+        <th class="ColumnHeader">Lottery</th>
+        <th style="width: 50%" class="ColumnHeader">Heads</th>
+        <th style="width: 50%" class="ColumnHeader">Tails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="row1" class="text-center">
+        <td class="ColumnHeader">1</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble1">
+            <table>
+              <tr>
+                <td>$4.00</td>
+                <td>$4.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row2" class="text-center">
+        <td class="ColumnHeader">2</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble2">
+            <table>
+              <tr>
+                <td>$3.50</td>
+                <td>$5.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row3" class="text-center">
+        <td class="ColumnHeader">3</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble3">
+            <table>
+              <tr>
+                <td>$3.00</td>
+                <td>$6.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row4" class="text-center">
+        <td class="ColumnHeader">4</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble4">
+            <table>
+              <tr>
+                <td>$2.50</td>
+                <td>$7.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row5" class="text-center">
+        <td class="ColumnHeader">5</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble5">
+            <table>
+              <tr>
+                <td>$2.00</td>
+                <td>$8.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row6" class="text-center">
+        <td class="ColumnHeader">6</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble6">
+            <table>
+              <tr>
+                <td>$1.50</td>
+                <td>$9.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row7" class="text-center">
+        <td class="ColumnHeader">7</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble7">
+            <table>
+              <tr>
+                <td>$1.00</td>
+                <td>$10.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row8" class="text-center">
+        <td class="ColumnHeader">8</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble8">
+            <table>
+              <tr>
+                <td>$0.50</td>
+                <td>$11.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row9" class="text-center">
+        <td class="ColumnHeader">9</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble9">
+            <table>
+              <tr>
+                <td>$0.00</td>
+                <td>$12.00</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input type="submit" class="btn btn-lg btn-success pull-right" id="SubmitBtn" value="Submit" style="display:none;">
+          <h4 id="errorMessage" style="color: red; display:none;">Please select your preferred lottery.</h4>
+          <h3 class="text-success" id="ResultNode"></h3>
+          <button type="button" class="btn btn-lg btn-success pull-right" id="Continue" style="display:none;">Continue...</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie("um-online-study-game-csrftoken");
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        {% if chosen %}
+            var chosen = {{ chosen }};
+            var coin = [];
+            coin[1] = {{ coin.1|yesno:"true,false" }};
+            coin[2] = {{ coin.2|yesno:"true,false" }};
+            coin[3] = {{ coin.3|yesno:"true,false" }};
+            coin[4] = {{ coin.4|yesno:"true,false" }};
+            coin[5] = {{ coin.5|yesno:"true,false" }};
+            coin[6] = {{ coin.6|yesno:"true,false" }};
+            coin[7] = {{ coin.7|yesno:"true,false" }};
+            coin[8] = {{ coin.8|yesno:"true,false" }};
+            coin[9] = {{ coin.9|yesno:"true,false" }};
+            var originalPoints = {{ originalPoints }};
+            for (i = 1; i < 10; i++) {
+                if (i != chosen) {
+                    $("#row" + i).hide();
+                }
+            }
+            var selectedRow = $("#row" + chosen);
+            $("#Gamble" + chosen).removeClass( "btn-info" ).addClass( "btn-success" );
+            var headerRow = $("#row0");
+            var coinVal = "";
+            if (coin[chosen] == false) {
+              selectedRow.find("table").find("td:eq(1)").css("color", "black");
+              selectedRow.find("table").find("td:eq(1)").css("text-decoration", "line-through");
+              // headerRow.find("th:eq(2)").hide(2500);
+              coinVal = "heads";
+            }
+            else if (coin[chosen] == true) {
+              selectedRow.find("table").find("td:eq(0)").css("color", "black");
+              selectedRow.find("table").find("td:eq(0)").css("text-decoration", "line-through");
+              // headerRow.find("th:eq(1)").hide(2500);
+              coinVal = "tails";
+            }
+            $("#ResultNode").html("<p>You chose lottery " + 
+              chosen + ".</p><p>The coin comes up " + coinVal + 
+              ".</p><p>&#10140; You earned $" + originalPoints + ".</p>");
+            $("#SubmitSection").hide();
+            $("#SubmitBtn").hide();
+            $("#Continue").show();
+
+        {% endif %}
+
+        $(".btn-game").click(function(){
+            $("#errorMessage").hide();
+            if ($(this).hasClass( "btn-info" )) {
+              $(this).removeClass( "btn-info" );
+              var siblingBtns = $(this).parent().parent().parent().find(".btn-game.btn-info");
+              siblingBtns.removeClass( "btn-info" );
+              siblingBtns.addClass( "btn-default" );
+              $(this).addClass( "btn-success" );
+              $("#SubmitBtn").show();
+            }
+            else if ($(this).hasClass( "btn-default" )) {
+              $(this).removeClass( "btn-default" );
+              var siblingBtns = $(this).parent().parent().parent().find(".btn-game.btn-success");
+              siblingBtns.removeClass( "btn-success" );
+              siblingBtns.addClass( "btn-default" );
+              $(this).addClass( "btn-success" );
+              $("#SubmitBtn").show();
+            }
+            var thisId = $(this).attr('id');
+            var gambleNum = thisId.substring(6, thisId.length);
+            $("#GambleChoice").val(gambleNum);
+        });
+
+        $("#SubmitBtn").click(function(){
+            var chosen = $("#GambleChoice").val();
+            if (chosen == "") {
+              $("#errorMessage").show();
+              return 0;
+            }
+            chosen = parseInt(chosen);
+
+            $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                url: '../gamble/Submit',
+                data: JSON.stringify({ 'chosen': chosen }),
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (data) {
+                    var chosen = data.chosen;
+                    var coin = data.coin;
+                    var result = data.result;
+                    $("#SubmitSection").hide();
+                    $("#SubmitBtn").hide();
+                    $("#ResultNode").html("You chose lottery " + chosen);
+                    for (i = 1; i < 10; i++) {
+                      if (i != chosen) {
+                        $("#row" + i).hide(2500);
+                      }
+                    }
+                    setTimeout(function() {
+                        var selectedRow = $("#row" + chosen);
+                        var headerRow = $("#row0");
+                        var coinVal = "";
+                        if (coin == false) {
+                          selectedRow.find("table").find("td:eq(1)").css("color", "black");
+                          selectedRow.find("table").find("td:eq(1)").css("text-decoration", "line-through");
+                          // headerRow.find("th:eq(2)").hide(2500);
+                          coinVal = "heads";
+                        }
+                        else if (coin == true) {
+                          selectedRow.find("table").find("td:eq(0)").css("color", "black");
+                          selectedRow.find("table").find("td:eq(0)").css("text-decoration", "line-through");
+                          // headerRow.find("th:eq(1)").hide(2500);
+                          coinVal = "tails";
+                        }
+                        setTimeout(function() {
+                            $("#ResultNode").html("<p>You chose lottery " + 
+                              chosen + ".</p><p>The coin comes up " + coinVal +
+                              ".</p><p>&#10140; You earned $" + result + ".</p>");
+                            $("#Continue").show();
+                        }, 2500);
+                    }, 1000);
+                },
+                error: function (data) {
+                    alert( "An error occurred. Please try again!" );
+                }
+            });
+
+        });
+
+      $("#Continue").click(function(){
+
+          window.location.href = "../nextgame/gamble";
+      });
+
+    });
+  </script>
+{% endblock %}

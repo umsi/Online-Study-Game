@@ -1,0 +1,321 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}Welcome!{% endblock title %} 
+
+{% block leftcontent %}
+<div id="questionnaire_si1">
+  <br />
+  <br />
+  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform">
+    {% csrf_token %}
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b>
+          Read each of the four statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with all 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
+
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5H" value="H" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
+
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Muslim immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5H" value="H" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
+
+    <button style="position: relative; right: 0px; top: 10px" type="submit">
+      next
+    </button>
+  </form>
+  <br />
+  <br />
+  <br />
+</div>
+{% endblock leftcontent %} 
+
+{% block rightcontent %}
+<div id="RightContentContainer"></div>
+{% endblock rightcontent %} 
+
+{% block content %}
+<!-- JavaScript code for this project -->
+<script type="text/javascript">
+  $("#RightContentContainer").height($("#questionnaire_si1").height() * 0.4);
+
+  var keep = Math.floor(Math.random() * 3);
+
+  $(document).ready(function() {
+    var elems = $(".random");
+    for (var i = 0; i < elems.length; ++i) {
+      if (i !== keep) {
+        $(elems[i]).hide();
+      }
+    }
+  });
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie("um-online-study-game-csrftoken");
+
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    },
+  });
+
+  $("#questionform").submit(function(event) {
+    event.preventDefault();
+
+    var errorInPage = false;
+
+    var q5answer = $("input[name=question5]:checked").val();
+
+    if (!q5answer) {
+      alert("Please check all the anwsers");
+    } else {
+      request = $.ajax({
+        url: "{% url 'invest_game:question2' %}",
+        method: "POST",
+        data: { question5: q5answer, questiontype: keep },
+        datatype: "json",
+      });
+    }
+  });
+</script>
+{% endblock content %}

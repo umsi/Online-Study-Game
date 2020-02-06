@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block leftcontent %}
+    <div>
+      <h1> Thank you for completing the study </h1>
+    </div>
+
+  
+
+{% endblock %}
+
+{% block rightcontent %}
+    <div id="RightContentContainer">
+    </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+<script type="text/javascript">
+      $("#RightContentContainer").height($(window).height()*0.7);
+      $("#RightContentContainer").width($(window).width()/2);
+</script>
+{% endblock %}

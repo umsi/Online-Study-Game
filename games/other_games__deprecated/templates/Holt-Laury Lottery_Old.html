@@ -1,0 +1,920 @@
+{% extends "base.html" %}
+
+{% block title %}Holt-Laury Lottery{% endblock %}
+
+{% block content %}
+
+      {% if umid %}
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="overflow:hidden; " id="InstructionsDIV">
+        <h1>1st Game<button type="button" class="HideInstructions btn btn-lg btn-info pull-right" >Hide Instructions</button></h1><br>
+        <h2>Introduction</h2>
+        <p>You are about to participate in a decision process in which you will be making choices between a series of two lotteries. This is part of a study intended to provide insight into certain features of decision processes. If you follow the instructions carefully and make good decisions you may earn a considerable amount of money. You will be paid in cash at the end of the experiment, which you will receive by direct deposit.</p>
+        <h2>Procedure</h2>
+        <ul>
+          <li>You will be making choices between two lotteries, such as those represented as “Option A” and “Option B” below. The money prizes are determined by the computer equivalent of throwing a ten-sided die. Each outcome, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, is equally likely. If you choose Option A in the row shown below, you will have a 1 in 10 chance of earning 200 points and a 9 in 10 chance of earning 160 points. Similarly, Option B offers a 1 in 10 chance of earning 385 points and a 9 in 10 chance of earning 10 points.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>1</h3></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1: </td>
+                          <td style="text-align:right;">200 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 2-10: </td>
+                          <td style="text-align:right;">160 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1: </td>
+                          <td style="text-align:right;">385 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 2-10: </td>
+                          <td style="text-align:right;">10 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul>
+          <li>Each row of the decision table contains a pair of choices between Option A and Option B.</li>
+          <li>You make your choice by clicking on option A or option B buttons. Only one option in each row can be selected, and you may change your decision as you wish.</li>
+          <li>Even though you will make ten decisions, only one of these will end up being used. The selection of the one to be used depends on the “throw of the die” that is determined by the computer’s random number generator. No decision is any more likely to be used than any other, and you will not know in advance which one will be selected, so please think about each one carefully. This random selection of a decision fixes the row (i.e. the Decision) that will be used. For example, suppose that you make all ten decisions and the throw of the die is 9, then your choice, A or B, for decision 9 below would be used and the other decisions would not be used.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>9</h3></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-9: </td>
+                          <td style="text-align:right;">200 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 10: </td>
+                          <td style="text-align:right;">160 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-9: </td>
+                          <td style="text-align:right;">385 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 10: </td>
+                          <td style="text-align:right;">10 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul>
+          <li>After the random die throw fixes the Decision row that will be used, we need to obtain a second random number that determines the earnings for the Option you chose for that row. In Decision 9 below, for example, a throw of 1, 2, 3, 4, 5, 6, 7, 8, or 9 will result in the higher payoff for the option you chose, and a throw of 10 will result in the lower payoff.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>9</h3></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-9: </td>
+                          <td style="text-align:right;">200 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 10: </td>
+                          <td style="text-align:right;">160 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-9: </td>
+                          <td style="text-align:right;">385 points</td>
+                        </tr>
+                        <tr class="die1">
+                          <td style="text-align:left;">die is 10: </td>
+                          <td style="text-align:right;">10 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><h3>10</h3></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-10: </td>
+                          <td style="text-align:right;">200 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-lg btn-info">
+                      <table style="background-color: none; width:100%;">
+                        <tr class="die0">
+                          <td style="text-align:left;">die is 1-10: </td>
+                          <td style="text-align:right;">385 points</td>
+                        </tr>
+                      </table>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul class="list-unstyled" style="padding-left: 40px;">
+          <li>For decision 10, the random die throw will not be needed, since the choice is between amounts of money that are fixed: 200 points for Option A and 385 points for Option B.</li>
+        </ul>
+        <ul>
+          <li><b>Making Ten Decisions</b>: You may make these choices in any order and change them as much as you wish until you press the Submit button at the bottom.</li>
+          <li><b>The Relevant Decision</b>: One of the rows is then selected at random, and the Option (A or B) that you chose in that row will be used to determine your earnings. Note: Please think about each decision carefully, since each row is equally likely to end up being the one that is used to determine payoffs.</li>
+          <li><b>Determining the Payoff</b>: After one of the decisions has been randomly selected, the computer will generate another random number that corresponds to the throw of a ten sided die. The number is equally likely to be 1, 2, 3, ... 10. This random number determines your earnings for the Option (A or B) that you previously selected for the decision being used.</li>
+          <li><b>Information for the Unchosen Decisions</b>: After the computer determines the outcomes in the ten decisions, you are only shown the outcome in the gamble that you choose but not those for the rest. That is, the information about the outcomes in the decisions which are not chosen is not for free. You will be asked your willingness to pay for this information with the following procedure:
+            <ul>
+              <li>You can enter a number in the interval of [0, 15] points, inclusive, to indicate your willingness to pay.</li>
+              <li>After you submit your willingness to pay, the computer will randomly draw a number for you. The number will be between 0 and 15, inclusive, with an increment of 0.01, with each number being chosen with equal probability.</li>
+              <li>If your willingness to pay is greater than the random number, you will be shown the outcomes in the rest nine decisions and pay the random number as your price for that information.</li>
+              <li>If your willingness to pay is below the random number, you will not be shown the information about the outcomes in the rest nine decisions.</li>
+              <li>It can be demonstrated that, given the procedures we are using, it is best for you, in terms of maximizing your earnings, to report your willingness to pay for the information about the outcomes in the rest decisions. So it pays to report your willingness to pay truthfully.</li>
+            </ul>
+          </li>
+        </ul>
+        <button type="button" class="HideInstructions btn btn-lg btn-info pull-right" >Hide Instructions</button>
+      </div>
+
+      <div class="page-header"><h1 style="">Let's get started!</h1></div>
+      <input type="hidden" name="Decision1" id="Decision1" value="">
+      <input type="hidden" name="Decision2" id="Decision2" value="">
+      <input type="hidden" name="Decision3" id="Decision3" value="">
+      <input type="hidden" name="Decision4" id="Decision4" value="">
+      <input type="hidden" name="Decision5" id="Decision5" value="">
+      <input type="hidden" name="Decision6" id="Decision6" value="">
+      <input type="hidden" name="Decision7" id="Decision7" value="">
+      <input type="hidden" name="Decision8" id="Decision8" value="">
+      <input type="hidden" name="Decision9" id="Decision9" value="">
+      <input type="hidden" name="Decision10" id="Decision10" value="">
+
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-6">
+          <table class="table table-bordered" style="background-color: white;">
+            <thead>
+              <tr id="row0" class="text-center">
+                <td><h3>Decision</h3></td>
+                <td><h3>Option A</h3></td>
+                <td><h3>Option B</h3></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="row1" class="text-center">
+                <td><h3>1</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionA" name="A">
+                    <table style="background-color: none; width:100%; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 2-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 2-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row2" class="text-center">
+                <td><h3>2</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-2: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 3-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-2: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 3-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row3" class="text-center">
+                <td><h3>3</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-3: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 4-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-3: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 4-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row4" class="text-center">
+                <td><h3>4</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-4: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 5-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-4: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 5-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row5" class="text-center">
+                <td><h3>5</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-5: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 6-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-5: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 6-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row6" class="text-center">
+                <td><h3>6</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-6: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 7-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-6: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 7-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row7" class="text-center">
+                <td><h3>7</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-7: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 8-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-7: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 8-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row8" class="text-center">
+                <td><h3>8</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-8: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 9-10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-8: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 9-10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row9" class="text-center">
+                <td><h3>9</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-9: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 10: </td>
+                        <td style="text-align:right;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-9: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:left;">die is 10: </td>
+                        <td style="text-align:right;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr id="row10" class="text-center">
+                <td><h3>10</h3></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionA" name="A">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-10: </td>
+                        <td style="text-align:right;">200 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionB" name="B">
+                    <table style="background-color: none; width:100%;">
+                      <tr class="die0">
+                        <td style="text-align:left;">die is 1-10: </td>
+                        <td style="text-align:right;">385 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3"><h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;</h4>
+                  <input type="submit" class="btn btn-lg btn-success pull-right" id="SubmitBtn" value="Submit" style="display:none;">
+                  <h4 id="errorMessage" style="color: red; display:none;">Please select an option for evey row.</h4>
+                  <h3 class="text-success" id="ResultNode"></h3>
+                </td>
+              </tr>
+              <tr id="WillingnessSection" style="display:none;">
+                <td colspan="3">
+                  <h4 id="WillingnessH4">
+                    <p>Now, enter the number of points, between 0 and 15, which you are willing to pay to see the results of the other rows:</p>
+                    <div class="col-xs-6">
+                    </div>
+                    <div class="col-xs-3">
+                      <input type="text" name="WillingnessAmount" id="WillingnessAmount" class="form-control" placeholder="Points">
+                    </div>
+                    <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;"><br><br>
+                  </h4>
+                  <h4 id="WillingnessError" style="color: red; display:none;">Please enter a number between 0 and 15.</h4>
+                  <h3 class="text-success" id="WillingnessResult"></h3>
+                  <button type="button" class="btn btn-lg btn-success pull-right" id="Continue" style="display:none;">Continue to the next game...</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+{% endblock %}
+
+{% block scontent %}
+    <!-- JavaScript code for this project -->
+    <script>
+      $(document).ready(function(){
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie("um-online-study-game-csrftoken");
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        {% if decision %}
+            var decision = {{ decision }};
+            var die = [];
+            die[1] = {{ die.1 }};
+            die[2] = {{ die.2 }};
+            die[3] = {{ die.3 }};
+            die[4] = {{ die.4 }};
+            die[5] = {{ die.5 }};
+            die[6] = {{ die.6 }};
+            die[7] = {{ die.7 }};
+            die[8] = {{ die.8 }};
+            die[9] = {{ die.9 }};
+            die[10] = {{ die.10 }};
+            var option = [];
+            option[1] = {{ option.1|yesno:"true,false" }};
+            option[2] = {{ option.2|yesno:"true,false" }};
+            option[3] = {{ option.3|yesno:"true,false" }};
+            option[4] = {{ option.4|yesno:"true,false" }};
+            option[5] = {{ option.5|yesno:"true,false" }};
+            option[6] = {{ option.6|yesno:"true,false" }};
+            option[7] = {{ option.7|yesno:"true,false" }};
+            option[8] = {{ option.8|yesno:"true,false" }};
+            option[9] = {{ option.9|yesno:"true,false" }};
+            option[10] = {{ option.10|yesno:"true,false" }};
+            var originalPoints = {{ originalPoints }};
+            for (i = 1; i <= 10; i++) {
+                if (i != decision) {
+                    $("#row" + i).hide();
+                }
+            }
+            var selectedRow = $("#row" + decision);
+            var headerRow = $("#row0");
+            if (option[decision] == 0) {
+              selectedRow.children("td:eq(2)").hide(2500);
+              headerRow.children("td:eq(2)").hide(2500);
+            }
+            else if (option[decision] == 1) {
+              selectedRow.children("td:eq(1)").hide(2500);
+              headerRow.children("td:eq(1)").hide(2500);
+            }
+            if (die[decision] > decision) {
+                selectedRow.find(".die0").hide(2500);
+            }
+            else if (die[decision] <= decision) {
+                selectedRow.find(".die1").hide(2500);
+            }
+            $("#ResultNode").html("Decision = " + 
+                decision + "<br>Die = " + die[decision] + "<br>&#10140; Points Earned = " + originalPoints);
+            $("#SubmitSection").hide();
+            $("#SubmitBtn").hide();
+            $("#WillingnessSection").show();
+
+            var result = {{ result }};
+            var willingnessRand = {{ willingnessRand }};
+            var willingnessNum = {{ willingnessNum }};
+
+            if (willingnessRand != 16) {
+              if (willingnessNum >= willingnessRand) {
+                  var selectedRow = $("#row" + decision);
+                  var headerRow = $("#row0");
+                  selectedRow.children("td:eq(2)").show(2500);
+                  headerRow.children("td:eq(2)").show(2500);
+                  selectedRow.children("td:eq(1)").show(2500);
+                  headerRow.children("td:eq(1)").show(2500);
+                  $("#WillingnessResult").html("Random number = " + 
+                    willingnessRand + " &le; Your willingness = " + 
+                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
+                  for (index = 1; index <= 10; index++) {
+                      var rowObj = $("#row" + index)
+                      rowObj.show(2500);
+                      rowObj.find(".btn-success").removeClass( "btn-success" ).addClass( "btn-warning" );
+                      rowObj.find(".btn-default").removeClass( "btn-default" ).addClass( "btn-warning" );
+                      rowObj.find(".btn-info").removeClass( "btn-info" ).addClass( "btn-warning" );
+                      if (index == decision) {
+                        if (option[index] == 0) {
+                          rowObj.find(".btn-warning:eq(0)").removeClass( "btn-warning" ).addClass( "btn-success" );
+                        }
+                        else if (option[index] == 1) {
+                          rowObj.find(".btn-warning:eq(1)").removeClass( "btn-warning" ).addClass( "btn-success" );
+                        }
+                      }
+                      if (die[index] > index) {
+                          rowObj.find(".die0").hide(2500);
+                      }
+                      else if (die[index] <= index) {
+                          rowObj.find(".die1").hide(2500);
+                      }
+                  }
+                  $("#WillingnessResult").removeClass("text-danger").addClass( "text-success" );
+              }
+              else {
+                  $("#WillingnessResult").html("Random number = " + 
+                    willingnessRand + " > Your willingness = " +
+                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
+                  $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
+              }
+              $("#WillingnessBtn").hide();
+              $("#WillingnessH4").hide();
+              $("#WillingnessAmount").hide();
+            }
+            $("#Continue").show();
+
+        {% endif %}
+
+        var instructionsOriginalHeight = $( "#InstructionsDIV" ).css("height");
+        $(".HideInstructions").click(function(){
+            if ($(".HideInstructions").text().indexOf("Hide Instructions") > -1) {
+              $( "#InstructionsDIV" ).animate({
+                height: "190px"
+              }, 2500, function() {
+                $(".HideInstructions:eq(1)").hide();
+                $(".HideInstructions").text("Show Instructions");
+              });
+            }
+            else if ($(".HideInstructions").text().indexOf("Show Instructions") > -1) {
+              $( "#InstructionsDIV" ).animate({
+                height: instructionsOriginalHeight
+              }, 2500, function() {
+                $(".HideInstructions:eq(1)").show();
+                $(".HideInstructions").text("Hide Instructions");
+              });
+            }
+        });
+
+        $(".btn-game").click(function(){
+            $("#errorMessage").hide();
+            if ($(this).hasClass( "btn-info" )) {
+                $(this).removeClass( "btn-info" );
+                var siblingBtn = $(this).parent().parent().find(".btn-game.btn-info");
+                siblingBtn.removeClass( "btn-info" );
+                siblingBtn.addClass( "btn-default" );
+                $(this).addClass( "btn-success" );
+            }
+            else if ($(this).hasClass( "btn-default" )) {
+                $(this).removeClass( "btn-default" );
+                var siblingBtn = $(this).parent().parent().find(".btn-game.btn-success");
+                siblingBtn.removeClass( "btn-success" );
+                siblingBtn.addClass( "btn-default" );
+                $(this).addClass( "btn-success" );
+            }
+            if ($(this).parent().parent().parent().find( ".btn-success" ).length == 13) {
+                $("#SubmitBtn").show();
+            }
+            var thisId = $(this).attr('id');
+            var inputId = thisId.substring(0, thisId.length - 7);
+            $("#" + inputId).val(this.name);
+        });
+
+        $("#SubmitBtn").click(function(){
+            var DecisionOptionsComplete = true;
+            var DecisionsOption = [];
+            for (i = 1; i <= 10; i++) { 
+                DecisionsOption[i] = $("#Decision" + i).val();
+                if (DecisionsOption[i] == "A") {
+                    DecisionsOption[i] = 0;
+                }
+                else if (DecisionsOption[i] == "B") {
+                    DecisionsOption[i] = 1;
+                }
+                else {
+                    DecisionOptionsComplete = false;
+                    $("#errorMessage").show();
+                    return 0;
+                }
+            }
+
+            $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                url: '../lottery/Submit',
+                data: JSON.stringify({ 'DecisionsOption': DecisionsOption }),
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (data) {
+                    var decision = data.decision;
+                    var die = data.die;
+                    var result = data.result;
+                    $("#ResultNode").html("Decision = " + decision);
+                    for (i = 1; i <= 10; i++) {
+                      if (i != decision) {
+                        $("#row" + i).hide(2500);
+                      }
+                    }
+                    setTimeout(function() {
+                        var selectedRow = $("#row" + decision);
+                        var headerRow = $("#row0");
+                        if (DecisionsOption[decision] == 0) {
+                          selectedRow.children("td:eq(2)").hide(2500);
+                          headerRow.children("td:eq(2)").hide(2500);
+                        }
+                        else if (DecisionsOption[decision] == 1) {
+                          selectedRow.children("td:eq(1)").hide(2500);
+                          headerRow.children("td:eq(1)").hide(2500);
+                        }
+                        setTimeout(function() {
+                            if (die > decision) {
+                                selectedRow.find(".die0").hide(2500);
+                            }
+                            else if (die <= decision) {
+                                selectedRow.find(".die1").hide(2500);
+                            }
+                            $("#ResultNode").html("Decision = " + 
+                              decision + "<br>Die = " + die +
+                              "<br>&#10140; Points Earned: " + result);
+                            $("#SubmitSection").hide();
+                            $("#SubmitBtn").hide();
+                            $("#WillingnessSection").show();
+                            $("#Continue").show();
+                        }, 2500);
+                    }, 2500);
+                },
+                error: function (data) {
+                    alert( "An error occurred. Please try again." );
+                }
+            });
+
+        });
+
+        $("#WillingnessAmount").on("input", function(){
+            var value = $(this).val();
+            if (value != "" && $.isNumeric(value) && parseInt(value) >= 0 && parseInt(value) <= 15) {
+                $("#WillingnessBtn").show();
+                $("#WillingnessError").hide();
+            }
+            else {
+                $("#WillingnessError").show();
+                $("#WillingnessBtn").hide();
+            }
+        });
+
+        $("#WillingnessBtn").click(function(){
+            var willingnessNum = parseInt($("#WillingnessAmount").val());
+
+            $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                url: '../lottery/Willingness',
+                data: JSON.stringify({ 'willingnessNum': willingnessNum }),
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (data) {
+                    var willingnessRand = data.willingnessRand;
+                    var decision = data.decision;
+                    var die = data.die;
+                    var option = data.option;
+                    var result = data.result;
+                    if (willingnessNum >= willingnessRand) {
+                        var selectedRow = $("#row" + decision);
+                        var headerRow = $("#row0");
+                        selectedRow.children("td:eq(2)").show(2500);
+                        headerRow.children("td:eq(2)").show(2500);
+                        selectedRow.children("td:eq(1)").show(2500);
+                        headerRow.children("td:eq(1)").show(2500);
+                        $("#WillingnessResult").html("Random number = " + 
+                          willingnessRand + " &le; Your willingness = " + 
+                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
+                        for (index = 1; index <= 10; index++) {
+                            var rowObj = $("#row" + index)
+                            rowObj.show(1600);
+                            rowObj.find(".btn-success").removeClass( "btn-success" ).addClass( "btn-warning" );
+                            rowObj.find(".btn-default").removeClass( "btn-default" ).addClass( "btn-warning" );
+                            rowObj.find(".btn-info").removeClass( "btn-info" ).addClass( "btn-warning" );
+                            if (index == decision) {
+                              if (option[index] == 0) {
+                                rowObj.find(".btn-warning:eq(0)").removeClass( "btn-warning" ).addClass( "btn-success" );
+                              }
+                              else if (option[index] == 1) {
+                                rowObj.find(".btn-warning:eq(1)").removeClass( "btn-warning" ).addClass( "btn-success" );
+                              }
+                            }
+                            if (die[index] > index) {
+                                rowObj.find(".die0").hide(2500);
+                            }
+                            else if (die[index] <= index) {
+                                rowObj.find(".die1").hide(2500);
+                            }
+                        }
+                        $("#WillingnessResult").removeClass("text-danger").addClass( "text-success" );
+                    }
+                    else {
+                        $("#WillingnessResult").html("Random number = " + 
+                          willingnessRand + " > Your willingness = " +
+                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
+                        $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
+                    }
+                    $("#WillingnessBtn").hide();
+                    $("#WillingnessH4").hide();
+                    $("#WillingnessAmount").hide();
+                },
+                error: function (data) {
+                    alert( "An error occurred. Please try again." );
+                }
+            });
+
+        });
+
+        $('#WillingnessAmount').keypress(function (e) {
+          if (e.which == 13) {
+            $('#WillingnessBtn').click();
+            return false;    //<---- Add this line
+          }
+        });
+      });
+
+      $("#Continue").click(function(){
+
+          window.location.href = "../gamble";
+      });
+
+    </script>
+{% endblock %}
