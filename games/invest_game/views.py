@@ -6,439 +6,299 @@ import random
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.six.moves import range
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.urls import reverse
 
 from config.settings import DATA_ADDR, INFO_STORE
 from .models import Investment, InvestmentGameUser
-from games.core.decorators import require_id_session_param, require_id_query_param
+from games.core.decorators import (
+    require_id_session_param,
+    require_id_query_param,
+)
 
 
-def compare(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-        user = InvestmentGameUser.objects.get(username=umid)
-        investment = user.investment_set.all()[0]
-        user_invested = investment.invested
-        user_guess_returned = investment.returned0
-        respondent = investment.respondent
-        data = {}
-        data_path = os.path.join(DATA_ADDR, "ans.json")
-        with open(data_path) as json_file:
-            data = json.load(json_file)
-        real_returned = data[respondent][str(user_invested)]
-        investment.returned1 = real_returned
-        user.investment_set.update(returned1=real_returned)
-        user_received = real_returned
-        guess_flag = "not within"
-        bonus = 0
-        if abs(real_returned - user_guess_returned) <= 1:
-            user_received += 2
-            guess_flag = "within"
-            bonus = 2
-        user_received += 5 - user_invested
-        user_left = 5 - user_invested
-        investment.returned2 = user_received
-        user.investment_set.update(returned2=user_received)
-        user.save()
-        context = {
-            "umid": umid,
-            "invested": user_invested,
-            "guess_returned": user_guess_returned,
-            "real_returned": real_returned,
-            "received": user_received,
-            "respondent": respondent,
-            "guess_flag": guess_flag,
-            "nodata": False,
-            "user_left": user_left,
-            "bonus": bonus,
-        }
-        return render(request, "compare.html", context)
-
-
-def question0(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-    context = {"umid": umid, "nodata": False}
-    return render(request, "games/question0.html", context)
-
-
-def question0_store(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-            user = InvestmentGameUser.objects.get(username=umid)
-            investment = user.investment_set.all()[0]
-            q1answer = request.POST["question1"]
-            q2answer = request.POST["question2"]
-            q3answer = request.POST["question3"]
-            q4answer = request.POST["question4"]
-
-            flag = 0
-            if investment.q1answer == " ":
-                flag = 1
-                user.investment_set.update(q1answer=q1answer)
-            if investment.q2answer == " ":
-                user.investment_set.update(q2answer=q2answer)
-            if investment.q3answer == " ":
-                user.investment_set.update(q3answer=q3answer)
-            if investment.q4answer == " ":
-                user.investment_set.update(q4answer=q4answer)
-
-            investment = user.investment_set.all()[0]
-            q1answer = investment.q1answer
-            q2answer = investment.q2answer
-            q3answer = investment.q3answer
-            q4answer = investment.q4answer
-
-            if flag == 1:
-                userinfo = {
-                    "umid": umid,
-                    "user_invested": investment.invested,
-                    "user_guess_returned": investment.returned0,
-                    "respondent": investment.respondent,
-                    "respondent_returned": investment.returned1,
-                    "user_received": investment.returned2,
-                    "question1": q1answer,
-                    "question2": q2answer,
-                    "question3": q3answer,
-                    "question4": q4answer,
-                }
-                filename = "user" + umid
-                path = os.path.join(INFO_STORE, filename + ".json")
-                with open(path, "w+") as f:
-                    json.dump(userinfo, f)
-            response = HttpResponse()
-            return response
-
-
-def question1(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-            context = {"umid": umid, "nodata": False}
-            return render(request, "question1.html", context)
-
-
-def question1_store(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-            user = InvestmentGameUser.objects.get(username=umid)
-            investment = user.investment_set.all()[0]
-            q5answer = request.POST["question5"]
-            q5type = request.POST["questiontype"]
-
-            flag = 0
-            if investment.q5answer == " ":
-                flag = 1
-                user.investment_set.update(q5answer=q5answer)
-            if investment.q5type == -1:
-                user.investment_set.update(q5type=q5type)
-
-            investment = user.investment_set.all()[0]
-            q5answer = investment.q5answer
-            q5type = investment.q5type
-
-            if flag == 1:
-                userinfo = {"question5": q5answer, "questiontype": q5type}
-                filename = "user" + umid
-                path = os.path.join(INFO_STORE, filename + ".json")
-                with open(path, "a") as f:
-                    json.dump(userinfo, f)
-            response = HttpResponse()
-            return response
-
-
-def question2(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-            context = {"umid": umid, "nodata": False}
-            return render(request, "question2.html", context)
-
-
-def finish(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
-    ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-            context = {"umid": umid, "nodata": False}
-            return render(request, "finish.html", context)
-
-
-def question2_store(request):
-    if request.method == "POST":
-        if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-            request.session.get("umid", False) and request.session["umid"] != ""
-        ):
-            if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-                umid = request.META["REMOTE_USER"]
-            if request.session.get("umid", False) and request.session["umid"] != "":
-                umid = request.session["umid"]
-                user = InvestmentGameUser.objects.get(username=umid)
-                investment = user.investment_set.all()[0]
-                q6answer = request.POST["question6"]
-                q7answer = request.POST["question7"]
-                q8answer = request.POST["question8"]
-                q9answer = request.POST["question9"]
-                q10answer = request.POST["question10"]
-                q11answer = request.POST["question11"]
-                q12answer = request.POST["question12"]
-                q13answer = request.POST["question13"]
-                q14answer = request.POST["question14"]
-                q15answer = request.POST["question15"]
-
-                flag = 0
-                if investment.q6answer == " ":
-                    flag = 1
-                    user.investment_set.update(q6answer=q6answer)
-                if investment.q7answer == " ":
-                    user.investment_set.update(q7answer=q7answer)
-                if investment.q8answer == " ":
-                    user.investment_set.update(q8answer=q8answer)
-                if investment.q9answer == " ":
-                    user.investment_set.update(q9answer=q9answer)
-                if investment.q10answer == " ":
-                    user.investment_set.update(q10answer=q10answer)
-                if investment.q11answer == " ":
-                    user.investment_set.update(q11answer=q11answer)
-                if investment.q12answer == " ":
-                    user.investment_set.update(q12answer=q12answer)
-                if investment.q13answer == " ":
-                    user.investment_set.update(q13answer=q13answer)
-                if investment.q14answer == " ":
-                    user.investment_set.update(q14answer=q14answer)
-                if investment.q15answer == " ":
-                    user.investment_set.update(q15answer=q15answer)
-
-                investment = user.investment_set.all()[0]
-                q6answer = investment.q6answer
-                q7answer = investment.q7answer
-                q8answer = investment.q8answer
-                q9answer = investment.q9answer
-                q10answer = investment.q10answer
-                q11answer = investment.q11answer
-                q12answer = investment.q12answer
-                q13answer = investment.q13answer
-                q14answer = investment.q14answer
-                q15answer = investment.q15answer
-
-                if flag == 1:
-                    userinfo = {
-                        "question6": q6answer,
-                        "question7": q7answer,
-                        "question8": q8answer,
-                        "question9": q9answer,
-                        "question10": q10answer,
-                        "question11": q11answer,
-                        "question12": q12answer,
-                        "question13": q13answer,
-                        "question14": q14answer,
-                        "question15": q15answer,
-                    }
-                    filename = "user" + umid
-                    path = os.path.join(INFO_STORE, filename + ".json")
-                    with open(path, "a") as f:
-                        json.dump(userinfo, f)
-                response = HttpResponse()
-                return response
+GUESS_THRESHOLD = 1
+USER_BONUS_AMOUNT = 2
 
 
 @require_id_query_param
 @require_GET
 def welcome(request, id=None):
     request.session["id"] = id
-    request.session["started"] = datetime.datetime.now().strftime(
-        "%b %d %Y %I:%M:%S %p"
-    )
 
     return render(request, "welcome.html")
 
 
 @require_id_session_param
 @require_POST
+# TODO: guard against loading this view out of sequence
 def sign_in(request, id=None):
     """
-    Instantiate models used for this instance of the game.
+    
+    POST
+    ----
+
+    Create a new InvestmentGameUser and Investment.
     """
     user, _ = InvestmentGameUser.objects.get_or_create(username=id)
     investment, __ = Investment.objects.get_or_create(user=user)
     investment.reached_stage = "select-respondent"
-    investment.save()
+    investment.save(update_fields=["reached_stage"])
 
     return redirect(reverse("invest_game:select_respondent"))
 
 
 @require_id_session_param
+@require_http_methods(["GET", "POST"])
 def select_respondent(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Return the view for the respondent selection phase.
+
+
+    POST
+    ----
+
+    Record the user's selected respondent.
+    """
     if request.method == "GET":
         return render(request, "select_respondent.html")
 
     if request.method == "POST":
         user = InvestmentGameUser.objects.get(username=id)
-        investment = user.investment_set.all()[0]
+        investment = Investment.objects.get(user=user)
         respondent = request.POST.get("respondent", None)
 
         if investment.respondent is None:
-            user.investment_set.update(respondent=respondent)
-        
-        return HttpResponse()
+            investment.respondent = respondent
+            investment.save(update_fields=["respondent"])
+            investment.refresh_from_db()  # TODO: is this needed?
+
+        return HttpResponse(investment.respondent)
 
 
 @require_id_session_param
-def investment(request, id=None):
-    request.session["started"] = datetime.datetime.now().strftime(
-        "%b %d %Y %I:%M:%S %p"
-    )
-    user = InvestmentGameUser.objects.get(username=umid)
-    gameNum = 1
-    invested = 0
-    if user.investment_set.count() == 0:
-        user.investment_set.create(
-            invested=invested,
-            startedinvested=datetime.datetime.strptime(
-                request.session["started"], "%b %d %Y %I:%M:%S %p"
-            ),
-            finishedinvested=datetime.datetime.now(),
+@require_http_methods(["GET", "POST"])
+def user_investment(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Return the template for the respondent selection phase.
+
+
+    POST
+    ----
+
+    Record the user's selected respondent.
+    """
+    user = InvestmentGameUser.objects.get(username=id)
+    investment = Investment.objects.get(user=user)
+
+    if request.method == "GET":
+        investment.started_user_investment = datetime.datetime.now()
+        investment.save(update_fields=["started_user_investment"])
+
+        return render(
+            request, "user_investment.html", {"respondent": investment.respondent}
         )
 
-    if user.investment_set.count() != 0:
-        investment = user.investment_set.all()[0]
-        invested = investment.invested
-        respondent = investment.respondent
-        context = {
-            "umid": umid,
-            "invested": invested,
-            "gameNum": gameNum,
-            "respondent": respondent,
-        }
-
-        return render(request, "trust_game.html", context)
-
-    context = {"umid": umid, "gameNum": gameNum, "respondent": respondent}
-
-    return render(request, "trust_game.html", context)
-
-
-def investmentSubmit(request):
     if request.method == "POST":
-        if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-            request.session.get("umid", False) and request.session["umid"] != ""
-        ):
-            if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-                umid = request.META["REMOTE_USER"]
-            if request.session.get("umid", False) and request.session["umid"] != "":
-                umid = request.session["umid"]
-            if "invested" in request.POST and request.POST["invested"] != "":
-                invested = request.POST["invested"]
-                user = InvestmentGameUser.objects.get(username=umid)
-                if user.investment_set.count() == 0:
-                    user.investment_set.create(
-                        invested=invested,
-                        startedinvested=datetime.datetime.strptime(
-                            request.session["started"], "%b %d %Y %I:%M:%S %p"
-                        ),
-                        finishedinvested=datetime.datetime.now(),
-                    )
-                else:
-                    investment = user.investment_set.all()[0]
-                    if investment.doneinvest == -1:
-                        user.investment_set.update(invested=invested, doneinvest=1)
-            # TODO
-            return redirect("../returning/")
-    return render(request, "welcome.html")
+        investment.finished_user_investment = datetime.datetime.now()
+        investment.user_investment = int(request.POST.get("user_investment"))
+        investment.save(update_fields=["finished_user_investment", "user_investment"])
+
+        return redirect(reverse("invest_game:respondent_investment"))
 
 
-def returned(request):
-    if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-        request.session.get("umid", False) and request.session["umid"] != ""
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+def respondent_investment(request, id=None):
+    """
+    
+    GET
+    ---
+
+
+
+    POST
+    ----
+
+    """
+    user = InvestmentGameUser.objects.get(username=id)
+    investment = Investment.objects.get(user=user)
+
+    if request.method == "GET":
+        investment.started_respondent_investment = datetime.datetime.now()
+        investment.save(update_fields=["started_respondent_investment"])
+
+        return render(
+            request,
+            "respondent_investment.html",
+            {
+                "respondent": investment.respondent,
+                "invested": investment.user_investment,
+            },
+        )
+
+    if request.method == "POST":
+        data = {}
+        data_path = os.path.join(DATA_ADDR, "ans.json")
+        with open(data_path) as json_file:
+            data = json.load(json_file)
+
+        # The *actual* amount returned by the respondent:
+        respondent_investment = data.get(investment.respondent, {}).get(
+            str(investment.user_investment)
+        )
+        respondent_investment_guess = int(
+            request.POST.get("respondent_investment_guess")
+        )
+
+        # TODO: Some comments explaining this logic would be helpful...
+        user_received = respondent_investment
+        user_bonus = 0
+        if abs(respondent_investment - respondent_investment_guess) <= GUESS_THRESHOLD:
+            user_received += USER_BONUS_AMOUNT
+
+        # TODO: What's the constant value here?
+        user_received += 5 - investment.user_investment
+
+        investment.respondent_investment = respondent_investment
+        investment.finished_respondent_investment = datetime.datetime.now()
+        investment.respondent_investment_guess = respondent_investment_guess
+        investment.user_received = user_received
+        investment.user_bonus = USER_BONUS_AMOUNT
+        investment.save(
+            update_fields=[
+                "respondent_investment",
+                "finished_respondent_investment",
+                "respondent_investment_guess",
+                "user_received",
+                "user_bonus",
+            ]
+        )
+
+        return redirect(reverse("invest_game:compare"))
+
+
+@require_id_session_param
+@require_GET
+def compare(request, id=None):
+    user = InvestmentGameUser.objects.get(username=id)
+    investment = Investment.objects.get(user=user)
+
+    guess_flag = "not within"
+    if (
+        abs(investment.respondent_investment - investment.respondent_investment_guess)
+        <= GUESS_THRESHOLD
     ):
-        if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-            umid = request.META["REMOTE_USER"]
-        if request.session.get("umid", False) and request.session["umid"] != "":
-            umid = request.session["umid"]
-        request.session["started"] = datetime.datetime.now().strftime(
-            "%b %d %Y %I:%M:%S %p"
-        )
-        user = InvestmentGameUser.objects.get(username=umid)
-        gameNum = 2
-        part = 6
-        returned = 0
-        investment = user.investment_set.all()[0]
-        invested = investment.invested
-        respondent = investment.respondent
-        # print(respondent)
+        guess_flag = "within"
 
-        context = {
-            "umid": umid,
-            "invested": invested,
-            "returned": returned,
-            "part": part,
-            "gameNum": gameNum,
-            "respondent": respondent,
-        }
-        return render(request, "trust_game.html", context)
+    context = {
+        "invested": investment.user_investment,
+        "guess_returned": investment.respondent_investment_guess,
+        "real_returned": investment.respondent_investment,
+        "received": investment.user_received,
+        "respondent": investment.respondent,
+        "guess_flag": guess_flag,
+        "nodata": False,
+        # TODO: What's the explanation of the hard-coded value here?
+        "user_left": 5 - investment.user_investment,
+        "bonus": investment.user_bonus,
+    }
 
-    context = {"umid": "", "welcomepage": 1}
-    return render(request, "welcome.html", context)
+    return render(request, "compare.html", context)
 
 
-def returnedSubmit(request):
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+def question1(request, id=None):
+    if request.method == "GET":
+        return render(request, "question1.html")
+
     if request.method == "POST":
-        if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-            request.session.get("umid", False) and request.session["umid"] != ""
-        ):
-            if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-                umid = request.META["REMOTE_USER"]
-            if request.session.get("umid", False) and request.session["umid"] != "":
-                umid = request.session["umid"]
-            if (
-                "returned" in request.POST
-                and request.POST["returned"] != ""
-                and "part" in request.POST
-                and request.POST["part"] != ""
-            ):
-                returned = int(request.POST["returned"])
-                part = int(request.POST["part"])
-                user = InvestmentGameUser.objects.get(username=umid)
-                investment = user.investment_set.all()[0]
-                if investment.donereturn == -1:
-                    user.investment_set.update(returned0=returned, donereturn=1)
-                return redirect("../compare")
-    context = {"umid": "", "welcomepage": 1}
-    return render(request, "welcome.html", context)
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+
+        investment.q1answer = request.POST.get("question1")
+        investment.q2answer = request.POST.get("question2")
+        investment.q3answer = request.POST.get("question3")
+        investment.q4answer = request.POST.get("question4")
+
+        investment.save(update_fields=["q1answer", "q2answer", "q3answer", "q4answer"])
+
+        return redirect(reverse("invest_game:question2"))
 
 
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+def question2(request, id=None):
+    if request.method == "GET":
+        return render(request, "question2.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+
+        investment.q5answer = request.POST.get("question5")
+        investment.q5type = request.POST.get("questiontype")
+
+        investment.save(update_fields=["q5answer", "q5type"])
+
+        return redirect(reverse("invest_game:question3"))
+
+
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+def question3(request, id=None):
+    if request.method == "GET":
+        return render(request, "question3.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+
+        investment.q6answer = request.POST.get("question6")
+        investment.q7answer = request.POST.get("question7")
+        investment.q8answer = request.POST.get("question8")
+        investment.q9answer = request.POST.get("question9")
+        investment.q10answer = request.POST.get("question10")
+        investment.q11answer = request.POST.get("question11")
+        investment.q12answer = request.POST.get("question12")
+        investment.q13answer = request.POST.get("question13")
+        investment.q14answer = request.POST.get("question14")
+        investment.q15answer = request.POST.get("question15")
+
+        investment.save(
+            update_fields=[
+                "q6answer",
+                "q7answer",
+                "q8answer",
+                "q9answer",
+                "q10answer",
+                "q11answer",
+                "q12answer",
+                "q13answer",
+                "q14answer",
+                "q15answer",
+            ]
+        )
+
+        return redirect(reverse("invest_game:finish"))
+
+
+@require_id_session_param
+@require_GET
+def finish(request):
+    return render(request, "finish.html")
+
+
+# TODO: What's the intended purpose of this view?
 def final(request):
     if request.method == "POST":
         requestPost = json.loads(request.body.decode("utf-8"))

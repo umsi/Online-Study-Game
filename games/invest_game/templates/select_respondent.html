@@ -10,9 +10,9 @@
     right.
   </h3>
 
-  <div class="step_by_step">
+  <div class="step_by_step" style="display:none">
     <h3 style="display:inline">
-      Your Responder’s name is
+      Your Responder’s name is 
       <h3 class="responder_name" style="display:inline"></h3>
       .
     </h3>
@@ -142,21 +142,12 @@
   </div>
 
   <div class="row" style="padding: 20px">
-    <form action="{% url 'invest_game:investment' %}" method="post" id="nameform">
-      {% csrf_token %}
-      <input
-        class="respondent_input"
-        type="hidden"
-        name="respondent_pick"
-        value="xxx"
-      />
-      <button
-        style="position: absolute; right: 120px; top: 300px"
-        type="submit"
-      >
-        Next
-      </button>
-    </form>
+     <button
+       style="position: absolute; right: 120px; top: 300px"
+       type="button"
+     >
+      <a href={% url "invest_game:user_investment" %}>Next</a>
+     </button>
   </div>
 </div>
 {% endblock rightcontent %} 
@@ -178,7 +169,6 @@
       "Tracy",
       "Theresa",
     ];
-    $(".step_by_step").hide();
 
     $(".respondent_img").click(function() {
       // cur_id = $(this).attr("id")
@@ -217,7 +207,7 @@
       });
 
       request = $.ajax({
-        url: "{% url 'invest_game:respondent_store' %}",
+        url: "{% url 'invest_game:select_respondent' %}",
         method: "POST",
         data: { respondent: respondent_name },
         datatype: "json",

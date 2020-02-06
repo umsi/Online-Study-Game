@@ -1,488 +1,321 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
-{% load staticfiles %}
+{% load static %} 
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}Welcome!{% endblock title %} 
 
 {% block leftcontent %}
+<div id="questionnaire_si1">
+  <br />
+  <br />
+  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform">
+    {% csrf_token %}
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b>
+          Read each of the four statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with all 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
 
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5H" value="H" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
 
-<div id="questionnaire_si2">
-  
-<br>
-<br>
+    <div class="random">
+      {% csrf_token %}
+      <p id="xx">
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Muslim immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5A" value="A" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5B" value="B" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5C" value="C" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5D" value="D" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5E" value="E" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5F" value="F" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5G" value="G" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio" id="xx">
+        <label>
+          <input type="radio" name="question5" id="question5H" value="H" />
+          Refuse to answer.
+        </label>
+      </div>
+    </div>
 
-<form action="{% url 'question2_store' %}" method="post" id="questionform">
-  {% csrf_token %}
-
-  <p><b>Which do you think is your main source of news? </b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6A" value="A">
-      ABC, NBC, or CBS  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6B" value="B">
-      CNN  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6C" value="C">
-      Fox News  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6D" value="D">
-      Local TV or radio  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6E" value="E">
-      MSNBC
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6E" value="E">
-      NPR (National Public Radio) or PBS  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6F" value="F">
-      Newspapers, online or in paper  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6G" value="G">
-      Facebook  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question6" id="question6H" value="H">
-      Twitter    
-    </label>
-  </div>
-
-
-  <p><b>Are there Muslims living in your neighborhood?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question7" id="question7A" value="A">
-      Many
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question7" id="question7B" value="B">
-      Some
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question7" id="question7C" value="C">
-      None at all
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question7" id="question7D" value="D">
-      Don't know
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question7" id="question7E" value="E">
-      Refused to answer
-    </label>
-  </div>
-
-  <p><b>Do you have Muslim co-workers?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question8" id="question8A" value="A">
-      Many
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question8" id="question8B" value="B">
-      Some
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question8" id="question8C" value="C">
-      None at all
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question8" id="question8D" value="D">
-      Don't know
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question8" id="question8E" value="E">
-      Refused to answer
-    </label>
-  </div>
-
-  <p><b>Have you, personally, ever been treated unfairly due to your race, ethnicity, or religion?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question9" id="question9A" value="A">
-      Yes
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question9" id="question9B" value="B">
-      No
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question9" id="question9C" value="C">
-      Don't know  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question9" id="question9D" value="D">
-      Refused to answer
-    </label>
-  </div>
-
-
-  <p><b>Do you think people of your race or ethnicity are treated unfairly?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10A" value="A">
-      Often
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10B" value="B">
-      Sometimes    
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10C" value="C">
-      Seldom  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10D" value="D">
-      Never 
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10E" value="E">
-      Don't know
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question10" id="question10E" value="E">
-      Refused to answer  
-    </label>
-  </div>
-
-  <p><b>Do you think people of your religion are treated unfairly? </b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11A" value="A">
-      Often
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11B" value="B">
-      Sometimes    
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11C" value="C">
-      Seldom  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11D" value="D">
-      Never 
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11E" value="E">
-      Don't know
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question11" id="question11F" value="F">
-      Refused to answer  
-    </label>
-  </div>
-
-
-  <p><b>Generally speaking, would you say that most people can be trusted or that you can’t be too careful in dealing with people?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question12" id="question12A" value="A">
-      Most people can be trusted      
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question12" id="question12B" value="B">
-      Can’t be too careful 
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question12" id="question12C" value="C">
-      Don't know   
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question12" id="question12D" value="D">
-      Refused to answer   
-    </label>
-  </div>
-
-
-  <p><b>What about the next 12 months? Do you expect the national economy to get better, get worse, or stay about the same?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question13" id="question13A" value="A">
-      Get Better        
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question13" id="question13B" value="B">
-      Stay the Same  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question13" id="question13C" value="C">
-      Get Worse     
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question13" id="question13D" value="D">
-      Don't know     
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question13" id="question13E" value="E">
-      Refused to answer    
-    </label>
-  </div>
-
-  <p><b>How concerned are you about the rise of Islamic extremism in the U.S.?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14A" value="A">
-      Very concerned       
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14B" value="B">
-      Somewhat concerned 
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14C" value="C">
-      Not too concerned
-    </label>
-  </div>
- <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14D" value="D">
-      Not concerned
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14E" value="E">
-      Don't know     
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question14" id="question14F" value="F">
-      Refused to answer    
-    </label>
-  </div>
-  
-  <p><b> In general, how well do you think the American government is doing in reducing the threat of terrorism?</b></p>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15A" value="A">
-      Very well         
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15B" value="B">
-      Fairly well   
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15C" value="C">
-      Not very well  
-    </label>
-  </div>
- <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15D" value="D">
-      Not well at all  
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15E" value="E">
-      Don't know     
-    </label>
-  </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="question15" id="question15F" value="F">
-      Refused to answer    
-    </label>
-  </div>
-
-
-
-  <button  style="position: relative; right: 0px; top: 10px" type="submit">Submit</button>
-</form>
-
-<br>
-<br>
-<br>
-
+    <button style="position: relative; right: 0px; top: 10px" type="submit">
+      next
+    </button>
+  </form>
+  <br />
+  <br />
+  <br />
 </div>
-
-{% endblock %}
+{% endblock leftcontent %} 
 
 {% block rightcontent %}
-    <div id="RightContentContainer">
-    </div>
-{% endblock %}
+<div id="RightContentContainer"></div>
+{% endblock rightcontent %} 
 
-{% block scontent %}
-  <!-- JavaScript code for this project -->
-
+{% block content %}
+<!-- JavaScript code for this project -->
 <script type="text/javascript">
+  $("#RightContentContainer").height($("#questionnaire_si1").height() * 0.4);
 
+  var keep = Math.floor(Math.random() * 3);
 
-      $("#RightContentContainer").height($("#questionnaire_si2").height());
-      // $("#RightContentContainer").width($(window).width()/2);
- 
-      var keep = Math.floor(Math.random() * 3); 
+  $(document).ready(function() {
+    var elems = $(".random");
+    for (var i = 0; i < elems.length; ++i) {
+      if (i !== keep) {
+        $(elems[i]).hide();
+      }
+    }
+  });
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie("um-online-study-game-csrftoken");
 
-      $( document ).ready(function() {
-                      
-          var elems = $(".random");
-          for (var i = 0; i < elems.length; ++i) {
-              if (i !== keep) {
-                $(elems[i]).hide();
-              }
-          }
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    },
+  });
 
+  $("#questionform").submit(function(event) {
+    event.preventDefault();
+
+    var errorInPage = false;
+
+    var q5answer = $("input[name=question5]:checked").val();
+
+    if (!q5answer) {
+      alert("Please check all the anwsers");
+    } else {
+      request = $.ajax({
+        url: "{% url 'invest_game:question2' %}",
+        method: "POST",
+        data: { question5: q5answer, questiontype: keep },
+        datatype: "json",
       });
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        var csrftoken = getCookie("um-online-study-game-csrftoken");
-
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-
-
-      $( "#questionform" ).submit(function( event ) {
-          event.preventDefault();
-
-          var errorInPage = false;
-          var q6answer = $('input[name=question6]:checked').val();
-          var q7answer = $('input[name=question7]:checked').val();
-          var q8answer = $('input[name=question8]:checked').val();
-          var q9answer = $('input[name=question9]:checked').val();
-          var q10answer = $('input[name=question10]:checked').val();
-          var q11answer = $('input[name=question11]:checked').val();
-          var q12answer = $('input[name=question12]:checked').val();
-          var q13answer = $('input[name=question13]:checked').val();
-          var q14answer = $('input[name=question14]:checked').val();
-          var q15answer = $('input[name=question15]:checked').val();
-
-
-          if (!q6answer || !q7answer || !q8answer || !q9answer || !q10answer || !q11answer || !q12answer || !q13answer || !q14answer || !q15answer) {
-            alert("Please check all the anwsers")
-          } else {
-
-            request = $.ajax({
-                url: "{% url 'question2_store' %}",
-                method: "POST",
-                data:
-                { 'question6': q6answer, 'question7': q7answer, 'question8': q8answer, 'question9': q9answer, 'question10': q10answer, 'question11': q11answer, 'question12': q12answer, 'question13': q13answer, 'question14': q14answer, 'question15': q15answer}
-                ,
-                datatype: "json"
-            });
-            
-            request.done(function(msg) {
-                var url = "{% url 'finish' %}";
-                window.location.href = url; 
-            });
-          }
-        })
-    
-
+    }
+  });
 </script>
-
-
-
-{% endblock %}
+{% endblock content %}
