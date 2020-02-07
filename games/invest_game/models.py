@@ -92,7 +92,6 @@ class Investment(TimeStampedModel):
     q13answer = models.CharField(max_length=255, null=True)
     q14answer = models.CharField(max_length=255, null=True)
     q15answer = models.CharField(max_length=255, null=True)
-    q5type = models.IntegerField(default=-1)
 
     def __str__(self):
         return self.user.username

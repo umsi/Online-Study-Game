@@ -295,10 +295,9 @@ def question2(request, id=None):
         investment = Investment.objects.get(user=user)
 
         investment.q5answer = request.POST.get("question5")
-        investment.q5type = request.POST.get("questiontype")
-        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_3
+        investment.reached_stage = Investment.STAGE_QUESTION_3
 
-        investment.save(update_fields=["q5answer", "q5type", "reached_stage"])
+        investment.save(update_fields=["q5answer", "reached_stage"])
 
         return redirect(reverse("invest_game:question3"))
 
