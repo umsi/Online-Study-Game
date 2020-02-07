@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
+admin.autodiscover()
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('games.invest_game.urls'), name='invest_game'), 
