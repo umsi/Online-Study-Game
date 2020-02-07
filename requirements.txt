@@ -4,5 +4,10 @@ pytz==2019.3
 scipy==1.4.1
 sqlparse==0.3.0
 
+# production database and hosting
+postgres==2.2.1
+psycopg2==2.7.1
+awsebcli==3.17.1
+
 # code formatting
 black==19.10b0

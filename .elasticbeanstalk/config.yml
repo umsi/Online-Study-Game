@@ -1,0 +1,19 @@
+branch-defaults:
+  goldpbear/prod-deployment:
+    environment: Online-Study-Game-staging
+    group_suffix: null
+environment-defaults:
+  Online-Study-Game-staging:
+    branch: null
+    repository: null
+global:
+  application_name: Online-Study-Game
+  branch: null
+  default_platform: Python 3.6
+  default_region: us-east-2
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: personal
+  repository: null
+  workspace_type: Application
