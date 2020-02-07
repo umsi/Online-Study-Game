@@ -8,7 +8,7 @@
 <div id="questionnaire_si2">
   <br />
   <br />
-  <form action="{% url 'question2_store' %}" method="post" id="questionform">
+  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform">
     {% csrf_token %}
 
     <p><b>Which do you think is your main source of news? </b></p>
@@ -413,7 +413,6 @@
 <!-- JavaScript code for this project -->
 <script type="text/javascript">
   $("#RightContentContainer").height($("#questionnaire_si2").height());
-  // $("#RightContentContainer").width($(window).width()/2);
 
   var keep = Math.floor(Math.random() * 3);
 
@@ -455,9 +454,6 @@
   });
 
   $("#questionform").submit(function(event) {
-    event.preventDefault();
-
-    var errorInPage = false;
     var q6answer = $("input[name=question6]:checked").val();
     var q7answer = $("input[name=question7]:checked").val();
     var q8answer = $("input[name=question8]:checked").val();
@@ -481,26 +477,9 @@
       !q14answer ||
       !q15answer
     ) {
+      event.preventDefault();
       alert("Please check all the anwsers");
-    } else {
-      request = $.ajax({
-        url: "{% url 'question2_store' %}",
-        method: "POST",
-        data: {
-          question6: q6answer,
-          question7: q7answer,
-          question8: q8answer,
-          question9: q9answer,
-          question10: q10answer,
-          question11: q11answer,
-          question12: q12answer,
-          question13: q13answer,
-          question14: q14answer,
-          question15: q15answer,
-        },
-        datatype: "json",
-      });
-    }
+    } 
   });
 </script>
 {% endblock content %}

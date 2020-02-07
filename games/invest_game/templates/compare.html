@@ -31,7 +31,7 @@
   </ul>
 </div>
 <div>
-  <form action="{% url 'invest_game:compare' %}">
+  <form action="{% url 'invest_game:compare' %}" method="POST">
     {% csrf_token %}
     <button type="submit">Go to Questions!</button>
   </form>

@@ -35,7 +35,7 @@ def welcome(request, id=None):
             investment = Investment.objects.get(user=user)
 
             return redirect(reverse("invest_game:%s" % investment.reached_stage))
-        except InvestmentGameUser.DoesNotExist:
+        except (InvestmentGameUser.DoesNotExist, Investment.DoesNotExist) as e:
             pass
 
     request.session["id"] = id
@@ -198,7 +198,7 @@ def respondent_investment(request, id=None):
         investment.respondent_investment_guess = respondent_investment_guess
         investment.user_received = user_received
         investment.user_bonus = USER_BONUS_AMOUNT
-        investment.reached_stage = InvestmentGameUser.STAGE_COMPARE
+        investment.reached_stage = Investment.STAGE_COMPARE
         investment.save(
             update_fields=[
                 "respondent_investment",
@@ -247,7 +247,7 @@ def compare(request, id=None):
         return render(request, "compare.html", context)
 
     if request.method == "POST":
-        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_1
+        investment.reached_stage = Investment.STAGE_QUESTION_1
         investment.save(update_fields=["reached_stage"])
 
         return redirect(reverse("invest_game:question1"))
@@ -268,7 +268,7 @@ def question1(request, id=None):
         investment.q2answer = request.POST.get("question2")
         investment.q3answer = request.POST.get("question3")
         investment.q4answer = request.POST.get("question4")
-        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_2
+        investment.reached_stage = Investment.STAGE_QUESTION_2
 
         investment.save(
             update_fields=[
@@ -323,7 +323,7 @@ def question3(request, id=None):
         investment.q13answer = request.POST.get("question13")
         investment.q14answer = request.POST.get("question14")
         investment.q15answer = request.POST.get("question15")
-        investment.reached_stage = InvestmentGameUser.STAGE_FINISH
+        investment.reached_stage = Investment.STAGE_FINISH
 
         investment.save(
             update_fields=[
@@ -337,7 +337,7 @@ def question3(request, id=None):
                 "q13answer",
                 "q14answer",
                 "q15answer",
-                "reached_stage"
+                "reached_stage",
             ]
         )
 
@@ -347,8 +347,8 @@ def question3(request, id=None):
 @require_id_session_param
 @require_GET
 @require_stage(Investment.STAGE_FINISH)
-def finish(request):
-    request.session.set("id", None)
+def finish(request, id=None):
+    request.session["id"] = None
 
     return render(request, "finish.html")
 
