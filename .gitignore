@@ -4,6 +4,9 @@
 # development databases
 *.sqlite3
 
+# static assets
+static/
+
 # user data
 games/userdata
 

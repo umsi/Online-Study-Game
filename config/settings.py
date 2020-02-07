@@ -141,6 +141,7 @@ CSRF_COOKIE_NAME = "um-online-study-game-csrftoken"
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -149,7 +150,6 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "games", "static"),
-    os.path.join(BASE_DIR, "admin", "static"),
 ]
 
 DATA_ADDR = os.path.join(BASE_DIR, "games/static/games/data")
