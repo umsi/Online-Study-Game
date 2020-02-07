@@ -15,6 +15,7 @@ from games.core.decorators import (
     require_id_session_param,
     require_id_query_param,
 )
+from .decorators import require_stage
 
 
 GUESS_THRESHOLD = 1
@@ -24,6 +25,19 @@ USER_BONUS_AMOUNT = 2
 @require_id_query_param
 @require_GET
 def welcome(request, id=None):
+    if request.session.get("id", None) is not None:
+        try:
+            # If we're loading the welcome page and an `id` session param
+            # already exists, it's probably because the user did not finish a
+            # previous session or has attempted to use the back button. In
+            # these cases we want to forward the user to the correct stage.
+            user = InvestmentGameUser.objects.get(username=request.session["id"])
+            investment = Investment.objects.get(user=user)
+
+            return redirect(reverse("invest_game:%s" % investment.reached_stage))
+        except InvestmentGameUser.DoesNotExist:
+            pass
+
     request.session["id"] = id
 
     return render(request, "welcome.html")
@@ -31,7 +45,6 @@ def welcome(request, id=None):
 
 @require_id_session_param
 @require_POST
-# TODO: guard against loading this view out of sequence
 def sign_in(request, id=None):
     """
     
@@ -41,22 +54,21 @@ def sign_in(request, id=None):
     Create a new InvestmentGameUser and Investment.
     """
     user, _ = InvestmentGameUser.objects.get_or_create(username=id)
-    investment, __ = Investment.objects.get_or_create(user=user)
-    investment.reached_stage = "select-respondent"
-    investment.save(update_fields=["reached_stage"])
+    Investment.objects.get_or_create(user=user)
 
     return redirect(reverse("invest_game:select_respondent"))
 
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_SELECT_RESPONDENT)
 def select_respondent(request, id=None):
     """
     
     GET
     ---
 
-    Return the view for the respondent selection phase.
+    Return the page for the respondent selection stage.
 
 
     POST
@@ -70,6 +82,9 @@ def select_respondent(request, id=None):
     if request.method == "POST":
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
+        investment.reached_stage = Investment.STAGE_USER_INVESTMENT
+        investment.save(update_fields=["reached_stage"])
+
         respondent = request.POST.get("respondent", None)
 
         if investment.respondent is None:
@@ -82,6 +97,7 @@ def select_respondent(request, id=None):
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_USER_INVESTMENT)
 def user_investment(request, id=None):
     """
     
@@ -110,13 +126,21 @@ def user_investment(request, id=None):
     if request.method == "POST":
         investment.finished_user_investment = datetime.datetime.now()
         investment.user_investment = int(request.POST.get("user_investment"))
-        investment.save(update_fields=["finished_user_investment", "user_investment"])
+        investment.reached_stage = Investment.STAGE_RESPONDENT_INVESTMENT
+        investment.save(
+            update_fields=[
+                "finished_user_investment",
+                "user_investment",
+                "reached_stage",
+            ]
+        )
 
         return redirect(reverse("invest_game:respondent_investment"))
 
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_RESPONDENT_INVESTMENT)
 def respondent_investment(request, id=None):
     """
     
@@ -151,7 +175,8 @@ def respondent_investment(request, id=None):
         with open(data_path) as json_file:
             data = json.load(json_file)
 
-        # The *actual* amount returned by the respondent:
+        # The *actual* amount returned by the respondent, obtained from a
+        # hard-coded data file:
         respondent_investment = data.get(investment.respondent, {}).get(
             str(investment.user_investment)
         )
@@ -173,6 +198,7 @@ def respondent_investment(request, id=None):
         investment.respondent_investment_guess = respondent_investment_guess
         investment.user_received = user_received
         investment.user_bonus = USER_BONUS_AMOUNT
+        investment.reached_stage = InvestmentGameUser.STAGE_COMPARE
         investment.save(
             update_fields=[
                 "respondent_investment",
@@ -180,6 +206,7 @@ def respondent_investment(request, id=None):
                 "respondent_investment_guess",
                 "user_received",
                 "user_bonus",
+                "reached_stage",
             ]
         )
 
@@ -187,36 +214,48 @@ def respondent_investment(request, id=None):
 
 
 @require_id_session_param
-@require_GET
+@require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_COMPARE)
 def compare(request, id=None):
     user = InvestmentGameUser.objects.get(username=id)
     investment = Investment.objects.get(user=user)
 
-    guess_flag = "not within"
-    if (
-        abs(investment.respondent_investment - investment.respondent_investment_guess)
-        <= GUESS_THRESHOLD
-    ):
-        guess_flag = "within"
+    if request.method == "GET":
+        guess_flag = "not within"
+        if (
+            abs(
+                investment.respondent_investment
+                - investment.respondent_investment_guess
+            )
+            <= GUESS_THRESHOLD
+        ):
+            guess_flag = "within"
 
-    context = {
-        "invested": investment.user_investment,
-        "guess_returned": investment.respondent_investment_guess,
-        "real_returned": investment.respondent_investment,
-        "received": investment.user_received,
-        "respondent": investment.respondent,
-        "guess_flag": guess_flag,
-        "nodata": False,
-        # TODO: What's the explanation of the hard-coded value here?
-        "user_left": 5 - investment.user_investment,
-        "bonus": investment.user_bonus,
-    }
+        context = {
+            "invested": investment.user_investment,
+            "guess_returned": investment.respondent_investment_guess,
+            "real_returned": investment.respondent_investment,
+            "received": investment.user_received,
+            "respondent": investment.respondent,
+            "guess_flag": guess_flag,
+            "nodata": False,
+            # TODO: What's the explanation of the hard-coded value here?
+            "user_left": 5 - investment.user_investment,
+            "bonus": investment.user_bonus,
+        }
 
-    return render(request, "compare.html", context)
+        return render(request, "compare.html", context)
+
+    if request.method == "POST":
+        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_1
+        investment.save(update_fields=["reached_stage"])
+
+        return redirect(reverse("invest_game:question1"))
 
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_1)
 def question1(request, id=None):
     if request.method == "GET":
         return render(request, "question1.html")
@@ -229,14 +268,24 @@ def question1(request, id=None):
         investment.q2answer = request.POST.get("question2")
         investment.q3answer = request.POST.get("question3")
         investment.q4answer = request.POST.get("question4")
+        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_2
 
-        investment.save(update_fields=["q1answer", "q2answer", "q3answer", "q4answer"])
+        investment.save(
+            update_fields=[
+                "q1answer",
+                "q2answer",
+                "q3answer",
+                "q4answer",
+                "reached_stage",
+            ]
+        )
 
         return redirect(reverse("invest_game:question2"))
 
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_2)
 def question2(request, id=None):
     if request.method == "GET":
         return render(request, "question2.html")
@@ -247,14 +296,16 @@ def question2(request, id=None):
 
         investment.q5answer = request.POST.get("question5")
         investment.q5type = request.POST.get("questiontype")
+        investment.reached_stage = InvestmentGameUser.STAGE_QUESTION_3
 
-        investment.save(update_fields=["q5answer", "q5type"])
+        investment.save(update_fields=["q5answer", "q5type", "reached_stage"])
 
         return redirect(reverse("invest_game:question3"))
 
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_3)
 def question3(request, id=None):
     if request.method == "GET":
         return render(request, "question3.html")
@@ -273,6 +324,7 @@ def question3(request, id=None):
         investment.q13answer = request.POST.get("question13")
         investment.q14answer = request.POST.get("question14")
         investment.q15answer = request.POST.get("question15")
+        investment.reached_stage = InvestmentGameUser.STAGE_FINISH
 
         investment.save(
             update_fields=[
@@ -286,6 +338,7 @@ def question3(request, id=None):
                 "q13answer",
                 "q14answer",
                 "q15answer",
+                "reached_stage"
             ]
         )
 
@@ -294,7 +347,10 @@ def question3(request, id=None):
 
 @require_id_session_param
 @require_GET
+@require_stage(Investment.STAGE_FINISH)
 def finish(request):
+    request.session.set("id", None)
+
     return render(request, "finish.html")
 
 
