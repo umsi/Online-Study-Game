@@ -8,7 +8,7 @@
 <div id="questionnaire_si0">
   <br />
   <br />
-  <form action="{% url 'question1' %}" method="post" id="questionform">
+  <form action={% url 'invest_game:question1' %} method="POST" id="questionform">
     {% csrf_token %}
 
     <p><b>Are you a U.S. citizen?</b></p>
@@ -193,33 +193,15 @@
   });
 
   $("#questionform").submit(function(event) {
-    event.preventDefault();
-
-    var errorInPage = false;
-
     var q1answer = $("input[name=question1]:checked").val();
-
     var q2answer = $("input[name=question2]:checked").val();
-
     var q3answer = $("input[name=question3]:checked").val();
-
     var q4answer = $("input[name=question4]:checked").val();
 
     if (!q1answer || !q2answer || !q3answer || !q4answer) {
+      event.preventDefault();
       alert("Please check all the anwsers");
-    } else {
-      request = $.ajax({
-        url: "{% url 'invest_game:question0' %}",
-        method: "POST",
-        data: {
-          question1: q1answer,
-          question2: q2answer,
-          question3: q3answer,
-          question4: q4answer,
-        },
-        datatype: "json",
-      });
-    }
+    } 
   });
 </script>
 {% endblock content %}

@@ -300,22 +300,12 @@
   });
 
   $("#questionform").submit(function(event) {
-    event.preventDefault();
-
-    var errorInPage = false;
-
     var q5answer = $("input[name=question5]:checked").val();
 
     if (!q5answer) {
+      event.preventDefault();
       alert("Please check all the anwsers");
-    } else {
-      request = $.ajax({
-        url: "{% url 'invest_game:question2' %}",
-        method: "POST",
-        data: { question5: q5answer, questiontype: keep },
-        datatype: "json",
-      });
-    }
+    } 
   });
 </script>
 {% endblock content %}

@@ -1,27 +1,23 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
-{% load staticfiles %}
+{% load static %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}Thank you!{% endblock title %} 
 
 {% block leftcontent %}
-    <div>
-      <h1> Thank you for completing the study </h1>
-    </div>
-
-  
-
-{% endblock %}
+<div>
+  <h1>Thank you for completing the study</h1>
+</div>
+{% endblock leftcontent %} 
 
 {% block rightcontent %}
-    <div id="RightContentContainer">
-    </div>
-{% endblock %}
+<div id="RightContentContainer"></div>
+{% endblock rightcontent %} 
 
-{% block scontent %}
-  <!-- JavaScript code for this project -->
+{% block content %}
+<!-- JavaScript code for this project -->
 <script type="text/javascript">
-      $("#RightContentContainer").height($(window).height()*0.7);
-      $("#RightContentContainer").width($(window).width()/2);
+  $("#RightContentContainer").height($(window).height() * 0.7);
+  $("#RightContentContainer").width($(window).width() / 2);
 </script>
-{% endblock %}
+{% endblock content %}

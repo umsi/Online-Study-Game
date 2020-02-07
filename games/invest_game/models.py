@@ -10,17 +10,23 @@ class InvestmentGameUser(GamesUser):
 
 class Investment(TimeStampedModel):
     # Valid experiment stage options
-    SELECT_RESPONDENT = "select-respondent"
-    USER_INVESTMENT = "user-investment"
-    RESPONDENT_INVESTMENT = "respondent-invenstment"
-    COMPARISON = "comparison"
-    THANK_YOU = "thank-you"
+    STAGE_SELECT_RESPONDENT = "select_respondent"
+    STAGE_USER_INVESTMENT = "user_investment"
+    STAGE_RESPONDENT_INVESTMENT = "respondent_investment"
+    STAGE_QUESTION_1 = "question1"
+    STAGE_QUESTION_2 = "question2"
+    STAGE_QUESTION_3 = "question3"
+    STAGE_COMPARE = "compare"
+    STAGE_FINISH = "finish"
     STAGE_CHOICES = (
-        (SELECT_RESPONDENT, "Reached respondent selection stage"),
-        (USER_INVESTMENT, "Reached user investment stage"),
-        (RESPONDENT_INVESTMENT, "Reached respondent investment stage"),
-        (COMPARISON, "Reached comparison stage"),
-        (THANK_YOU, "Reached thank you stage"),
+        (STAGE_SELECT_RESPONDENT, "Reached respondent selection stage"),
+        (STAGE_USER_INVESTMENT, "Reached user investment stage"),
+        (STAGE_RESPONDENT_INVESTMENT, "Reached respondent investment stage"),
+        (STAGE_QUESTION_1, "Reached question 1 stage"),
+        (STAGE_QUESTION_2, "Reached question 2 stage"),
+        (STAGE_QUESTION_3, "Reached question 3 stage"),
+        (STAGE_COMPARE, "Reached compare stage"),
+        (STAGE_FINISH, "Reached finish stage"),
     )
 
     # Valid respondent options
@@ -51,7 +57,7 @@ class Investment(TimeStampedModel):
         InvestmentGameUser, on_delete=models.CASCADE, primary_key=True
     )
     reached_stage = models.CharField(
-        max_length=256, choices=STAGE_CHOICES, default=None, null=True,
+        max_length=256, choices=STAGE_CHOICES, default=STAGE_SELECT_RESPONDENT,
     )
     respondent = models.CharField(
         max_length=256, choices=RESPONDENT_CHOICES, default=None, null=True
@@ -86,7 +92,6 @@ class Investment(TimeStampedModel):
     q13answer = models.CharField(max_length=255, null=True)
     q14answer = models.CharField(max_length=255, null=True)
     q15answer = models.CharField(max_length=255, null=True)
-    q5type = models.IntegerField(default=-1)
 
     def __str__(self):
         return self.user.username
