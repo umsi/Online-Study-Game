@@ -149,7 +149,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "games", "static"),
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "admin", "static"),
 ]
 
 DATA_ADDR = os.path.join(BASE_DIR, "games/static/games/data")
