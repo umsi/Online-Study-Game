@@ -1,7 +1,9 @@
 {% extends "base.html" %} 
+
 {% load static %} 
 
 {% block title %}Investing Game{% endblock title %} 
+
 {% block leftcontent %}
 <div id="InstructionsDIV">
   <div id="Instructions3">
@@ -45,7 +47,11 @@
 
 {% block rightcontent %}
 <div id="RightContentContainer">
-  <form id="InvestorForm" action="{% url "invest_game:user_investment" %}" method="post">
+  <form
+    id="InvestorForm"
+    action="{% url 'invest_game:user_investment' %}"
+    method="post"
+  >
     {% csrf_token %}
     <input type="hidden" name="user_investment" id="invested" value="0" />
   </form>
@@ -451,7 +457,6 @@
       </div>
     </div>
 
-
     <div id="slider" style=" width: 100%"></div>
     <input
       style="top: 40px; left: 36%"
@@ -464,39 +469,10 @@
 </div>
 {% endblock rightcontent %} 
 
-{% block content %}
-<!-- JavaScript code for this project -->
-<script>
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
   $(document).ready(function(){
-      function getCookie(name) {
-          var cookieValue = null;
-          if (document.cookie && document.cookie != '') {
-              var cookies = document.cookie.split(';');
-              for (var i = 0; i < cookies.length; i++) {
-                  var cookie = jQuery.trim(cookies[i]);
-                  // Does this cookie string begin with the name we want?
-                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                      break;
-                  }
-              }
-          }
-          return cookieValue;
-      }
-      var csrftoken = getCookie("um-online-study-game-csrftoken");
-
-      function csrfSafeMethod(method) {
-          // these HTTP methods do not require CSRF protection
-          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-      }
-      $.ajaxSetup({
-          beforeSend: function(xhr, settings) {
-              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-              }
-          }
-      });
-
       $("#RightContentContainer").height($(window).height()*0.75);
       $("#RightContentContainer").width($(window).width()/2);
 
@@ -601,4 +577,4 @@
     })();
   });
 </script>
-{% endblock content %}
+{% endblock jscontent %}

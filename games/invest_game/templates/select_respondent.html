@@ -152,9 +152,9 @@
 </div>
 {% endblock rightcontent %} 
 
-{% block content %}
-<!-- JavaScript code for this project -->
-<script>
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
   $(document).ready(function() {
     $("#RightContentContainer").height($(window).height() * 0.75);
     var names = [
@@ -171,40 +171,8 @@
     ];
 
     $(".respondent_img").click(function() {
-      // cur_id = $(this).attr("id")
       var random_id = Math.floor(Math.random() * 10);
       var respondent_name = names[random_id];
-
-      function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != "") {
-          var cookies = document.cookie.split(";");
-          for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
-            }
-          }
-        }
-        return cookieValue;
-      }
-      var csrftoken = getCookie("um-online-study-game-csrftoken");
-
-      function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-      }
-      $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          }
-        },
-      });
 
       request = $.ajax({
         url: "{% url 'invest_game:select_respondent' %}",
@@ -223,4 +191,4 @@
     });
   });
 </script>
-{% endblock content %}
+{% endblock jscontent %}
