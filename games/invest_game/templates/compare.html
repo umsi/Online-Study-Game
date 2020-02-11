@@ -33,7 +33,7 @@
 <div>
   <form action="{% url 'invest_game:compare' %}" method="POST">
     {% csrf_token %}
-    <button type="submit">Go to Questions!</button>
+    <button type="submit" class="btn btn-large btn-primary">Go to Questions!</button>
   </form>
 </div>
 {% endblock leftcontent %} 
@@ -41,11 +41,3 @@
 {% block rightcontent %}
 <div id="RightContentContainer"></div>
 {% endblock rightcontent %} 
-
-{% block content %}
-<!-- JavaScript code for this project -->
-<script type="text/javascript">
-  $("#RightContentContainer").height($(window).height() * 0.75);
-  $("#RightContentContainer").width($(window).width() / 2);
-</script>
-{% endblock content %}

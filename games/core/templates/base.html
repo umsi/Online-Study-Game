@@ -121,21 +121,60 @@
       </div>
     </nav>
 
-    <div class="row">
-      <div class="col-md-6 ">
-        {% block leftcontent %}{% endblock %}
+    <div class="container-fluid" id="content-container">
+      <div class="row">
+        <div class="col-md-6 ">
+          {% block leftcontent %}{% endblock %}
+        </div>
+        <div class="col-md-6">
+          {% block rightcontent %}{% endblock %}
+        </div>
       </div>
-      <div class="col-md-6">
-        {% block rightcontent %}{% endblock %}
-      </div>
-    </div>
 
-    <div class="row transBackground">
-      {% block content %}{% endblock %}
+      <div class="row">
+        <div class="col-md-12">
+          {% block content %}{% endblock content %}
+        </div>
+      </div>
     </div>
 
     <div class="navbar navbar-inverse navbar-fixed-bottom">
-      <p>&copy; University of Michigan, School of Information {% now "Y" %}</p>
+      <p id="browser-warning-msg">WARNING: Please do not use the browser buttons to go back or forward, or we might not be able to retrieve your responses and pay you!</p>
+      <p id="copyright">&copy; University of Michigan, School of Information {% now "Y" %}</p>
     </div>
+
+    <!-- Core JS functionality: -->
+    <script type="text/javascript">
+      var csrftoken = getCookie("um-online-study-game-csrftoken");
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != "") {
+          var cookies = document.cookie.split(";");
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+      }
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+        },
+      });
+    </script>
+
+    {% block jscontent %}{% endblock jscontent %}
   </body>
 </html>

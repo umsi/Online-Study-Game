@@ -6,13 +6,13 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si1">
-  <br />
-  <br />
-  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform">
+  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform" class="questionnaire-content">
     {% csrf_token %}
+
     <div class="random">
       {% csrf_token %}
-      <p id="xx">
+
+      <p>
         <b>
           Read each of the four statements below and indicate HOW MANY of them
           you agree with. You are NOT being asked to indicate which ones you
@@ -37,53 +37,54 @@
           I have traveled to a country other than the United States.
         </li>
       </ul>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5A" value="A" />
+          <input type="radio" name="multiple_agreement_question" value="none" />
           I agree with none of the above.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5B" value="B" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
           I agree with exactly 1 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5C" value="C" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
           I agree with exactly 2 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5D" value="D" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
           I agree with exactly 3 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5E" value="E" />
+          <input type="radio" name="multiple_agreement_question" value="all_4" />
           I agree with all 4 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5F" value="F" />
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
           Don't know.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5G" value="G" />
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
           Refuse to answer.
         </label>
       </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="control">
     </div>
 
     <div class="random">
       {% csrf_token %}
-      <p id="xx">
+      <p>
         <b
           >Read each of the five statements below and indicate HOW MANY of them
           you agree with. You are NOT being asked to indicate which ones you
@@ -111,59 +112,60 @@
           I have traveled to a country other than the United States.
         </li>
       </ul>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5A" value="A" />
+          <input type="radio" name="multiple_agreement_question" value="none" />
           I agree with none of the above.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5B" value="B" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
           I agree with exactly 1 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5C" value="C" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
           I agree with exactly 2 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5D" value="D" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
           I agree with exactly 3 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5E" value="E" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
           I agree with exactly 4 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5F" value="F" />
+          <input type="radio" name="multiple_agreement_question" value="all_5" />
           I agree with all 5 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5G" value="G" />
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
           Don't know.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5H" value="H" />
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
           Refuse to answer.
         </label>
       </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="with_immigration">
     </div>
 
     <div class="random">
       {% csrf_token %}
-      <p id="xx">
+      <p>
         <b
           >Read each of the five statements below and indicate HOW MANY of them
           you agree with. You are NOT being asked to indicate which ones you
@@ -191,121 +193,87 @@
           I have traveled to a country other than the United States.
         </li>
       </ul>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5A" value="A" />
+          <input type="radio" name="multiple_agreement_question" value="none" />
           I agree with none of the above.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5B" value="B" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
           I agree with exactly 1 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5C" value="C" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
           I agree with exactly 2 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5D" value="D" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
           I agree with exactly 3 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5E" value="E" />
+          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
           I agree with exactly 4 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5F" value="F" />
+          <input type="radio" name="multiple_agreement_question" value="all_5" />
           I agree with all 5 of the above statements.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5G" value="G" />
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
           Don't know.
         </label>
       </div>
-      <div class="radio" id="xx">
+      <div class="radio">
         <label>
-          <input type="radio" name="question5" id="question5H" value="H" />
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
           Refuse to answer.
         </label>
       </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="with_muslim_immigration">
     </div>
 
-    <button style="position: relative; right: 0px; top: 10px" type="submit">
-      next
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
     </button>
   </form>
-  <br />
-  <br />
-  <br />
 </div>
 {% endblock leftcontent %} 
 
-{% block rightcontent %}
-<div id="RightContentContainer"></div>
-{% endblock rightcontent %} 
-
-{% block content %}
-<!-- JavaScript code for this project -->
+{% block jscontent %}
+<!-- JavaScript code for this template -->
 <script type="text/javascript">
-  $("#RightContentContainer").height($("#questionnaire_si1").height() * 0.4);
-
   var keep = Math.floor(Math.random() * 3);
+  console.log("Keeping", keep)
 
   $(document).ready(function() {
     var elems = $(".random");
+
     for (var i = 0; i < elems.length; ++i) {
       if (i !== keep) {
-        $(elems[i]).hide();
+        $(elems[i]).remove();
       }
     }
-  });
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = jQuery.trim(cookies[i]);
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-  var csrftoken = getCookie("um-online-study-game-csrftoken");
 
-  function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-  }
-  $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-      }
-    },
-  });
+    $("#questionform").submit(function(event) {
+      var answer = $("input[name=multiple_agreement_question]:checked").val();
 
-  $("#questionform").submit(function(event) {
-    var q5answer = $("input[name=question5]:checked").val();
-
-    if (!q5answer) {
-      event.preventDefault();
-      alert("Please check all the anwsers");
-    } 
+      if (!answer) {
+        event.preventDefault();
+        alert("Please check all the anwsers");
+      } 
+    });
   });
 </script>
-{% endblock content %}
+{% endblock jscontent %}

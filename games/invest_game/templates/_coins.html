@@ -1,0 +1,30 @@
+{% load static %} 
+{% load coin_offset %} 
+
+<div id="{{ label }}Coins">
+  <div id="{{ label }}CoinsAmount">
+    <span id="{{ label }}CoinsAmountNum">$5</span>
+  </div>
+  {% for coin in coins %}
+  <div
+    id="{{ label }}Coin{{ forloop.counter }}"
+    style="top:{{ forloop.counter0|get_coin_offset }}px;"
+  >
+    <img
+      src="{% static 'games/media/goldcoin.png' %}"
+      alt="Gold Coin"
+      height="100px"
+      width="100px"
+    />
+  </div>
+  {% endfor %}
+
+  <div id="{{ label }}CoinsLabel">
+    <p id="{{ label }}IdentityLabel" style="font-weight:bold; font-size: 15px;">
+      INVESTOR
+    </p>
+    <p id="{{ label }}Identity" style="font-weight:bold; font-size: 20px;">
+      {{ name }}
+    </p>
+  </div>
+</div>

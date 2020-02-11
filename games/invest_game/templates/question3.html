@@ -6,63 +6,61 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si2">
-  <br />
-  <br />
-  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform">
+  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
     <p><b>Which do you think is your main source of news? </b></p>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6A" value="A" />
+        <input type="radio" name="news_source" value="abc_nbc_cbs" />
         ABC, NBC, or CBS
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6B" value="B" />
+        <input type="radio" name="news_source" value="cnn" />
         CNN
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6C" value="C" />
+        <input type="radio" name="news_source" value="fox_news" />
         Fox News
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6D" value="D" />
+        <input type="radio" name="news_source" value="local_tv_radio" />
         Local TV or radio
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6E" value="E" />
+        <input type="radio" name="news_source" value="msnbc" />
         MSNBC
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6E" value="E" />
+        <input type="radio" name="news_source" value="npr_pbs" />
         NPR (National Public Radio) or PBS
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6F" value="F" />
+        <input type="radio" name="news_source" value="newspapers" />
         Newspapers, online or in paper
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6G" value="G" />
+        <input type="radio" name="news_source" value="facebook" />
         Facebook
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question6" id="question6H" value="H" />
+        <input type="radio" name="news_source" value="twitter" />
         Twitter
       </label>
     </div>
@@ -70,95 +68,93 @@
     <p><b>Are there Muslims living in your neighborhood?</b></p>
     <div class="radio">
       <label>
-        <input type="radio" name="question7" id="question7A" value="A" />
+        <input type="radio" name="muslims_in_neighborhood" value="many" />
         Many
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question7" id="question7B" value="B" />
+        <input type="radio" name="muslims_in_neighborhood" value="some" />
         Some
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question7" id="question7C" value="C" />
+        <input type="radio" name="muslims_in_neighborhood" value="none" />
         None at all
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question7" id="question7D" value="D" />
+        <input type="radio" name="muslims_in_neighborhood" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question7" id="question7E" value="E" />
-        Refused to answer
+        <input type="radio" name="muslims_in_neighborhood" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
     <p><b>Do you have Muslim co-workers?</b></p>
     <div class="radio">
       <label>
-        <input type="radio" name="question8" id="question8A" value="A" />
+        <input type="radio" name="muslim_coworkers" value="many" />
         Many
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question8" id="question8B" value="B" />
+        <input type="radio" name="muslim_coworkers" value="some" />
         Some
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question8" id="question8C" value="C" />
+        <input type="radio" name="muslim_coworkers" value="none" />
         None at all
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question8" id="question8D" value="D" />
+        <input type="radio" name="muslim_coworkers" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question8" id="question8E" value="E" />
-        Refused to answer
+        <input type="radio" name="muslim_coworkers" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
     <p>
-      <b
-        >Have you, personally, ever been treated unfairly due to your race,
-        ethnicity, or religion?</b
-      >
+      <b>Have you, personally, ever been treated unfairly due to your race,
+        ethnicity, or religion?</b>
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question9" id="question9A" value="A" />
+        <input type="radio" name="self_treated_unfairly" value="yes" />
         Yes
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question9" id="question9B" value="B" />
+        <input type="radio" name="self_treated_unfairly" value="no" />
         No
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question9" id="question9C" value="C" />
+        <input type="radio" name="self_treated_unfairly" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question9" id="question9D" value="D" />
-        Refused to answer
+        <input type="radio" name="self_treated_unfairly" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
@@ -167,187 +163,181 @@
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10A" value="A" />
+        <input type="radio" name="race_treated_unfairly" value="often" />
         Often
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10B" value="B" />
+        <input type="radio" name="race_treated_unfairly" value="sometimes" />
         Sometimes
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10C" value="C" />
+        <input type="radio" name="race_treated_unfairly" value="seldom" />
         Seldom
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10D" value="D" />
+        <input type="radio" name="race_treated_unfairly" value="never" />
         Never
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10E" value="E" />
+        <input type="radio" name="race_treated_unfairly" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question10" id="question10E" value="E" />
-        Refused to answer
+        <input type="radio" name="race_treated_unfairly" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
     <p><b>Do you think people of your religion are treated unfairly? </b></p>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11A" value="A" />
+        <input type="radio" name="religion_treated_unfairly" value="often" />
         Often
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11B" value="B" />
+        <input type="radio" name="religion_treated_unfairly" value="sometimes" />
         Sometimes
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11C" value="C" />
+        <input type="radio" name="religion_treated_unfairly" value="seldom" />
         Seldom
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11D" value="D" />
+        <input type="radio" name="religion_treated_unfairly" value="never" />
         Never
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11E" value="E" />
+        <input type="radio" name="religion_treated_unfairly" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question11" id="question11F" value="F" />
+        <input type="radio" name="religion_treated_unfairly" value="refused_to_answer" />
         Refused to answer
       </label>
     </div>
 
     <p>
-      <b
-        >Generally speaking, would you say that most people can be trusted or
-        that you can’t be too careful in dealing with people?</b
-      >
+      <b>Generally speaking, would you say that most people can be trusted or
+        that you can’t be too careful in dealing with people?</b>
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question12" id="question12A" value="A" />
+        <input type="radio" name="general_trustworthiness" value="most_people" />
         Most people can be trusted
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question12" id="question12B" value="B" />
+        <input type="radio" name="general_trustworthiness" value="cant_be_too_careful" />
         Can’t be too careful
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question12" id="question12C" value="C" />
+        <input type="radio" name="general_trustworthiness" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question12" id="question12D" value="D" />
-        Refused to answer
+        <input type="radio" name="general_trustworthiness" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
     <p>
-      <b
-        >What about the next 12 months? Do you expect the national economy to
-        get better, get worse, or stay about the same?</b
-      >
+      <b>What about the next 12 months? Do you expect the national economy to
+        get better, get worse, or stay about the same?</b>
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question13" id="question13A" value="A" />
+        <input type="radio" name="economic_outlook" value="get_better" />
         Get Better
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question13" id="question13B" value="B" />
+        <input type="radio" name="economic_outlook" value="stay_the_same" />
         Stay the Same
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question13" id="question13C" value="C" />
+        <input type="radio" name="economic_outlook" value="get_worse" />
         Get Worse
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question13" id="question13D" value="D" />
+        <input type="radio" name="economic_outlook" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question13" id="question13E" value="E" />
-        Refused to answer
+        <input type="radio" name="economic_outlook" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
     <p>
-      <b
-        >How concerned are you about the rise of Islamic extremism in the
-        U.S.?</b
-      >
+      <b>How concerned are you about the rise of Islamic extremism in the
+        U.S.?</b>
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14A" value="A" />
+        <input type="radio" name="islamic_extremism" value="very_concerned" />
         Very concerned
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14B" value="B" />
+        <input type="radio" name="islamic_extremism" value="somewhat_concerned" />
         Somewhat concerned
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14C" value="C" />
+        <input type="radio" name="islamic_extremism" value="not_too_concerned" />
         Not too concerned
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14D" value="D" />
+        <input type="radio" name="islamic_extremism" value="not_concerned" />
         Not concerned
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14E" value="E" />
+        <input type="radio" name="islamic_extremism" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question14" id="question14F" value="F" />
-        Refused to answer
+        <input type="radio" name="islamic_extremism" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
@@ -359,61 +349,51 @@
     </p>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15A" value="A" />
+        <input type="radio" name="reducing_terrorism" value="very_well" />
         Very well
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15B" value="B" />
+        <input type="radio" name="reducing_terrorism" value="fairly_well" />
         Fairly well
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15C" value="C" />
+        <input type="radio" name="reducing_terrorism" value="not_very_well" />
         Not very well
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15D" value="D" />
+        <input type="radio" name="reducing_terrorism" value="not_well_at_all" />
         Not well at all
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15E" value="E" />
+        <input type="radio" name="reducing_terrorism" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question15" id="question15F" value="F" />
-        Refused to answer
+        <input type="radio" name="reducing_terrorism" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
-    <button style="position: relative; right: 0px; top: 10px" type="submit">
-      Submit
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
     </button>
   </form>
-
-  <br />
-  <br />
-  <br />
 </div>
 {% endblock leftcontent %} 
 
-{% block rightcontent %}
-<div id="RightContentContainer"></div>
-{% endblock rightcontent %} 
-
-{% block content %}
-<!-- JavaScript code for this project -->
+{% block jscontent %}
+<!-- JavaScript code for this template -->
 <script type="text/javascript">
-  $("#RightContentContainer").height($("#questionnaire_si2").height());
-
   var keep = Math.floor(Math.random() * 3);
 
   $(document).ready(function() {
@@ -424,62 +404,34 @@
       }
     }
   });
-  function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = jQuery.trim(cookies[i]);
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-  var csrftoken = getCookie("um-online-study-game-csrftoken");
-
-  function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
-  }
-  $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-      }
-    },
-  });
 
   $("#questionform").submit(function(event) {
-    var q6answer = $("input[name=question6]:checked").val();
-    var q7answer = $("input[name=question7]:checked").val();
-    var q8answer = $("input[name=question8]:checked").val();
-    var q9answer = $("input[name=question9]:checked").val();
-    var q10answer = $("input[name=question10]:checked").val();
-    var q11answer = $("input[name=question11]:checked").val();
-    var q12answer = $("input[name=question12]:checked").val();
-    var q13answer = $("input[name=question13]:checked").val();
-    var q14answer = $("input[name=question14]:checked").val();
-    var q15answer = $("input[name=question15]:checked").val();
+    var q1answer = $("input[name=news_source]:checked").val();
+    var q2answer = $("input[name=muslims_in_neighborhood]:checked").val();
+    var q3answer = $("input[name=muslim_coworkers]:checked").val();
+    var q4answer = $("input[name=self_treated_unfairly]:checked").val();
+    var q5answer = $("input[name=race_treated_unfairly]:checked").val();
+    var q6answer = $("input[name=religion_treated_unfairly]:checked").val();
+    var q7answer = $("input[name=general_trustworthiness]:checked").val();
+    var q8answer = $("input[name=economic_outlook]:checked").val();
+    var q9answer = $("input[name=islamic_extremism]:checked").val();
+    var q10answer = $("input[name=reducing_terrorism]:checked").val();
 
     if (
+      !q1answer ||
+      !q2answer ||
+      !q3answer ||
+      !q4answer ||
+      !q5answer ||
       !q6answer ||
       !q7answer ||
       !q8answer ||
       !q9answer ||
-      !q10answer ||
-      !q11answer ||
-      !q12answer ||
-      !q13answer ||
-      !q14answer ||
-      !q15answer
+      !q10answer
     ) {
       event.preventDefault();
       alert("Please check all the anwsers");
     } 
   });
 </script>
-{% endblock content %}
+{% endblock jscontent %}
