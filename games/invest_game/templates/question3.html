@@ -6,9 +6,7 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si2">
-  <br />
-  <br />
-  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform">
+  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
     <p><b>Which do you think is your main source of news? </b></p>
@@ -132,10 +130,8 @@
     </div>
 
     <p>
-      <b
-        >Have you, personally, ever been treated unfairly due to your race,
-        ethnicity, or religion?</b
-      >
+      <b>Have you, personally, ever been treated unfairly due to your race,
+        ethnicity, or religion?</b>
     </p>
     <div class="radio">
       <label>
@@ -394,26 +390,16 @@
       </label>
     </div>
 
-    <button style="position: relative; right: 0px; top: 10px" type="submit">
-      Submit
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
     </button>
   </form>
-
-  <br />
-  <br />
-  <br />
 </div>
 {% endblock leftcontent %} 
-
-{% block rightcontent %}
-<div id="RightContentContainer"></div>
-{% endblock rightcontent %} 
 
 {% block jscontent %}
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
-  $("#RightContentContainer").height($("#questionnaire_si2").height());
-
   var keep = Math.floor(Math.random() * 3);
 
   $(document).ready(function() {

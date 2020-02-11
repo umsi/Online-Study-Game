@@ -118,10 +118,13 @@ def user_investment(request, id=None):
     if request.method == "GET":
         investment.started_user_investment = datetime.datetime.now()
         investment.save(update_fields=["started_user_investment"])
+        context = {
+            "respondent": investment.respondent,
+            "investor_coins": range(20),
+            "respondent_coins": range(20),
+        }
 
-        return render(
-            request, "user_investment.html", {"respondent": investment.respondent}
-        )
+        return render(request, "user_investment.html", context)
 
     if request.method == "POST":
         investment.finished_user_investment = datetime.datetime.now()
@@ -166,6 +169,8 @@ def respondent_investment(request, id=None):
             {
                 "respondent": investment.respondent,
                 "invested": investment.user_investment,
+                "investor_coins": range(20),
+                "respondent_coins": range(20),
             },
         )
 

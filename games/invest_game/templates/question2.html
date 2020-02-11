@@ -6,9 +6,7 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si1">
-  <br />
-  <br />
-  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform">
+  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform" class="questionnaire-content">
     {% csrf_token %}
     <div class="random">
       {% csrf_token %}
@@ -241,25 +239,16 @@
       </div>
     </div>
 
-    <button style="position: relative; right: 0px; top: 10px" type="submit">
-      next
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
     </button>
   </form>
-  <br />
-  <br />
-  <br />
 </div>
 {% endblock leftcontent %} 
-
-{% block rightcontent %}
-<div id="RightContentContainer"></div>
-{% endblock rightcontent %} 
 
 {% block jscontent %}
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
-  $("#RightContentContainer").height($("#questionnaire_si1").height() * 0.4);
-
   var keep = Math.floor(Math.random() * 3);
 
   $(document).ready(function() {
