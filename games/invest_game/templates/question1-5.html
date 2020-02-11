@@ -1,0 +1,133 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}Welcome!{% endblock title %} 
+
+{% block leftcontent %}
+<div id="questionnaire_si0" class="questionnaire-content">
+  <form action={% url 'invest_game:question1_5' %} method="POST" id="questionform">
+    {% csrf_token %}
+
+    <p>
+      <b>Did you vote for a presidential candidate in the last election?</b>
+    </p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="voted_last_election"  value="yes" />
+        Yes
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="voted_last_election" value="no" />
+        No
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="voted_last_election" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="voted_last_election" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
+    </div>
+
+    <p><b>How did you vote for?</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="how_voted" value="trump" />
+        Donald Trump
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="how_voted" value="clinton" />
+        Hillary Clinton
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="how_voted" value="other" />
+        Other
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="how_voted" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="how_voted" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
+    </div>
+
+    <p><b>Are your political views generally closer to</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="democrats" />
+        The Democrats
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="republicans" />
+        The Republicans
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="other" />
+        Other
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="no_preference" />
+        No preference
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
+    </button>
+  </form>
+</div>
+{% endblock leftcontent %} 
+
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#questionform").submit(function(event) {
+      var q1answer = $("input[name=voted_last_election]:checked").val();
+      var q2answer = $("input[name=how_voted]:checked").val();
+      var q3answer = $("input[name=political_views]:checked").val();
+
+      if (!q1answer || !q2answer || !q3answer) {
+        event.preventDefault();
+        alert("Please check all the anwsers");
+      } 
+    });
+  });
+</script>
+{% endblock jscontent %}

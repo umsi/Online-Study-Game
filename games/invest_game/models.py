@@ -14,6 +14,7 @@ class Investment(TimeStampedModel):
     STAGE_USER_INVESTMENT = "user_investment"
     STAGE_RESPONDENT_INVESTMENT = "respondent_investment"
     STAGE_QUESTION_1 = "question1"
+    STAGE_QUESTION_1_5 = "question1_5"
     STAGE_QUESTION_2 = "question2"
     STAGE_QUESTION_3 = "question3"
     STAGE_COMPARE = "compare"
@@ -23,6 +24,7 @@ class Investment(TimeStampedModel):
         (STAGE_USER_INVESTMENT, "Reached user investment stage"),
         (STAGE_RESPONDENT_INVESTMENT, "Reached respondent investment stage"),
         (STAGE_QUESTION_1, "Reached question 1 stage"),
+        (STAGE_QUESTION_1_5, "Reached question 1.5 stage"),
         (STAGE_QUESTION_2, "Reached question 2 stage"),
         (STAGE_QUESTION_3, "Reached question 3 stage"),
         (STAGE_COMPARE, "Reached compare stage"),
@@ -77,21 +79,22 @@ class Investment(TimeStampedModel):
     started_respondent_investment = models.DateTimeField(null=True)
     finished_respondent_investment = models.DateTimeField(null=True)
 
-    q1answer = models.CharField(max_length=255, null=True)
-    q2answer = models.CharField(max_length=255, null=True)
-    q3answer = models.CharField(max_length=255, null=True)
-    q4answer = models.CharField(max_length=255, null=True)
-    q5answer = models.CharField(max_length=255, null=True)
-    q6answer = models.CharField(max_length=255, null=True)
-    q7answer = models.CharField(max_length=255, null=True)
-    q8answer = models.CharField(max_length=255, null=True)
-    q9answer = models.CharField(max_length=255, null=True)
-    q10answer = models.CharField(max_length=255, null=True)
-    q11answer = models.CharField(max_length=255, null=True)
-    q12answer = models.CharField(max_length=255, null=True)
-    q13answer = models.CharField(max_length=255, null=True)
-    q14answer = models.CharField(max_length=255, null=True)
-    q15answer = models.CharField(max_length=255, null=True)
+    us_citizen = models.CharField(max_length=255, null=True)
+    voted_last_election = models.CharField(max_length=255, null=True)
+    how_voted = models.CharField(max_length=255, null=True)
+    political_views = models.CharField(max_length=255, null=True)
+    multiple_agreement_question = models.CharField(max_length=255, null=True)
+    multiple_agreement_question_type = models.CharField(max_length=255, null=True)
+    news_source = models.CharField(max_length=255, null=True)
+    muslims_in_neighborhood = models.CharField(max_length=255, null=True)
+    muslim_coworkers = models.CharField(max_length=255, null=True)
+    self_treated_unfairly = models.CharField(max_length=255, null=True)
+    race_treated_unfairly = models.CharField(max_length=255, null=True)
+    religion_treated_unfairly = models.CharField(max_length=255, null=True)
+    general_trustworthiness = models.CharField(max_length=255, null=True)
+    economic_outlook = models.CharField(max_length=255, null=True)
+    islamic_extremism = models.CharField(max_length=255, null=True)
+    reducing_terrorism = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.user.username

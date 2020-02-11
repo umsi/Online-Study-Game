@@ -12,123 +12,25 @@
     <p><b>Are you a U.S. citizen?</b></p>
     <div class="radio">
       <label>
-        <input type="radio" name="question1" id="question1A" value="A" />
+        <input type="radio" name="us_citizen" value="yes" />
         Yes
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question1" id="question1B" value="B" />
+        <input type="radio" name="us_citizen" value="no" />
         No
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question1" id="question1C" value="C" />
+        <input type="radio" name="us_citizen" value="dont_know" />
         Don't know
       </label>
     </div>
     <div class="radio">
       <label>
-        <input type="radio" name="question1" id="question1D" value="D" />
-        Refuse to answer
-      </label>
-    </div>
-
-    <p>
-      <b>Did you vote for a presidential candidate in the last election?</b>
-    </p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question2" id="question2A" value="A" />
-        Yes
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question2" id="question2B" value="B" />
-        No
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question2" id="question2C" value="C" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question2" id="question2D" value="D" />
-        Refuse to answer
-      </label>
-    </div>
-
-    <p><b>How did you vote for?</b></p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question3" id="question3A" value="A" />
-        Donald Trump
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question3" id="question3B" value="B" />
-        Hillary Clinton
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question3" id="question3C" value="C" />
-        Other
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question3" id="question3D" value="C" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question3" id="question3E" value="D" />
-        Refuse to answer
-      </label>
-    </div>
-
-    <p><b>Are your political views generally closer to </b></p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4A" value="A" />
-        The Democrats
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4B" value="B" />
-        The Republicans
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4C" value="C" />
-        Other
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4B" value="B" />
-        No preference
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4D" value="C" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="question4" id="question4E" value="D" />
+        <input type="radio" name="us_citizen" value="refuse_to_answer" />
         Refuse to answer
       </label>
     </div>
@@ -143,27 +45,15 @@
 {% block jscontent %}
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
-  var keep = Math.floor(Math.random() * 3);
-
   $(document).ready(function() {
-    var elems = $(".random");
-    for (var i = 0; i < elems.length; ++i) {
-      if (i !== keep) {
-        $(elems[i]).hide();
-      }
-    }
-  });
+    $("#questionform").submit(function(event) {
+      var answer = $("input[name=us_citizen]:checked").val();
 
-  $("#questionform").submit(function(event) {
-    var q1answer = $("input[name=question1]:checked").val();
-    var q2answer = $("input[name=question2]:checked").val();
-    var q3answer = $("input[name=question3]:checked").val();
-    var q4answer = $("input[name=question4]:checked").val();
-
-    if (!q1answer || !q2answer || !q3answer || !q4answer) {
-      event.preventDefault();
-      alert("Please check all the anwsers");
-    } 
+      if (!answer) {
+        event.preventDefault();
+        alert("Please check all the anwsers");
+      } 
+    });
   });
 </script>
 {% endblock jscontent %}

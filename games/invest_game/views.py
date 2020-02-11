@@ -269,18 +269,49 @@ def question1(request, id=None):
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
 
-        investment.q1answer = request.POST.get("question1")
-        investment.q2answer = request.POST.get("question2")
-        investment.q3answer = request.POST.get("question3")
-        investment.q4answer = request.POST.get("question4")
+        us_citizen = request.POST.get("us_citizen")
+        investment.us_citizen = us_citizen
+
+        investment.reached_stage = (
+            Investment.STAGE_QUESTION_1_5
+            if us_citizen == "yes"
+            else Investment.STAGE_QUESTION_2
+        )
+
+        investment.save(
+            update_fields=["us_citizen", "reached_stage",]
+        )
+
+        return redirect(
+            reverse(
+                "invest_game:question1_5"
+                if us_citizen == "yes"
+                else "invest_game:question2"
+            )
+        )
+
+
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_1_5)
+def question1_5(request, id=None):
+    if request.method == "GET":
+        return render(request, "question1-5.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+
+        investment.voted_last_election = request.POST.get("voted_last_election")
+        investment.how_voted = request.POST.get("how_voted")
+        investment.political_views = request.POST.get("political_views")
         investment.reached_stage = Investment.STAGE_QUESTION_2
 
         investment.save(
             update_fields=[
-                "q1answer",
-                "q2answer",
-                "q3answer",
-                "q4answer",
+                "voted_last_election",
+                "how_voted",
+                "political_views",
                 "reached_stage",
             ]
         )
@@ -299,10 +330,21 @@ def question2(request, id=None):
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
 
-        investment.q5answer = request.POST.get("question5")
+        investment.multiple_agreement_question = request.POST.get(
+            "multiple_agreement_question"
+        )
+        investment.multiple_agreement_question_type = request.POST.get(
+            "multiple_agreement_question_type"
+        )
         investment.reached_stage = Investment.STAGE_QUESTION_3
 
-        investment.save(update_fields=["q5answer", "reached_stage"])
+        investment.save(
+            update_fields=[
+                "multiple_agreement_question",
+                "multiple_agreement_question_type",
+                "reached_stage",
+            ]
+        )
 
         return redirect(reverse("invest_game:question3"))
 
@@ -318,30 +360,32 @@ def question3(request, id=None):
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
 
-        investment.q6answer = request.POST.get("question6")
-        investment.q7answer = request.POST.get("question7")
-        investment.q8answer = request.POST.get("question8")
-        investment.q9answer = request.POST.get("question9")
-        investment.q10answer = request.POST.get("question10")
-        investment.q11answer = request.POST.get("question11")
-        investment.q12answer = request.POST.get("question12")
-        investment.q13answer = request.POST.get("question13")
-        investment.q14answer = request.POST.get("question14")
-        investment.q15answer = request.POST.get("question15")
+        investment.news_source = request.POST.get("news_source")
+        investment.muslims_in_neighborhood = request.POST.get("muslims_in_neighborhood")
+        investment.muslim_coworkers = request.POST.get("muslim_coworkers")
+        investment.self_treated_unfairly = request.POST.get("self_treated_unfairly")
+        investment.race_treated_unfairly = request.POST.get("race_treated_unfairly")
+        investment.religion_treated_unfairly = request.POST.get(
+            "religion_treated_unfairly"
+        )
+        investment.general_trustworthiness = request.POST.get("general_trustworthiness")
+        investment.economic_outlook = request.POST.get("economic_outlook")
+        investment.islamic_extremism = request.POST.get("islamic_extremism")
+        investment.reducing_terrorism = request.POST.get("reducing_terrorism")
         investment.reached_stage = Investment.STAGE_FINISH
 
         investment.save(
             update_fields=[
-                "q6answer",
-                "q7answer",
-                "q8answer",
-                "q9answer",
-                "q10answer",
-                "q11answer",
-                "q12answer",
-                "q13answer",
-                "q14answer",
-                "q15answer",
+                "news_source",
+                "muslims_in_neighborhood",
+                "muslim_coworkers",
+                "self_treated_unfairly",
+                "race_treated_unfairly",
+                "religion_treated_unfairly",
+                "general_trustworthiness",
+                "economic_outlook",
+                "islamic_extremism",
+                "reducing_terrorism",
                 "reached_stage",
             ]
         )
