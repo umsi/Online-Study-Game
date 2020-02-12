@@ -1,5 +1,7 @@
 # Online-Study-Game
 
+This repository contains code for running the `invest_game` study and supporting questionnaires. It also contains (deprecated!) non-`invest_game` code designed to run other game experiments. This functionality is siloed in its own Django app but could be restored in the future.
+
 ## Setting up a local environment
 
 This application uses [`virtualenv`](https://virtualenv.pypa.io/en/latest/) to manage the local development environment. Follow the steps below to set up your environment:
