@@ -15,7 +15,6 @@ urlpatterns = [
         views.respondent_investment,
         name="respondent_investment",
     ),
-    path("final/", views.final, name="final"),
     path("compare/", views.compare, name="compare"),
     path("question1/", views.question1, name="question1"),
     path("question1-5/", views.question1_5, name="question1_5"),

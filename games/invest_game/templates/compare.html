@@ -2,19 +2,19 @@
 
 {% load static %} 
 
-{% block title %}Welcome!{% endblock title %} 
+{% block title %}Your Results{% endblock title %} 
 
 {% block leftcontent %}
 <div>
   <ul>
     <li>
-      <h3>You decided to pass ${{invested}} to {{respondent}}.</h3>
+      <h3>You decided to pass ${{user_investment}} to {{respondent}}.</h3>
     </li>
     <li>
-      <h3>{{respondent}} decided to return back ${{real_returned}}.</h3>
+      <h3>{{respondent}} decided to return back ${{respondent_investment}}.</h3>
     </li>
     <li>
-      <h3>You guessed that {{respondent}} would return ${{guess_returned}}.</h3>
+      <h3>You guessed that {{respondent}} would return ${{respondent_investment_guess}}.</h3>
     </li>
     <li>
       <h3>
@@ -24,7 +24,7 @@
     </li>
     <li>
       <h3>
-        Therefore you earned ${{user_left}} + ${{real_returned}} + ${{bonus}} =
+        Therefore you earned ${{user_left}} + ${{respondent_investment}} + ${{user_bonus}} =
         ${{received}} in total.
       </h3>
     </li>
@@ -37,7 +37,3 @@
   </form>
 </div>
 {% endblock leftcontent %} 
-
-{% block rightcontent %}
-<div id="RightContentContainer"></div>
-{% endblock rightcontent %} 

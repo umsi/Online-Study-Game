@@ -20,6 +20,8 @@ from .decorators import require_stage
 
 GUESS_THRESHOLD = 1
 USER_BONUS_AMOUNT = 2
+USER_INVESTMENT_MULTIPLIER = 3
+INITIAL_USER_COINS_NUM = 5
 
 
 @require_id_query_param
@@ -168,7 +170,8 @@ def respondent_investment(request, id=None):
             "respondent_investment.html",
             {
                 "respondent": investment.respondent,
-                "invested": investment.user_investment,
+                "user_investment": investment.user_investment,
+                "USER_INVESTMENT_MULTIPLIER": USER_INVESTMENT_MULTIPLIER,
                 "investor_coins": range(20),
                 "respondent_coins": range(20),
             },
@@ -189,20 +192,24 @@ def respondent_investment(request, id=None):
             request.POST.get("respondent_investment_guess")
         )
 
-        # TODO: Some comments explaining this logic would be helpful...
+        # NOTE: The final amount the user received is calculated as follows:
+        #  - The *actual* amount the respondent invested
+        #  - Plus a bonus of $2 if the user guess was within the 
+        #    `GUESS_THRESHOLD`
+        #  - Plus the difference between `INITIAL_USER_COINS_NUM` and the
+        #    amount the user decided to invest in the respondent.
         user_received = respondent_investment
         user_bonus = 0
         if abs(respondent_investment - respondent_investment_guess) <= GUESS_THRESHOLD:
-            user_received += USER_BONUS_AMOUNT
-
-        # TODO: What's the constant value here?
-        user_received += 5 - investment.user_investment
+            user_bonus = USER_BONUS_AMOUNT
+            user_received += user_bonus
+        user_received += INITIAL_USER_COINS_NUM - investment.user_investment
 
         investment.respondent_investment = respondent_investment
         investment.finished_respondent_investment = datetime.datetime.now()
         investment.respondent_investment_guess = respondent_investment_guess
         investment.user_received = user_received
-        investment.user_bonus = USER_BONUS_AMOUNT
+        investment.user_bonus = user_bonus
         investment.reached_stage = Investment.STAGE_COMPARE
         investment.save(
             update_fields=[
@@ -237,16 +244,14 @@ def compare(request, id=None):
             guess_flag = "within"
 
         context = {
-            "invested": investment.user_investment,
-            "guess_returned": investment.respondent_investment_guess,
-            "real_returned": investment.respondent_investment,
+            "user_investment": investment.user_investment,
+            "respondent_investment_guess": investment.respondent_investment_guess,
+            "respondent_investment": investment.respondent_investment,
             "received": investment.user_received,
             "respondent": investment.respondent,
             "guess_flag": guess_flag,
-            "nodata": False,
-            # TODO: What's the explanation of the hard-coded value here?
-            "user_left": 5 - investment.user_investment,
-            "bonus": investment.user_bonus,
+            "user_left": INITIAL_USER_COINS_NUM - investment.user_investment,
+            "user_bonus": investment.user_bonus,
         }
 
         return render(request, "compare.html", context)
@@ -258,6 +263,8 @@ def compare(request, id=None):
         return redirect(reverse("invest_game:question1"))
 
 
+# TODO: Use Django's ModelForms to handle this view and subsequent
+# questionnaire views.
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_QUESTION_1)
@@ -400,175 +407,3 @@ def finish(request, id=None):
     request.session["id"] = None
 
     return render(request, "finish.html")
-
-
-# TODO: What's the intended purpose of this view?
-def final(request):
-    if request.method == "POST":
-        requestPost = json.loads(request.body.decode("utf-8"))
-        if ("REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "") or (
-            request.session.get("umid", False) and request.session["umid"] != ""
-        ):
-            if "REMOTE_USER" in request.META and request.META["REMOTE_USER"] != "":
-                umid = request.META["REMOTE_USER"]
-            if request.session.get("umid", False) and request.session["umid"] != "":
-                umid = request.session["umid"]
-            if "returned" in requestPost and requestPost["returned"] != "":
-                returned = int(requestPost["returned"])
-                part = 7
-                user = InvestmentGameUser.objects.get(username=umid)
-                gameNum = 1
-                if user.firstgame == "investment":
-                    gameNum = 1
-                elif user.secondgame == "investment":
-                    gameNum = 2
-                elif user.thirdgame == "investment":
-                    gameNum = 3
-                if user.investment_set.count() != 0:
-                    investment = user.investment_set.all()[0]
-                    if (
-                        investment.otherreturned == -1
-                        and investment.otherinvested == -1
-                    ):
-                        for i in range(2, part + 1):
-                            if i == 2:
-                                returned = investment.returned0
-                            elif i == 3:
-                                returned = investment.returned1
-                            elif i == 4:
-                                returned = investment.returned2
-                            elif i == 5:
-                                returned = investment.returned3
-                            elif i == 6:
-                                returned = investment.returned4
-                            elif i == 7:
-                                returned = int(requestPost["returned"])
-                                investment.returned5 = returned
-                                investment.startedreturned5 = datetime.datetime.strptime(
-                                    request.session["started"], "%b %d %Y %I:%M:%S %p"
-                                )
-                                investment.finishedreturned5 = datetime.datetime.now()
-                                investment.save()
-                            if returned == -1:
-                                part = i
-                                context = {
-                                    "umid": umid,
-                                    "returned": returned,
-                                    "part": part,
-                                    "gameNum": gameNum,
-                                }
-                                return render(request, "games/Trust Game.html", context)
-
-                        otherPlayer = None
-                        otherPlayersComparison = Investment.objects.filter(
-                            otherreturned=-1
-                        ).filter(otherinvested=-1)
-                        otherPlayers = (
-                            Investment.objects.filter(user__version="Pilot")
-                            .exclude(user=user)
-                            .order_by("?")
-                        )
-                        for other in otherPlayers:
-                            if (
-                                other.invested != -1
-                                and other.returned5 != -1
-                                and not other in otherPlayersComparison
-                            ):
-                                otherPlayer = other
-                                break
-                        if otherPlayer == None:
-                            return JsonResponse({"found": 0})
-                        InvestOrReturn = random.getrandbits(1)
-                        if InvestOrReturn:
-                            investAmount = investment.invested
-                            if investAmount == 0:
-                                returnAmount = otherPlayer.returned0
-                            elif investAmount == 1:
-                                returnAmount = otherPlayer.returned1
-                            elif investAmount == 2:
-                                returnAmount = otherPlayer.returned2
-                            elif investAmount == 3:
-                                returnAmount = otherPlayer.returned3
-                            elif investAmount == 4:
-                                returnAmount = otherPlayer.returned4
-                            elif investAmount == 5:
-                                returnAmount = otherPlayer.returned5
-                            investment.otherreturned = returnAmount
-                            # otherPlayer.otherinvested = investAmount
-
-                            investment.points = 5 - investAmount + returnAmount
-                            # otherPlayer.points = 5 + (3 * investAmount) - returnAmount
-
-                        else:
-                            investAmount = otherPlayer.invested
-                            if investAmount == 0:
-                                returnAmount = investment.returned0
-                            elif investAmount == 1:
-                                returnAmount = investment.returned1
-                            elif investAmount == 2:
-                                returnAmount = investment.returned2
-                            elif investAmount == 3:
-                                returnAmount = investment.returned3
-                            elif investAmount == 4:
-                                returnAmount = investment.returned4
-                            elif investAmount == 5:
-                                returnAmount = investment.returned5
-                            # otherPlayer.otherreturned = returnAmount
-                            investment.otherinvested = investAmount
-
-                            # otherPlayer.points = 5 - investAmount + returnAmount
-                            investment.points = 5 + (3 * investAmount) - returnAmount
-
-                        investment.otheruser = otherPlayer.user
-                        # otherPlayer.otheruser = user
-                        investment.save()
-                        # otherPlayer.save()
-
-                        return JsonResponse(
-                            {
-                                "InvestOrReturn": InvestOrReturn,
-                                "found": 1,
-                                "returnAmount": returnAmount,
-                                "investAmount": investAmount,
-                                "points": investment.points,
-                            }
-                        )
-                    else:
-                        if investment.otherreturned != -1:
-                            return JsonResponse(
-                                {
-                                    "InvestOrReturn": True,
-                                    "found": 1,
-                                    "returnAmount": investment.otherreturned,
-                                    "investAmount": investment.invested,
-                                    "points": investment.points,
-                                }
-                            )
-                        elif investment.otherinvested != -1:
-                            investAmount = investment.otherinvested
-                            if investAmount == 0:
-                                returnAmount = investment.returned0
-                            elif investAmount == 1:
-                                returnAmount = investment.returned1
-                            elif investAmount == 2:
-                                returnAmount = investment.returned2
-                            elif investAmount == 3:
-                                returnAmount = investment.returned3
-                            elif investAmount == 4:
-                                returnAmount = investment.returned4
-                            elif investAmount == 5:
-                                returnAmount = investment.returned5
-                            return JsonResponse(
-                                {
-                                    "InvestOrReturn": False,
-                                    "found": 1,
-                                    "returnAmount": returnAmount,
-                                    "investAmount": investAmount,
-                                    "points": investment.points,
-                                }
-                            )
-                context = {"umid": umid, "gameNum": gameNum}
-                return render(request, "trust_game.html", context)
-
-    context = {"umid": "", "welcomepage": 1}
-    return render(request, "welcome.html", context)

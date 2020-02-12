@@ -20,15 +20,15 @@ class Investment(TimeStampedModel):
     STAGE_COMPARE = "compare"
     STAGE_FINISH = "finish"
     STAGE_CHOICES = (
-        (STAGE_SELECT_RESPONDENT, "Reached respondent selection stage"),
-        (STAGE_USER_INVESTMENT, "Reached user investment stage"),
-        (STAGE_RESPONDENT_INVESTMENT, "Reached respondent investment stage"),
-        (STAGE_QUESTION_1, "Reached question 1 stage"),
-        (STAGE_QUESTION_1_5, "Reached question 1.5 stage"),
-        (STAGE_QUESTION_2, "Reached question 2 stage"),
-        (STAGE_QUESTION_3, "Reached question 3 stage"),
-        (STAGE_COMPARE, "Reached compare stage"),
-        (STAGE_FINISH, "Reached finish stage"),
+        (STAGE_SELECT_RESPONDENT, "User reached respondent selection stage"),
+        (STAGE_USER_INVESTMENT, "User reached user investment stage"),
+        (STAGE_RESPONDENT_INVESTMENT, "User reached respondent investment stage"),
+        (STAGE_QUESTION_1, "User reached question 1 stage"),
+        (STAGE_QUESTION_1_5, "User reached question 1.5 stage"),
+        (STAGE_QUESTION_2, "User reached question 2 stage"),
+        (STAGE_QUESTION_3, "User reached question 3 stage"),
+        (STAGE_COMPARE, "User reached compare stage"),
+        (STAGE_FINISH, "User reached finish stage"),
     )
 
     # Valid respondent options
@@ -43,16 +43,40 @@ class Investment(TimeStampedModel):
     RESPONDENT_TRACY = "Tracy"
     RESPONDENT_THERESA = "Theresa"
     RESPONDENT_CHOICES = (
-        (RESPONDENT_IBRAHIM, "Your respondent is Ibrahim"),
-        (RESPONDENT_SAHR, "Your respondent is Sahr"),
-        (RESPONDENT_SAHAL, "Your respondent is Sahal"),
-        (RESPONDENT_OMAR, "Your respondent is Omar"),
-        (RESPONDENT_EMAN, "Your respondent is Eman"),
-        (RESPONDENT_DOUGLAS, "Your respondent is Douglas"),
-        (RESPONDENT_CHRISTOPHER, "Your respondent is Christopher"),
-        (RESPONDENT_PHILIP, "Your respondent is Philip"),
-        (RESPONDENT_THERESA, "Your respondent is Theresa"),
-        (RESPONDENT_TRACY, "Your respondent is Tracy"),
+        (RESPONDENT_IBRAHIM, "Respondent is Ibrahim"),
+        (RESPONDENT_SAHR, "Respondent is Sahr"),
+        (RESPONDENT_SAHAL, "Respondent is Sahal"),
+        (RESPONDENT_OMAR, "Respondent is Omar"),
+        (RESPONDENT_EMAN, "Respondent is Eman"),
+        (RESPONDENT_DOUGLAS, "Respondent is Douglas"),
+        (RESPONDENT_CHRISTOPHER, "Respondent is Christopher"),
+        (RESPONDENT_PHILIP, "Respondent is Philip"),
+        (RESPONDENT_THERESA, "Respondent is Theresa"),
+        (RESPONDENT_TRACY, "Respondent is Tracy"),
+    )
+
+    # Valid multiple agreement question types
+    MULTIPLE_AGREEMENT_CONTROL = "control"
+    MULTIPLE_AGREEMENT_WITH_IMMIGRATION = "with_immigration"
+    MULTIPLE_AGREEMENT_WITH_MUSLIM_IMMIGRATION = "with_muslim_immigration"
+    MULTIPLE_AGREEMENT_CHOICES = (
+        (MULTIPLE_AGREEMENT_CONTROL, "User was presented with the control question"),
+        (
+            MULTIPLE_AGREEMENT_WITH_IMMIGRATION,
+            "User was presented with the immigration option",
+        ),
+        (
+            MULTIPLE_AGREEMENT_WITH_MUSLIM_IMMIGRATION,
+            "User was presented with the Muslim immigration option",
+        ),
+    )
+
+    # Valid user bonus choices
+    USER_BONUS = 2
+    NO_USER_BONUS = 0
+    USER_BONUS_CHOICES = (
+        (USER_BONUS, "User received a bonus of $%s" % USER_BONUS),
+        (NO_USER_BONUS, "User received no bonus ($0)"),
     )
 
     user = models.OneToOneField(
@@ -67,12 +91,8 @@ class Investment(TimeStampedModel):
     user_investment = models.IntegerField(null=True)
     respondent_investment_guess = models.IntegerField(null=True)
     respondent_investment = models.IntegerField(null=True)
+    user_bonus = models.IntegerField(choices=USER_BONUS_CHOICES, default=NO_USER_BONUS)
     user_received = models.IntegerField(null=True)
-    user_bonus = models.IntegerField(default=0)
-
-    otherreturned = models.IntegerField(default=-1)
-    otherinvested = models.IntegerField(default=-1)
-    points = models.IntegerField(default=-1)
 
     started_user_investment = models.DateTimeField(null=True)
     finished_user_investment = models.DateTimeField(null=True)
@@ -84,7 +104,9 @@ class Investment(TimeStampedModel):
     how_voted = models.CharField(max_length=255, null=True)
     political_views = models.CharField(max_length=255, null=True)
     multiple_agreement_question = models.CharField(max_length=255, null=True)
-    multiple_agreement_question_type = models.CharField(max_length=255, null=True)
+    multiple_agreement_question_type = models.CharField(
+        max_length=255, choices=MULTIPLE_AGREEMENT_CHOICES, null=True
+    )
     news_source = models.CharField(max_length=255, null=True)
     muslims_in_neighborhood = models.CharField(max_length=255, null=True)
     muslim_coworkers = models.CharField(max_length=255, null=True)

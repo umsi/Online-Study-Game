@@ -8,7 +8,7 @@ TOPMOST_OFFSET_PIXELS = 130
 
 
 @register.filter(name="get_coin_offset")
-def coin_offset(coin_num):
+def get_coin_offset(coin_num):
     """
     Calculate the top pixel offset of a coin based on its number in the total
     array of coins.
