@@ -24,3 +24,27 @@ def require_stage(target_stage_name):
         return _arguments_wrapper
 
     return _view_wrapper
+
+
+def require_unique_id_query_param(view_func):
+    """
+    Require that the `id` query param not already exist in the database, so
+    that if a user tries to re-take the experiment with the same id after 
+    finishing they are prevented from doing so.
+    """
+
+    @wraps(view_func)
+    def new_view_func(request, *args, **kwargs):
+        id = request.GET.get("id", None)
+
+        try:
+            user = InvestmentGameUser.objects.get(username=id)
+        except InvestmentGameUser.DoesNotExist:
+            user = None
+
+        if Investment.objects.filter(user=user).exists():
+            return render(request, "error.html")
+
+        return view_func(request, *args, **kwargs)
+
+    return new_view_func
