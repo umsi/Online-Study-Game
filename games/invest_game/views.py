@@ -1,7 +1,6 @@
 import os
 import json
 import datetime
-import random
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
