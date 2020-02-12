@@ -82,21 +82,53 @@ class Investment(TimeStampedModel):
     user = models.OneToOneField(
         InvestmentGameUser, on_delete=models.CASCADE, primary_key=True
     )
+    respondent = models.CharField(max_length=256, choices=RESPONDENT_CHOICES, null=True)
+
+    # User progress tracking
+    started_experiment = models.DateTimeField(
+        null=True, help_text="When the user landed on the welcome page"
+    )
     reached_stage = models.CharField(
         max_length=256, choices=STAGE_CHOICES, default=STAGE_SELECT_RESPONDENT,
     )
-    respondent = models.CharField(max_length=256, choices=RESPONDENT_CHOICES, null=True)
+    started_select_respondent = models.DateTimeField(
+        null=True, help_text="When the user landed on the select respondent stage"
+    )
+    started_user_investment = models.DateTimeField(
+        null=True, help_text="When the user landed on the user investment stage"
+    )
+    started_respondent_investment = models.DateTimeField(
+        null=True, help_text="When the user landed on the respondent investment stage"
+    )
+    started_compare = models.DateTimeField(
+        null=True, help_text="When the user landed on the compare stage"
+    )
+    started_question_1 = models.DateTimeField(
+        null=True, help_text="When the user landed on the question 1 stage"
+    )
+    started_question_1_5 = models.DateTimeField(
+        null=True,
+        help_text="When the user landed on the question 1.5 stage (if relevant)",
+    )
+    started_question_2 = models.DateTimeField(
+        null=True, help_text="When the user landed on the question 2 stage"
+    )
+    started_question_3 = models.DateTimeField(
+        null=True, help_text="When the user landed on the question 3 stage"
+    )
+    started_finish = models.DateTimeField(
+        null=True,
+        help_text="When the user landed on the finish stage, and completed the experiment",
+    )
+
+    # Investment game data
     user_investment = models.IntegerField(null=True)
     respondent_investment_guess = models.IntegerField(null=True)
     respondent_investment = models.IntegerField(null=True)
     user_bonus = models.IntegerField(choices=USER_BONUS_CHOICES, null=True)
     user_received = models.IntegerField(null=True)
 
-    started_user_investment = models.DateTimeField(null=True)
-    finished_user_investment = models.DateTimeField(null=True)
-    started_respondent_investment = models.DateTimeField(null=True)
-    finished_respondent_investment = models.DateTimeField(null=True)
-
+    # Final qustionnaires
     us_citizen = models.CharField(max_length=255, null=True)
     voted_last_election = models.CharField(max_length=255, null=True)
     how_voted = models.CharField(max_length=255, null=True)
