@@ -24,13 +24,9 @@ class GamesUser(AbstractUser, TimeStampedModel):
     InvestmentGameUser. That way game-specific fields can be added.
     """
 
-    # TODO: I'm not sure if all these fields are stricly needed here?
-    total_earning = models.FloatField(default=0)
-    experiment_earning = models.FloatField(default=0)
-    started_study = models.DateTimeField(default=timezone.now)
-    finished_study = models.DateTimeField(null=True)
-    optout = models.BooleanField(default=0)
-    postpone = models.BooleanField(default=0)
+    # TODO: This model might not be needed, but in case we need to track data
+    # across multiple games (such as total earnings, etc.), this model would be
+    # the place to store that data.
 
     def __str__(self):
         return self.username

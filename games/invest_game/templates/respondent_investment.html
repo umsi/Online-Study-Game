@@ -55,26 +55,7 @@
 
   <div id="SliderContainer">
     <div id="parent" style="display: table; table-layout: fixed;">
-      <div class="childwrap" style="display: table-row;">
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-        <div class="child" style="display: table-cell; width: calc(100% / 5)">
-          |
-        </div>
-      </div>
+      <div class="childwrap" style="display: table-row;"></div>
     </div>
 
     <div id="slider" style=" width: 100%"></div>
@@ -93,49 +74,46 @@
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
   $(document).ready(function(){
-      var invested = {{invested}}
-      var returned = 0
-      var ruler_num = invested * 3 + 5
+      var USER_INVESTMENT_MULTIPLIER = Number({{ USER_INVESTMENT_MULTIPLIER }});
+      var USER_STARTING_COINS_NUM = 5;
+      var userInvestment = Number({{ user_investment }});
+      var numUserCoins = USER_STARTING_COINS_NUM - userInvestment;
+      var numRespondentCoins = userInvestment * USER_INVESTMENT_MULTIPLIER + USER_STARTING_COINS_NUM; 
+      var returned = 0;
 
-      for (var i = 0; i <= ruler_num; i++) {
+      for (var i = 0; i <= numRespondentCoins; i++) {
         var elm = '<div class="child" ' +
-        'style="display: table-cell; width: calc(100% / ' + ruler_num +  ');">' + '|' +
+        'style="display: table-cell; width: calc(100% / ' + numRespondentCoins +  ');">' + '|' +
         '</div>';
-        $(elm).appendTo($(".childwrap2"))
+        $(elm).appendTo($(".childwrap"));
       }
 
-      invested = invested - 2;
-      // returned = {{returned}}
       $("#UpperArrow").children("img")[0].src ="{% static 'games/media/Upper_Blue_Arrow.png' %}";
       $("#LowerArrow").show();
       $("#ReturnCalc").show();
       $("#InvestmentAmount").css("color", "blue");
       $("#InvestmentCalc").css("color", "blue");
       $("#InvestorCoinsAmountNum").css("color", "green");
-      $("#Instructions1").slideUp();
-      $("#Instructions2").show().slideDown();
-      $("#PartNum").html(invested + 2);
-      $("#InvestorPasses").html(invested);
-      $("#YouReceivedFromInvestor").html(invested * 3);
+      $("#InvestorPasses").html(userInvestment);
       $("#InvestorIdentity").css("font-weight", "normal");
       $("#InvestorIdentityLabel").css("font-weight", "normal");
       $("#ResponderIdentity").css("font-weight", "bold");
       $("#ResponderIdentityLabel").css("font-weight", "bold");
       $("#RespondentCoinsAmount").css("color", "green");
 
-      $( "#InvestmentAmount" ).html( "$" + invested );
-      $( "#InvestmentResult" ).html( "$" + (invested * 3) );
+      $( "#InvestmentAmount" ).html( "$" + userInvestment );
+      $( "#InvestmentResult" ).html( "$" + (userInvestment * USER_INVESTMENT_MULTIPLIER) );
 
       $("#returned").val( returned );
       $( "#ReturnAmount" ).html( "$" + returned );
 
-      $( "#InvestorCoinsAmountNum" ).html( "$" + (5 - invested + returned) );
-      $( "#RespondentCoinsAmountNum" ).html( "$" + (5 + (invested * 3) - returned) );
+      $( "#InvestorCoinsAmountNum" ).html( "$" + numUserCoins);
+      $( "#RespondentCoinsAmountNum" ).html( "$" + (USER_STARTING_COINS_NUM + (userInvestment * USER_INVESTMENT_MULTIPLIER) - returned) );
 
-      $("#InvestorCoinsAmount").css("top", (76 - 9 * (returned - invested)) + "px");
-      $("#RespondentCoinsAmount").css("top", (76 + 9 * (returned - (invested * 3))) + "px");
+      $("#InvestorCoinsAmount").css("top", (76 - 9 * (returned - userInvestment)) + "px");
+      $("#RespondentCoinsAmount").css("top", (76 + 9 * (returned - (userInvestment * USER_INVESTMENT_MULTIPLIER))) + "px");
 
-      var sliderMaxVal = 5 + (invested * 3);
+      var sliderMaxVal = USER_STARTING_COINS_NUM + (userInvestment * USER_INVESTMENT_MULTIPLIER);
       var sliderMinVal = 0;
       var sliderVal = sliderMaxVal - returned;
 
@@ -148,7 +126,7 @@
         }
       }
       for (i = 1; i <= 20; i++) {
-        if (i <= 5 - invested + returned) {
+        if (i <= USER_STARTING_COINS_NUM - userInvestment + returned) {
           $("#InvestorCoin" + i).show();
         }
         else {
@@ -162,18 +140,18 @@
         max: sliderMaxVal,
         step: 1,
         slide: function( event, ui ) {
-          invested = invested - 2;
+          userInvestment = userInvestment - 2;
           var inv = parseInt(ui.value);
           var transferedAmount = sliderMaxVal - inv;
 
           $("#returned").val(transferedAmount);
           $( "#ReturnAmount" ).html( "$" + transferedAmount );
 
-          $( "#InvestorCoinsAmountNum" ).html( "$" + (5 - invested + transferedAmount) );
+          $( "#InvestorCoinsAmountNum" ).html( "$" + (USER_STARTING_COINS_NUM - userInvestment + transferedAmount) );
           $( "#RespondentCoinsAmountNum" ).html( "$" + inv );
 
-          $("#InvestorCoinsAmount").css("top", (76 - 9 * (transferedAmount - invested)) + "px");
-          $("#RespondentCoinsAmount").css("top", (76 + 9 * (transferedAmount - (invested * 3))) + "px");
+          $("#InvestorCoinsAmount").css("top", (76 - 9 * (transferedAmount - userInvestment)) + "px");
+          $("#RespondentCoinsAmount").css("top", (76 + 9 * (transferedAmount - (userInvestment * USER_INVESTMENT_MULTIPLIER))) + "px");
 
           for (i = 1; i <= 20; i++) {
             if (i <= inv) {
@@ -184,7 +162,7 @@
             }
           }
           for (i = 1; i <= 20; i++) {
-            if (i <= 5 - invested + transferedAmount) {
+            if (i <= USER_STARTING_COINS_NUM - userInvestment + transferedAmount) {
               $("#InvestorCoin" + i).show();
             }
             else {
@@ -192,10 +170,10 @@
             }
           }
 
-          invested = invested + 2;
+          userInvestment = userInvestment + 2;
         }
       });
-      invested = invested + 2;
+      userInvestment = userInvestment + 2;
 
       $("#SliderSubmitBtn").click(function() {
           $("#ReturnForm").submit();

@@ -378,6 +378,10 @@ td.slim button {
   top: 340px;
 }
 
+.ui-slider .ui-slider-handle {
+  cursor: pointer;
+}
+
 .ui-accordion-content {
   padding-right: 0 !important;
   padding-left: 0 !important;
