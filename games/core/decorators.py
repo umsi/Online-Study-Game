@@ -40,8 +40,7 @@ def require_id_query_param(view_func):
             return render(request, "error.html")
 
         kwargs["id"] = id
-        response = view_func(request, *args, **kwargs)
 
-        return response
+        return view_func(request, *args, **kwargs)
 
     return new_view_func

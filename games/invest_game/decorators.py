@@ -48,3 +48,24 @@ def require_unique_id_query_param(view_func):
         return view_func(request, *args, **kwargs)
 
     return new_view_func
+
+
+def disallow_id_session_param(view_func):
+    """
+    Check if the `request.session['id']` property exists, and disallow further view
+    processing if it does. Instead, route to the expected stage.
+    """
+
+    @wraps(view_func)
+    def new_view_func(request, *args, **kwargs):
+        id = request.session.get("id", None)
+
+        if id is not None:
+            user = InvestmentGameUser.objects.get(username=id)
+            investment = Investment.objects.get(user=user)
+
+            return redirect(reverse("invest_game:%s" % investment.reached_stage))
+
+        return view_func(request, *args, **kwargs)
+
+    return new_view_func

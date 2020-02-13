@@ -15,7 +15,11 @@ from games.core.decorators import (
     require_id_session_param,
     require_id_query_param,
 )
-from .decorators import require_stage, require_unique_id_query_param
+from .decorators import (
+    require_stage,
+    require_unique_id_query_param,
+    disallow_id_session_param,
+)
 
 
 GUESS_THRESHOLD = 1
@@ -25,6 +29,7 @@ INITIAL_USER_COINS_NUM = 5
 
 
 @require_id_query_param
+@disallow_id_session_param
 @require_unique_id_query_param
 @require_GET
 def welcome(request, id=None):
