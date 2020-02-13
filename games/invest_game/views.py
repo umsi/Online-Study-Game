@@ -17,8 +17,7 @@ from games.core.decorators import (
 )
 from .decorators import (
     require_stage,
-    require_unique_id_query_param,
-    disallow_id_session_param,
+    require_unique_id_query_param_and_disallow_id_session_param,
 )
 
 
@@ -28,14 +27,13 @@ USER_INVESTMENT_MULTIPLIER = 3
 INITIAL_USER_COINS_NUM = 5
 
 
-@require_id_query_param
-@disallow_id_session_param
-@require_unique_id_query_param
+@require_unique_id_query_param_and_disallow_id_session_param
 @require_GET
 def welcome(request, id=None):
     request.session["id"] = id
-    request.session["started_experiment"] = json.dumps(
-        timezone.now(), cls=DjangoJSONEncoder
+    user = InvestmentGameUser.objects.create(username=id)
+    Investment.objects.create(
+        user=user, started_experiment=timezone.now(),
     )
 
     return render(request, "welcome.html")
@@ -51,12 +49,6 @@ def sign_in(request, id=None):
 
     Create a new InvestmentGameUser and Investment.
     """
-    user, _ = InvestmentGameUser.objects.get_or_create(username=id)
-    Investment.objects.get_or_create(
-        user=user,
-        started_experiment=json.loads(request.session.get("started_experiment", "")),
-        started_select_respondent=timezone.now(),
-    )
 
     return redirect(reverse("invest_game:select_respondent"))
 
