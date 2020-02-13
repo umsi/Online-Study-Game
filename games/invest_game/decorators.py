@@ -26,46 +26,55 @@ def require_stage(target_stage_name):
     return _view_wrapper
 
 
-def require_unique_id_query_param(view_func):
+def require_unique_id_query_param_and_disallow_id_session_param(view_func):
     """
-    Require that the `id` query param not already exist in the database, so
-    that if a user tries to re-take the experiment with the same id after 
-    finishing they are prevented from doing so.
+    Require that the `id` query param exist and not already correspond to a
+    record in the database, and furthermore disallow an existing id session 
+    param. In other words, only allow further view processing if a unique id 
+    query param is supplied and no id session param already exists.
     """
 
     @wraps(view_func)
     def new_view_func(request, *args, **kwargs):
+        session_id = request.session.get("id", None)
         id = request.GET.get("id", None)
 
-        try:
-            user = InvestmentGameUser.objects.get(username=id)
-        except InvestmentGameUser.DoesNotExist:
-            user = None
-
-        if Investment.objects.filter(user=user).exists():
-            return render(request, "error.html")
-
-        return view_func(request, *args, **kwargs)
-
-    return new_view_func
-
-
-def disallow_id_session_param(view_func):
-    """
-    Check if the `request.session['id']` property exists, and disallow further view
-    processing if it does. Instead, route to the expected stage.
-    """
-
-    @wraps(view_func)
-    def new_view_func(request, *args, **kwargs):
-        id = request.session.get("id", None)
-
-        if id is not None:
-            user = InvestmentGameUser.objects.get(username=id)
-            investment = Investment.objects.get(user=user)
+        if session_id is not None:
+            # If a session token already exists and has an `id` parameter, the
+            # user is attempting to restart the experiment. In that case,
+            # redirect to the stage they *should* be on.
+            try:
+                user = InvestmentGameUser.objects.get(username=session_id)
+                investment = Investment.objects.get(user=user)
+            except (InvestmentGameUser.DoesNotExist, Investment.DoesNotExist) as e:
+                return render(request, "error.html")
 
             return redirect(reverse("invest_game:%s" % investment.reached_stage))
 
-        return view_func(request, *args, **kwargs)
+        elif session_id is None and id is None:
+            # If no query id param or session id param exists, render the error
+            # page.
+            return render(request, "error.html")
+
+        elif id is not None and session_id is None:
+            # If we have an id query param and no session id param, check to
+            # make sure the id query param is not a duplicate. We might have a
+            # duplicate if a user finishes the study (and in so doing clears
+            # their session id param), and then for some reason restarts the
+            # study using the same id query param they originally used. In this
+            # case we want to show the error page.
+            try:
+                user = InvestmentGameUser.objects.get(username=id)
+            except InvestmentGameUser.DoesNotExist:
+                kwargs["id"] = id
+                return view_func(request, *args, **kwargs)
+
+            try:
+                investment = Investment.objects.get(user=user)
+            except Investment.DoesNotExist:
+                kwargs["id"] = id
+                return view_func(request, *args, **kwargs)
+
+        return render(request, "error.html")
 
     return new_view_func
