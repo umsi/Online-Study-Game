@@ -15,7 +15,11 @@ from games.core.decorators import (
     require_id_session_param,
     require_id_query_param,
 )
-from .decorators import require_stage
+from .decorators import (
+    require_stage,
+    require_unique_id_query_param,
+    disallow_id_session_param,
+)
 
 
 GUESS_THRESHOLD = 1
@@ -25,21 +29,10 @@ INITIAL_USER_COINS_NUM = 5
 
 
 @require_id_query_param
+@disallow_id_session_param
+@require_unique_id_query_param
 @require_GET
 def welcome(request, id=None):
-    if request.session.get("id", None) is not None:
-        try:
-            # If we're loading the welcome page and an `id` session param
-            # already exists, it's probably because the user did not finish a
-            # previous session or has attempted to use the back button. In
-            # these cases we want to forward the user to the correct stage.
-            user = InvestmentGameUser.objects.get(username=request.session["id"])
-            investment = Investment.objects.get(user=user)
-
-            return redirect(reverse("invest_game:%s" % investment.reached_stage))
-        except (InvestmentGameUser.DoesNotExist, Investment.DoesNotExist) as e:
-            pass
-
     request.session["id"] = id
     request.session["started_experiment"] = json.dumps(
         timezone.now(), cls=DjangoJSONEncoder
