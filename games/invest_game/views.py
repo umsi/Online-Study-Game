@@ -31,26 +31,15 @@ INITIAL_USER_COINS_NUM = 5
 @require_GET
 def welcome(request, id=None):
     request.session["id"] = id
+    # TODO: I'm not sure it's ideal to be altering the database on a GET
+    # request as we do here, though this view is guarded somewhat by the
+    # decorators above. But maybe there's a better way to handle this?
     user = InvestmentGameUser.objects.create(username=id)
     Investment.objects.create(
         user=user, started_experiment=timezone.now(),
     )
 
     return render(request, "welcome.html")
-
-
-@require_id_session_param
-@require_POST
-def sign_in(request, id=None):
-    """
-    
-    POST
-    ----
-
-    Create a new InvestmentGameUser and Investment.
-    """
-
-    return redirect(reverse("invest_game:select_respondent"))
 
 
 @require_id_session_param

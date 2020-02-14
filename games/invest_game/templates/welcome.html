@@ -9,12 +9,15 @@
       person called the Responder. The Responder is someone from an American
       city who has already played their part of the game.
     </h3>
-    <form class="form-signin" action={% url 'invest_game:sign_in' %} method="post">
-      {% csrf_token %}
-      <button id="begin-game-btn" class="btn btn-lg btn-primary" type="submit">
+    <div style="text-align:center;margin-top:24px;">
+      <a
+        href="{% url 'invest_game:select_respondent' %}"
+        class="btn btn-large btn-primary"
+        style="font-size:1.5rem;padding:12px 20px 12px 20px;"
+      >
         Begin Game
-      </button>
-    </form>
+      </a>
+    </div>
   </div>
 </div>
 {% endblock content %}

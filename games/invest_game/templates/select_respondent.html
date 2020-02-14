@@ -51,6 +51,7 @@
 {% endblock leftcontent %} 
 
 {% block rightcontent %}
+{% csrf_token %}
 <div id="RightContentContainer">
   <div id="respondent-images-container">
     <img class="respondent-img" src="{% static 'games/media/user.svg' %}" />

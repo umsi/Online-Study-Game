@@ -28,12 +28,6 @@ body {
   color: #ff0000;
 }
 
-#begin-game-btn {
-  display: block;
-  margin: 0 auto;
-  margin-top: 36px;
-}
-
 #LeftContentContainer, #RightContentContainer {
   padding: 0 16px;
 }

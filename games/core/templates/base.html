@@ -145,7 +145,6 @@
 
     <!-- Core JS functionality: -->
     <script type="text/javascript">
-      var csrftoken = getCookie("um-online-study-game-csrftoken");
       function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != "") {
@@ -161,6 +160,7 @@
         }
         return cookieValue;
       }
+      var csrftoken = getCookie("um-online-study-game-csrftoken");
 
       function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
