@@ -128,7 +128,6 @@ USE_L10N = True
 # Sessions
 # https://docs.djangoproject.com/en/3.0/topics/http/sessions/
 
-SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_NAME = "um-online-study-game-sessionid"
 
 
