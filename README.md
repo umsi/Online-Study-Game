@@ -55,3 +55,10 @@ If you need to create an environment, use the `eb create` command, documented [h
 The standard Django admin application can be accessed at `<application_url>/admin`. The username and password are set using the `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables.
 
 From the admin panel, you can export study data to a CSV file.
+
+## Running tests
+
+Run tests with:
+```
+python manage.py test
+```
