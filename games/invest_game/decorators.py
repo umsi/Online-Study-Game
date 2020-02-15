@@ -7,6 +7,14 @@ from .models import Investment, InvestmentGameUser
 
 
 def require_stage(target_stage_name):
+    """
+    Require that the value of `reached_stage` on the `Investment` model
+    corresponding to the current session be equivalent to the stage declared
+    when this decorator is invoked. If `reached_stage` matches the declared
+    stage, allow further processing of the view. If not, redirect to the
+    correct stage.
+    """
+
     def _view_wrapper(view_func):
         @wraps(view_func)
         def _arguments_wrapper(request, *args, **kwargs):
