@@ -47,11 +47,10 @@ def welcome(request, id=None):
 @require_stage(Investment.STAGE_SELECT_RESPONDENT)
 def select_respondent(request, id=None):
     """
-    
     GET
     ---
 
-    Return the page for the respondent selection stage.
+    Render the page for the respondent selection stage.
 
 
     POST
@@ -86,11 +85,10 @@ def select_respondent(request, id=None):
 @require_stage(Investment.STAGE_USER_INVESTMENT)
 def user_investment(request, id=None):
     """
-    
     GET
     ---
 
-    Return the template for the respondent selection phase.
+    Render the template for the user investment phase.
 
 
     POST
@@ -134,11 +132,13 @@ def respondent_investment(request, id=None):
     GET
     ---
 
+    Render the template for the respondent investment phase.
 
 
     POST
     ----
 
+    Record the user's respondent investment guess.
     """
     user = InvestmentGameUser.objects.get(username=id)
     investment = Investment.objects.get(user=user)
@@ -208,6 +208,20 @@ def respondent_investment(request, id=None):
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_COMPARE)
 def compare(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Calculate comparison statistics and render the template for the compare 
+    phase.
+
+
+    POST
+    ----
+
+    Redirect to next stage.
+    """
     user = InvestmentGameUser.objects.get(username=id)
     investment = Investment.objects.get(user=user)
 
@@ -249,6 +263,19 @@ def compare(request, id=None):
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_QUESTION_1)
 def question1(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question1 phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
     if request.method == "GET":
         return render(request, "question1.html")
 
@@ -292,6 +319,19 @@ def question1(request, id=None):
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_QUESTION_1_5)
 def question1_5(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question1-5 phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
     if request.method == "GET":
         return render(request, "question1-5.html")
 
@@ -322,6 +362,19 @@ def question1_5(request, id=None):
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_QUESTION_2)
 def question2(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question2 phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
     if request.method == "GET":
         return render(request, "question2.html")
 
@@ -354,6 +407,19 @@ def question2(request, id=None):
 @require_http_methods(["GET", "POST"])
 @require_stage(Investment.STAGE_QUESTION_3)
 def question3(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question3 phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
     if request.method == "GET":
         return render(request, "question3.html")
 
@@ -400,6 +466,13 @@ def question3(request, id=None):
 @require_GET
 @require_stage(Investment.STAGE_FINISH)
 def finish(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the finish phase and reset the id session param.
+    """
     request.session["id"] = None
     request.session["started_experiment"] = None
 
