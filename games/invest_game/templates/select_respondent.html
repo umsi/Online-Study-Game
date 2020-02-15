@@ -6,6 +6,12 @@
 
 {% block leftcontent %}
 <div id="LeftContentContainer">
+  <h3 id="instructions">
+    Next, we will ask you to play a game in which you have the opportunity to
+    earn a little bit of cash. You are an Investor, investing in another
+    person called the Responder. The Responder is someone from an American
+    city who has already played their part of the game.
+  </h3>
   <h3 id="intro-title">
     Let’s first find out who your Responder is. Click on one of the icons on the
     right.
@@ -121,7 +127,9 @@
         $(".step_by_step").show();
         $(".respondent-img").off("click");
 
-        $("#respondent-images-container, #intro-title").css("opacity", "0.1")
+        $("#intro-title, #instructions").slideUp()
+        $("#respondent-images-container, #intro-title, #instructions")
+          .css("opacity", "0.1")
 
         isWithRespondent = true;
       });
