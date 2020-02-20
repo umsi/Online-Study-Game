@@ -6,61 +6,61 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si2">
-  <form action="{% url 'invest_game:question3' %}" method="post" id="questionform" class="questionnaire-content">
+  <form id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
-    <p><b>Which do you think is your main source of news?</b></p>
-    <div class="radio">
+    <p><b>Which do you think are your main source of news? (check all that apply)</b></p>
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="abc_nbc_cbs" />
+        <input type="checkbox" id="news_source" name="news_source" value="abc_nbc_cbs" />
         ABC, NBC, or CBS
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="cnn" />
+        <input type="checkbox" id="news_source" name="news_source" value="cnn" />
         CNN
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="fox_news" />
+        <input type="checkbox" id="news_source" name="news_source" value="fox_news" />
         Fox News
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="local_tv_radio" />
+        <input type="checkbox" id="news_source" name="news_source" value="local_tv_radio" />
         Local TV or radio
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="msnbc" />
+        <input type="checkbox" id="news_source" name="news_source" value="msnbc" />
         MSNBC
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="npr_pbs" />
+        <input type="checkbox" id="news_source" name="news_source" value="npr_pbs" />
         NPR (National Public Radio) or PBS
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="newspapers" />
+        <input type="checkbox" id="news_source" name="news_source" value="newspapers" />
         Newspapers, online or in paper
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="facebook" />
+        <input type="checkbox" id="news_source" name="news_source" value="facebook" />
         Facebook
       </label>
     </div>
-    <div class="radio">
+    <div class="checkbox">
       <label>
-        <input type="radio" name="news_source" value="twitter" />
+        <input type="checkbox" id="news_source" name="news_source" value="twitter" />
         Twitter
       </label>
     </div>
@@ -385,7 +385,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
-      Next
+      End of Survey
     </button>
   </form>
 </div>
@@ -406,31 +406,52 @@
   });
 
   $("#questionform").submit(function(event) {
-    var q1answer = $("input[name=news_source]:checked").val();
-    var q2answer = $("input[name=muslims_in_neighborhood]:checked").val();
-    var q3answer = $("input[name=muslim_coworkers]:checked").val();
-    var q4answer = $("input[name=self_treated_unfairly]:checked").val();
-    var q5answer = $("input[name=race_treated_unfairly]:checked").val();
-    var q6answer = $("input[name=religion_treated_unfairly]:checked").val();
-    var q7answer = $("input[name=general_trustworthiness]:checked").val();
-    var q8answer = $("input[name=economic_outlook]:checked").val();
-    var q9answer = $("input[name=islamic_extremism]:checked").val();
-    var q10answer = $("input[name=reducing_terrorism]:checked").val();
+    event.preventDefault();
+
+    var news_source = $("input[name=news_source]:checked")
+      .map(function() { return $(this).val() }).get()
+    var muslims_in_neighborhood = $("input[name=muslims_in_neighborhood]:checked").val();
+    var muslim_coworkers = $("input[name=muslim_coworkers]:checked").val();
+    var self_treated_unfairly = $("input[name=self_treated_unfairly]:checked").val();
+    var race_treated_unfairly = $("input[name=race_treated_unfairly]:checked").val();
+    var religion_treated_unfairly = $("input[name=religion_treated_unfairly]:checked").val();
+    var general_trustworthiness = $("input[name=general_trustworthiness]:checked").val();
+    var economic_outlook = $("input[name=economic_outlook]:checked").val();
+    var islamic_extremism = $("input[name=islamic_extremism]:checked").val();
+    var reducing_terrorism = $("input[name=reducing_terrorism]:checked").val();
 
     if (
-      !q1answer ||
-      !q2answer ||
-      !q3answer ||
-      !q4answer ||
-      !q5answer ||
-      !q6answer ||
-      !q7answer ||
-      !q8answer ||
-      !q9answer ||
-      !q10answer
+      !news_source.length > 0 ||
+      !muslims_in_neighborhood ||
+      !muslim_coworkers ||
+      !self_treated_unfairly ||
+      !race_treated_unfairly ||
+      !religion_treated_unfairly ||
+      !general_trustworthiness ||
+      !economic_outlook ||
+      !islamic_extremism ||
+      !reducing_terrorism
     ) {
-      event.preventDefault();
       alert("Please check all the anwsers");
+    } else {
+      $.ajax({
+        url: "{% url 'invest_game:question3' %}",
+        method: "POST",
+        data: JSON.stringify({
+          news_source: news_source,
+          muslims_in_neighborhood: muslims_in_neighborhood,
+          muslim_coworkers: muslim_coworkers,
+          self_treated_unfairly: self_treated_unfairly,
+          race_treated_unfairly: race_treated_unfairly,
+          religion_treated_unfairly: religion_treated_unfairly,
+          general_trustworthiness: general_trustworthiness,
+          economic_outlook: economic_outlook,
+          islamic_extremism: islamic_extremism,
+          reducing_terrorism: reducing_terrorism
+        }),
+      }).done(function() {
+        window.location.href = {% url "invest_game:finish" %}
+      })
     } 
   });
 </script>

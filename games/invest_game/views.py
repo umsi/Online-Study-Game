@@ -426,19 +426,18 @@ def question3(request, id=None):
     if request.method == "POST":
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
+        data = json.loads(request.body)
 
-        investment.news_source = request.POST.get("news_source")
-        investment.muslims_in_neighborhood = request.POST.get("muslims_in_neighborhood")
-        investment.muslim_coworkers = request.POST.get("muslim_coworkers")
-        investment.self_treated_unfairly = request.POST.get("self_treated_unfairly")
-        investment.race_treated_unfairly = request.POST.get("race_treated_unfairly")
-        investment.religion_treated_unfairly = request.POST.get(
-            "religion_treated_unfairly"
-        )
-        investment.general_trustworthiness = request.POST.get("general_trustworthiness")
-        investment.economic_outlook = request.POST.get("economic_outlook")
-        investment.islamic_extremism = request.POST.get("islamic_extremism")
-        investment.reducing_terrorism = request.POST.get("reducing_terrorism")
+        investment.news_source = str(data["news_source"])
+        investment.muslims_in_neighborhood = data["muslims_in_neighborhood"]
+        investment.muslim_coworkers = data["muslim_coworkers"]
+        investment.self_treated_unfairly = data["self_treated_unfairly"]
+        investment.race_treated_unfairly = data["race_treated_unfairly"]
+        investment.religion_treated_unfairly = data["religion_treated_unfairly"]
+        investment.general_trustworthiness = data["general_trustworthiness"]
+        investment.economic_outlook = data["economic_outlook"]
+        investment.islamic_extremism = data["islamic_extremism"]
+        investment.reducing_terrorism = data["reducing_terrorism"]
         investment.reached_stage = Investment.STAGE_FINISH
         investment.started_finish = timezone.now()
 
@@ -459,7 +458,7 @@ def question3(request, id=None):
             ]
         )
 
-        return redirect(reverse("invest_game:finish"))
+        return HttpResponse()
 
 
 @require_id_session_param

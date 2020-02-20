@@ -6,15 +6,11 @@
 
 {% block leftcontent %}
 <div id="LeftContentContainer">
-  <h3 id="instructions">
-    Next, we will ask you to play a game in which you have the opportunity to
-    earn a little bit of cash. You are an Investor, investing in another
-    person called the Responder. The Responder is someone from an American
-    city who has already played their part of the game.
-  </h3>
   <h3 id="intro-title">
-    Let’s first find out who your Responder is. Click on one of the icons on the
-    right.
+    Let’s first find out who your Responder is. 
+  </h3>
+  <h3 style="color:red;">
+    Click on one of the icons on the right.
   </h3>
   <div class="step_by_step" style="display:none">
     <h3>
@@ -49,7 +45,9 @@
         </h4>
       </li>
       <li>
-        <h4>OK, let’s play. Click "Next" to continue.</h4>
+        <h4>OK, let’s play. 
+          <span style="color:red;">Click "Next" to continue.</span>
+        </h4>
       </li>
     </ul>
   </div>
@@ -127,8 +125,7 @@
         $(".step_by_step").show();
         $(".respondent-img").off("click");
 
-        $("#intro-title, #instructions").slideUp()
-        $("#respondent-images-container, #intro-title, #instructions")
+        $("#respondent-images-container")
           .css("opacity", "0.1")
 
         isWithRespondent = true;

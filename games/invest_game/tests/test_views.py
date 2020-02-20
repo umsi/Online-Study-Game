@@ -519,7 +519,7 @@ class TestQuestion3View(TestCase):
 
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
-            "news_source": "cnn",
+            "news_source": ["cnn", "twitter", "facebook"],
             "muslims_in_neighborhood": "some",
             "muslim_coworkers": "many",
             "self_treated_unfairly": "no",
