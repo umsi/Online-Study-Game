@@ -148,28 +148,6 @@ class Investment(TimeStampedModel):
 
     # Valid question3 choices:
     # ------------------------
-    # Which do you think is your main source of news?
-    QUESTION_PAGE_3_Q1_OPTION_A = "abc_nbc_cbs"
-    QUESTION_PAGE_3_Q1_OPTION_B = "cnn"
-    QUESTION_PAGE_3_Q1_OPTION_C = "fox_news"
-    QUESTION_PAGE_3_Q1_OPTION_D = "local_tv_radio"
-    QUESTION_PAGE_3_Q1_OPTION_E = "msnbc"
-    QUESTION_PAGE_3_Q1_OPTION_F = "npr_pbs"
-    QUESTION_PAGE_3_Q1_OPTION_G = "newspapers"
-    QUESTION_PAGE_3_Q1_OPTION_H = "facebook"
-    QUESTION_PAGE_3_Q1_OPTION_I = "twitter"
-    QUESTION_PAGE_3_Q1_CHOICES = (
-        (QUESTION_PAGE_3_Q1_OPTION_A, "ABC, NBC, or CBS"),
-        (QUESTION_PAGE_3_Q1_OPTION_B, "CNN"),
-        (QUESTION_PAGE_3_Q1_OPTION_C, "Fox News"),
-        (QUESTION_PAGE_3_Q1_OPTION_D, "Local TV or radio"),
-        (QUESTION_PAGE_3_Q1_OPTION_E, "MSNBC"),
-        (QUESTION_PAGE_3_Q1_OPTION_F, "NPR (National Public Radio) or PBS"),
-        (QUESTION_PAGE_3_Q1_OPTION_G, "Newspapers, online or in paper"),
-        (QUESTION_PAGE_3_Q1_OPTION_H, "Facebook"),
-        (QUESTION_PAGE_3_Q1_OPTION_I, "Twitter"),
-    )
-
     # Are there Muslims living in your neighborhood?
     QUESTION_PAGE_3_Q2_OPTION_A = "many"
     QUESTION_PAGE_3_Q2_OPTION_B = "some"
@@ -386,7 +364,6 @@ class Investment(TimeStampedModel):
     news_source = models.CharField(
         max_length=255,
         null=True,
-        choices=QUESTION_PAGE_3_Q1_CHOICES,
         help_text="Which do you think is your main source of news?",
     )
     muslims_in_neighborhood = models.CharField(
