@@ -207,7 +207,7 @@
         }),
       }).done(function(data) {
         if (data.redirect_location === "question2_5") {
-          window.location.href = {% url "invest_game:question2-5" %}
+          window.location.href = {% url "invest_game:question2_5" %}
         } else {
           window.location.href = {% url "invest_game:question3" %}
         }

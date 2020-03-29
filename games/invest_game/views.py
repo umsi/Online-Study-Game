@@ -412,7 +412,7 @@ def question2_5(request, id=None):
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
-@require_stage(Investment.STAGE_QUESTION_2)
+@require_stage(Investment.STAGE_QUESTION_3)
 def question3(request, id=None):
     """
     
@@ -441,6 +441,7 @@ def question3(request, id=None):
         investment.self_treated_unfairly = data["self_treated_unfairly"]
         investment.race_treated_unfairly = data["race_treated_unfairly"]
         investment.religion_treated_unfairly = data["religion_treated_unfairly"]
+        investment.economic_outlook = data["economic_outlook"]
         investment.islamic_extremism = data["islamic_extremism"]
         investment.reducing_terrorism = data["reducing_terrorism"]
         investment.reached_stage = Investment.STAGE_FINISH
@@ -454,6 +455,7 @@ def question3(request, id=None):
                 "self_treated_unfairly",
                 "race_treated_unfairly",
                 "religion_treated_unfairly",
+                "economic_outlook",
                 "islamic_extremism",
                 "reducing_terrorism",
                 "reached_stage",
