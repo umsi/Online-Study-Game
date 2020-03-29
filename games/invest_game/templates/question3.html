@@ -36,7 +36,7 @@
     </div>
 
     <p>
-      <b>What about the next 12 months? Do you expect the national economy to
+      <b>Over the next 12 months, do you expect the national economy to
         get better, get worse, or stay about the same?</b>
     </p>
     <div class="radio">
@@ -388,6 +388,8 @@
           islamic_extremism: islamic_extremism,
           reducing_terrorism: reducing_terrorism
         }),
+      }).done(function() {
+        window.location.href = {% url "invest_game:finish" %}
       })
     } 
   });

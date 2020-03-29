@@ -300,7 +300,7 @@ def question1(request, id=None):
             ]
         )
 
-        return redirect(reverse("invest_game:question2"))
+        return HttpResponse()
 
 
 @require_id_session_param
@@ -356,12 +356,15 @@ def question2(request, id=None):
             ]
         )
 
-        return redirect(
-            reverse(
-                "invest_game:question2_5"
-                if data["us_citizen"] == "yes"
-                else "invest_game:question3"
-            )
+        return HttpResponse(
+            json.dumps(
+                {
+                    "redirect_location": "question2_5"
+                    if data["us_citizen"] == "yes"
+                    else "question3"
+                }
+            ),
+            content_type="application/json",
         )
 
 
@@ -404,7 +407,7 @@ def question2_5(request, id=None):
             ]
         )
 
-        return redirect(reverse("invest_game:question3"))
+        return HttpResponse()
 
 
 @require_id_session_param
@@ -458,7 +461,7 @@ def question3(request, id=None):
             ]
         )
 
-        return redirect(reverse("invest_game:finish"))
+        return HttpResponse()
 
 
 @require_id_session_param

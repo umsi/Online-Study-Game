@@ -282,7 +282,9 @@
             multiple_agreement_question: multiple_agreement_question,
             multiple_agreement_question_type: multiple_agreement_question_type
           }),
-        });
+        }).done(function() {
+          window.location.href = {% url "invest_game:question2" %}
+        })
       } 
     });
   });

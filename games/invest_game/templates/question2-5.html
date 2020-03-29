@@ -6,7 +6,7 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si0" class="questionnaire-content">
-  <form action={% url 'invest_game:question1_5' %} method="POST" id="questionform">
+  <form id="questionform">
     {% csrf_token %}
 
     <p>
@@ -86,7 +86,7 @@
       var voted_last_election = $("input[name=voted_last_election]:checked").val();
       var how_voted = $("input[name=how_voted]:checked").val();
 
-      if (!q1answer || !q2answer) {
+      if (!voted_last_election || !how_voted) {
         alert("Please check all the anwsers");
       } else {
         $.ajax({
@@ -96,7 +96,9 @@
             voted_last_election: voted_last_election,
             how_voted: how_voted
           }),
-        });
+        }).done(function() {
+          window.location.href = {% url "invest_game:question3" %}
+        })
       } 
     });
   });
