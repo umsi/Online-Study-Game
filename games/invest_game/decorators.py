@@ -47,6 +47,10 @@ def require_unique_id_query_param_and_disallow_id_session_param(view_func):
         session_id = request.session.get("id", None)
         id = request.GET.get("id", None)
 
+        if request.method == "POST":
+            kwargs["id"] = session_id
+            return view_func(request, *args, **kwargs)
+
         if session_id is not None:
             # If a session token already exists and has an `id` parameter, the
             # user is attempting to restart the experiment. In that case,
@@ -57,7 +61,10 @@ def require_unique_id_query_param_and_disallow_id_session_param(view_func):
             except (InvestmentGameUser.DoesNotExist, Investment.DoesNotExist) as e:
                 return render(request, "error.html")
 
-            return redirect(reverse("invest_game:%s" % investment.reached_stage))
+            try:
+                return redirect(reverse("invest_game:%s" % investment.reached_stage))
+            except:
+                return render(request, "error.html")
 
         elif session_id is None and id is None:
             # If no query id param or session id param exists, render the error

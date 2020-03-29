@@ -28,18 +28,31 @@ INITIAL_USER_COINS_NUM = 5
 
 
 @require_unique_id_query_param_and_disallow_id_session_param
-@require_GET
+@require_http_methods(["GET", "POST"])
 def welcome(request, id=None):
-    request.session["id"] = id
-    # TODO: I'm not sure it's ideal to be altering the database on a GET
-    # request as we do here, though this view is guarded somewhat by the
-    # decorators above. But maybe there's a better way to handle this?
-    user = InvestmentGameUser.objects.create(username=id)
-    Investment.objects.create(
-        user=user, started_experiment=timezone.now(),
-    )
+    if request.method == "GET":
+        request.session["id"] = id
+        # TODO: I'm not sure it's ideal to be altering the database on a GET
+        # request as we do here, though this view is guarded somewhat by the
+        # decorators above. But maybe there's a better way to handle this?
+        user = InvestmentGameUser.objects.create(username=id)
+        Investment.objects.create(
+            user=user, started_experiment=timezone.now(),
+        )
 
-    return render(request, "welcome.html")
+        return render(request, "welcome.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+        investment.started_select_respondent = timezone.now()
+        investment.reached_stage = Investment.STAGE_SELECT_RESPONDENT
+
+        investment.save(
+            update_fields=["started_user_investment", "reached_stage"]
+        )
+
+        return HttpResponse()
 
 
 @require_id_session_param

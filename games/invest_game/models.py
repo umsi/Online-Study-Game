@@ -398,7 +398,7 @@ class Investment(TimeStampedModel):
         null=True, help_text="When the user landed on the welcome page"
     )
     reached_stage = models.CharField(
-        max_length=256, choices=STAGE_CHOICES, default=STAGE_SELECT_RESPONDENT,
+        max_length=256, choices=STAGE_CHOICES, null=True,
     )
     started_select_respondent = models.DateTimeField(
         null=True, help_text="When the user landed on the select respondent stage"
