@@ -432,6 +432,7 @@ def question3(request, id=None):
         investment = Investment.objects.get(user=user)
         data = json.loads(request.body)
 
+        investment.approve_of_trump = data["approve_of_trump"]
         investment.muslims_in_neighborhood = data["muslims_in_neighborhood"]
         investment.muslim_coworkers = data["muslim_coworkers"]
         investment.self_treated_unfairly = data["self_treated_unfairly"]
@@ -444,6 +445,7 @@ def question3(request, id=None):
 
         investment.save(
             update_fields=[
+                "approve_of_trump",
                 "muslims_in_neighborhood",
                 "muslim_coworkers",
                 "self_treated_unfairly",

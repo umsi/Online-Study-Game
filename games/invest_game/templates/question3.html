@@ -9,6 +9,32 @@
   <form id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
+    <p><b>Do you approve or disapprove of the way Donald Trump is handling his job as president?</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="approve_of_trump" value="approve" />
+        Approve
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="approve_of_trump" value="disapprove" />
+        Disapprove
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="approve_of_trump" value="dont_know" />
+        Dont' know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="approve_of_trump" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
+    </div>
+
     <p>
       <b>What about the next 12 months? Do you expect the national economy to
         get better, get worse, or stay about the same?</b>
@@ -323,6 +349,7 @@
   $("#questionform").submit(function(event) {
     event.preventDefault();
 
+    var approve_of_trump = $("input[name=approve_of_trump]:checked").val();
     var muslims_in_neighborhood = $("input[name=muslims_in_neighborhood]:checked").val();
     var muslim_coworkers = $("input[name=muslim_coworkers]:checked").val();
     var self_treated_unfairly = $("input[name=self_treated_unfairly]:checked").val();
@@ -333,6 +360,7 @@
     var reducing_terrorism = $("input[name=reducing_terrorism]:checked").val();
 
     if (
+      !approve_of_trump ||
       !muslims_in_neighborhood ||
       !muslim_coworkers ||
       !self_treated_unfairly ||
@@ -349,6 +377,7 @@
         url: "{% url 'invest_game:question3' %}",
         method: "POST",
         data: JSON.stringify({
+          approve_of_trump: approve_of_trump,
           muslims_in_neighborhood: muslims_in_neighborhood,
           muslim_coworkers: muslim_coworkers,
           self_treated_unfairly: self_treated_unfairly,
