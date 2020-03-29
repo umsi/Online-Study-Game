@@ -5,243 +5,157 @@
 {% block title %}Welcome!{% endblock title %} 
 
 {% block leftcontent %}
-<div id="questionnaire_si1">
-  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform" class="questionnaire-content">
+<div id="questionnaire_si2">
+  <form id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
-    <div class="random">
-      {% csrf_token %}
-
-      <p>
-        <b>
-          Read each of the four statements below and indicate HOW MANY of them
-          you agree with. You are NOT being asked to indicate which ones you
-          agree with, just how many of them.
-        </b>
-      </p>
-      <ul>
-        <li>
-          Some corporal punishment (e.g., spanking) is an important element of
-          good child-rearing.
-        </li>
-        <li>
-          I remember when the first Star Wars movie ("A New Hope") was in movie
-          theaters.
-        </li>
-        <li>
-          When I was in high school, I owned my own personal music player (e.g.,
-          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
-          similar device that is usually used with earphones).
-        </li>
-        <li>
-          I have traveled to a country other than the United States.
-        </li>
-      </ul>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="none" />
-          I agree with none of the above.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
-          I agree with exactly 1 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
-          I agree with exactly 2 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
-          I agree with exactly 3 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="all_4" />
-          I agree with all 4 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="dont_know" />
-          Don't know.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
-          Refuse to answer.
-        </label>
-      </div>
-      <input type="hidden" name="multiple_agreement_question_type" value="control">
+    <p>
+      <b>Generally speaking, would you say that most people can be trusted or
+        that you can’t be too careful in dealing with people?</b>
+    </p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="general_trustworthiness" value="most_people" />
+        Most people can be trusted
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="general_trustworthiness" value="cant_be_too_careful" />
+        Can’t be too careful
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="general_trustworthiness" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="general_trustworthiness" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
     </div>
 
-    <div class="random">
-      {% csrf_token %}
-      <p>
-        <b
-          >Read each of the five statements below and indicate HOW MANY of them
-          you agree with. You are NOT being asked to indicate which ones you
-          agree with, just how many of them.
-        </b>
-      </p>
-      <ul>
-        <li>
-          Some corporal punishment (e.g., spanking) is an important element of
-          good child-rearing.
-        </li>
-        <li>
-          I remember when the first Star Wars movie ("A New Hope") was in movie
-          theaters.
-        </li>
-        <li>
-          Immigration to the United States should be further reduced.
-        </li>
-        <li>
-          When I was in high school, I owned my own personal music player (e.g.,
-          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
-          similar device that is usually used with earphones).
-        </li>
-        <li>
-          I have traveled to a country other than the United States.
-        </li>
-      </ul>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="none" />
-          I agree with none of the above.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
-          I agree with exactly 1 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
-          I agree with exactly 2 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
-          I agree with exactly 3 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
-          I agree with exactly 4 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="all_5" />
-          I agree with all 5 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="dont_know" />
-          Don't know.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
-          Refuse to answer.
-        </label>
-      </div>
-      <input type="hidden" name="multiple_agreement_question_type" value="with_immigration">
+    <p><b>Which do you think are your main source of news? (check all that apply)</b></p>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="abc_nbc_cbs" />
+        ABC, NBC, or CBS
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="cnn" />
+        CNN
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="fox_news" />
+        Fox News
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="local_tv_radio" />
+        Local TV or radio
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="msnbc" />
+        MSNBC
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="npr_pbs" />
+        NPR (National Public Radio) or PBS
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="newspapers" />
+        Newspapers, online or in paper
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="facebook" />
+        Facebook
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="news_source" name="news_source" value="twitter" />
+        Twitter
+      </label>
     </div>
 
-    <div class="random">
-      {% csrf_token %}
-      <p>
-        <b
-          >Read each of the five statements below and indicate HOW MANY of them
-          you agree with. You are NOT being asked to indicate which ones you
-          agree with, just how many of them.
-        </b>
-      </p>
-      <ul>
-        <li>
-          Some corporal punishment (e.g., spanking) is an important element of
-          good child-rearing.
-        </li>
-        <li>
-          I remember when the first Star Wars movie ("A New Hope") was in movie
-          theaters.
-        </li>
-        <li>
-          Muslim immigration to the United States should be further reduced.
-        </li>
-        <li>
-          When I was in high school, I owned my own personal music player (e.g.,
-          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
-          similar device that is usually used with earphones).
-        </li>
-        <li>
-          I have traveled to a country other than the United States.
-        </li>
-      </ul>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="none" />
-          I agree with none of the above.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
-          I agree with exactly 1 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
-          I agree with exactly 2 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
-          I agree with exactly 3 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
-          I agree with exactly 4 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="all_5" />
-          I agree with all 5 of the above statements.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="dont_know" />
-          Don't know.
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
-          Refuse to answer.
-        </label>
-      </div>
-      <input type="hidden" name="multiple_agreement_question_type" value="with_muslim_immigration">
+    <p><b>Are your political views generally closer to...</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="democrats" />
+        The Democrats
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="republicans" />
+        The Republicans
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="other" />
+        Other
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="no_preference" />
+        No preference
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="political_views" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
+    </div>
+
+    <p><b>Are you a U.S. citizen?</b></p>
+    <div class="radio">
+      <label>
+        <input type="radio" name="us_citizen" value="yes" />
+        Yes
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="us_citizen" value="no" />
+        No
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="us_citizen" value="dont_know" />
+        Don't know
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="us_citizen" value="refuse_to_answer" />
+        Refuse to answer
+      </label>
     </div>
 
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
@@ -255,25 +169,44 @@
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
   var keep = Math.floor(Math.random() * 3);
-  console.log("Keeping", keep)
 
   $(document).ready(function() {
     var elems = $(".random");
-
     for (var i = 0; i < elems.length; ++i) {
       if (i !== keep) {
-        $(elems[i]).remove();
+        $(elems[i]).hide();
       }
     }
+  });
 
-    $("#questionform").submit(function(event) {
-      var answer = $("input[name=multiple_agreement_question]:checked").val();
+  $("#questionform").submit(function(event) {
+    event.preventDefault();
 
-      if (!answer) {
-        event.preventDefault();
-        alert("Please check all the anwsers");
-      } 
-    });
+    var general_trustworthiness = $("input[name=general_trustworthiness]:checked").val();
+    var news_source = $("input[name=news_source]:checked")
+      .map(function() { return $(this).val() }).get()
+    var political_views = $("input[name=political_views]:checked").val();
+    var us_citizen = $("input[name=us_citizen]:checked").val();
+
+    if (
+      !general_trustworthiness ||
+      !news_source.length > 0 ||
+      !political_views ||
+      !us_citizen
+    ) {
+      alert("Please check all the anwsers");
+    } else {
+      $.ajax({
+        url: "{% url 'invest_game:question2' %}",
+        method: "POST",
+        data: JSON.stringify({
+          general_trustworthiness: general_trustworthiness,
+          news_source: news_source,
+          political_views: political_views,
+          us_citizen: us_citizen
+        }),
+      });
+    } 
   });
 </script>
 {% endblock jscontent %}

@@ -268,7 +268,7 @@ def question1(request, id=None):
     GET
     ---
 
-    Render the template for the question1 phase.
+    Render the template for the question1 (multiple agreement) phase.
 
 
     POST
@@ -283,73 +283,18 @@ def question1(request, id=None):
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
 
-        us_citizen = request.POST.get("us_citizen")
-        investment.us_citizen = us_citizen
-
-        investment.reached_stage = (
-            Investment.STAGE_QUESTION_1_5
-            if us_citizen == "yes"
-            else Investment.STAGE_QUESTION_2
-        )
-
-        if us_citizen == "yes":
-            investment.started_question_1_5 = timezone.now()
-        else:
-            investment.started_question_2 = timezone.now()
-
-        investment.save(
-            update_fields=[
-                "us_citizen",
-                "reached_stage",
-                "started_question_1_5",
-                "started_question_2",
-            ]
-        )
-
-        return redirect(
-            reverse(
-                "invest_game:question1_5"
-                if us_citizen == "yes"
-                else "invest_game:question2"
-            )
-        )
-
-
-@require_id_session_param
-@require_http_methods(["GET", "POST"])
-@require_stage(Investment.STAGE_QUESTION_1_5)
-def question1_5(request, id=None):
-    """
-    
-    GET
-    ---
-
-    Render the template for the question1-5 phase.
-
-
-    POST
-    ----
-
-    Record questionnaire responses and redirect to next stage.
-    """
-    if request.method == "GET":
-        return render(request, "question1-5.html")
-
-    if request.method == "POST":
-        user = InvestmentGameUser.objects.get(username=id)
-        investment = Investment.objects.get(user=user)
-
-        investment.voted_last_election = request.POST.get("voted_last_election")
-        investment.how_voted = request.POST.get("how_voted")
-        investment.political_views = request.POST.get("political_views")
+        data = json.loads(request.body)
+        investment.multiple_agreement_question = data["multiple_agreement_question"]
+        investment.multiple_agreement_question_type = data[
+            "multiple_agreement_question_type"
+        ]
         investment.reached_stage = Investment.STAGE_QUESTION_2
         investment.started_question_2 = timezone.now()
 
         investment.save(
             update_fields=[
-                "voted_last_election",
-                "how_voted",
-                "political_views",
+                "multiple_agreement_question",
+                "multiple_agreement_question_type",
                 "reached_stage",
                 "started_question_2",
             ]
@@ -367,7 +312,7 @@ def question2(request, id=None):
     GET
     ---
 
-    Render the template for the question2 phase.
+    Render the template for the question2 (news and U.S. citizenship) phase.
 
 
     POST
@@ -382,21 +327,80 @@ def question2(request, id=None):
         user = InvestmentGameUser.objects.get(username=id)
         investment = Investment.objects.get(user=user)
 
-        investment.multiple_agreement_question = request.POST.get(
-            "multiple_agreement_question"
+        data = json.loads(request.body)
+        investment.general_trustworthiness = data["general_trustworthiness"]
+        investment.news_source = str(data["news_source"])
+        investment.political_views = request.POST.get("political_views")
+        investment.us_citizen = data["us_citizen"]
+
+        investment.reached_stage = (
+            Investment.STAGE_QUESTION_2_5
+            if data["us_citizen"] == "yes"
+            else Investment.STAGE_QUESTION_3
         )
-        investment.multiple_agreement_question_type = request.POST.get(
-            "multiple_agreement_question_type"
-        )
-        investment.reached_stage = Investment.STAGE_QUESTION_3
-        investment.started_question_3 = timezone.now()
+
+        if data["us_citizen"] == "yes":
+            investment.started_question_2_5 = timezone.now()
+        else:
+            investment.started_question_3 = timezone.now()
 
         investment.save(
             update_fields=[
-                "multiple_agreement_question",
-                "multiple_agreement_question_type",
+                "general_trustworthiness",
+                "news_source",
+                "political_views",
+                "us_citizen",
                 "reached_stage",
+                "started_question_2_5",
                 "started_question_3",
+            ]
+        )
+
+        return redirect(
+            reverse(
+                "invest_game:question2_5"
+                if data["us_citizen"] == "yes"
+                else "invest_game:question3"
+            )
+        )
+
+
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_2_5)
+def question2_5(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question2-5 (voting questions) phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
+    if request.method == "GET":
+        return render(request, "question2-5.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+        data = json.loads(request.body)
+
+        investment.voted_last_election = data["voted_last_election"]
+        investment.how_voted = data["how_voted"]
+        investment.reached_stage = Investment.STAGE_QUESTION_3
+        investment.started_question3 = timezone.now()
+
+        investment.save(
+            update_fields=[
+                "voted_last_election",
+                "how_voted",
+                "reached_stage",
+                "started_question3",
             ]
         )
 
@@ -405,14 +409,14 @@ def question2(request, id=None):
 
 @require_id_session_param
 @require_http_methods(["GET", "POST"])
-@require_stage(Investment.STAGE_QUESTION_3)
+@require_stage(Investment.STAGE_QUESTION_2)
 def question3(request, id=None):
     """
     
     GET
     ---
 
-    Render the template for the question3 phase.
+    Render the template for the question2 (news consumption habits) phase.
 
 
     POST
@@ -428,14 +432,11 @@ def question3(request, id=None):
         investment = Investment.objects.get(user=user)
         data = json.loads(request.body)
 
-        investment.news_source = str(data["news_source"])
         investment.muslims_in_neighborhood = data["muslims_in_neighborhood"]
         investment.muslim_coworkers = data["muslim_coworkers"]
         investment.self_treated_unfairly = data["self_treated_unfairly"]
         investment.race_treated_unfairly = data["race_treated_unfairly"]
         investment.religion_treated_unfairly = data["religion_treated_unfairly"]
-        investment.general_trustworthiness = data["general_trustworthiness"]
-        investment.economic_outlook = data["economic_outlook"]
         investment.islamic_extremism = data["islamic_extremism"]
         investment.reducing_terrorism = data["reducing_terrorism"]
         investment.reached_stage = Investment.STAGE_FINISH
@@ -443,14 +444,11 @@ def question3(request, id=None):
 
         investment.save(
             update_fields=[
-                "news_source",
                 "muslims_in_neighborhood",
                 "muslim_coworkers",
                 "self_treated_unfairly",
                 "race_treated_unfairly",
                 "religion_treated_unfairly",
-                "general_trustworthiness",
-                "economic_outlook",
                 "islamic_extremism",
                 "reducing_terrorism",
                 "reached_stage",
@@ -458,7 +456,7 @@ def question3(request, id=None):
             ]
         )
 
-        return HttpResponse()
+        return redirect(reverse("invest_game:finish"))
 
 
 @require_id_session_param

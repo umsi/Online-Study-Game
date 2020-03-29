@@ -9,59 +9,38 @@
   <form id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
-    <p><b>Which do you think are your main source of news? (check all that apply)</b></p>
-    <div class="checkbox">
+    <p>
+      <b>What about the next 12 months? Do you expect the national economy to
+        get better, get worse, or stay about the same?</b>
+    </p>
+    <div class="radio">
       <label>
-        <input type="checkbox" id="news_source" name="news_source" value="abc_nbc_cbs" />
-        ABC, NBC, or CBS
+        <input type="radio" name="economic_outlook" value="get_better" />
+        Get better
       </label>
     </div>
-    <div class="checkbox">
+    <div class="radio">
       <label>
-        <input type="checkbox" id="news_source" name="news_source" value="cnn" />
-        CNN
+        <input type="radio" name="economic_outlook" value="stay_the_same" />
+        Stay the same
       </label>
     </div>
-    <div class="checkbox">
+    <div class="radio">
       <label>
-        <input type="checkbox" id="news_source" name="news_source" value="fox_news" />
-        Fox News
+        <input type="radio" name="economic_outlook" value="get_worse" />
+        Get worse
       </label>
     </div>
-    <div class="checkbox">
+    <div class="radio">
       <label>
-        <input type="checkbox" id="news_source" name="news_source" value="local_tv_radio" />
-        Local TV or radio
+        <input type="radio" name="economic_outlook" value="dont_know" />
+        Don't know
       </label>
     </div>
-    <div class="checkbox">
+    <div class="radio">
       <label>
-        <input type="checkbox" id="news_source" name="news_source" value="msnbc" />
-        MSNBC
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="news_source" name="news_source" value="npr_pbs" />
-        NPR (National Public Radio) or PBS
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="news_source" name="news_source" value="newspapers" />
-        Newspapers, online or in paper
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="news_source" name="news_source" value="facebook" />
-        Facebook
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="news_source" name="news_source" value="twitter" />
-        Twitter
+        <input type="radio" name="economic_outlook" value="refuse_to_answer" />
+        Refuse to answer
       </label>
     </div>
 
@@ -237,70 +216,6 @@
     </div>
 
     <p>
-      <b>Generally speaking, would you say that most people can be trusted or
-        that you can’t be too careful in dealing with people?</b>
-    </p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="general_trustworthiness" value="most_people" />
-        Most people can be trusted
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="general_trustworthiness" value="cant_be_too_careful" />
-        Can’t be too careful
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="general_trustworthiness" value="dont_know" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="general_trustworthiness" value="refuse_to_answer" />
-        Refuse to answer
-      </label>
-    </div>
-
-    <p>
-      <b>What about the next 12 months? Do you expect the national economy to
-        get better, get worse, or stay about the same?</b>
-    </p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="economic_outlook" value="get_better" />
-        Get better
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="economic_outlook" value="stay_the_same" />
-        Stay the same
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="economic_outlook" value="get_worse" />
-        Get worse
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="economic_outlook" value="dont_know" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="economic_outlook" value="refuse_to_answer" />
-        Refuse to answer
-      </label>
-    </div>
-
-    <p>
       <b>How concerned are you about the rise of Islamic extremism in the
         U.S.?</b>
     </p>
@@ -408,20 +323,16 @@
   $("#questionform").submit(function(event) {
     event.preventDefault();
 
-    var news_source = $("input[name=news_source]:checked")
-      .map(function() { return $(this).val() }).get()
     var muslims_in_neighborhood = $("input[name=muslims_in_neighborhood]:checked").val();
     var muslim_coworkers = $("input[name=muslim_coworkers]:checked").val();
     var self_treated_unfairly = $("input[name=self_treated_unfairly]:checked").val();
     var race_treated_unfairly = $("input[name=race_treated_unfairly]:checked").val();
     var religion_treated_unfairly = $("input[name=religion_treated_unfairly]:checked").val();
-    var general_trustworthiness = $("input[name=general_trustworthiness]:checked").val();
     var economic_outlook = $("input[name=economic_outlook]:checked").val();
     var islamic_extremism = $("input[name=islamic_extremism]:checked").val();
     var reducing_terrorism = $("input[name=reducing_terrorism]:checked").val();
 
     if (
-      !news_source.length > 0 ||
       !muslims_in_neighborhood ||
       !muslim_coworkers ||
       !self_treated_unfairly ||
@@ -438,7 +349,6 @@
         url: "{% url 'invest_game:question3' %}",
         method: "POST",
         data: JSON.stringify({
-          news_source: news_source,
           muslims_in_neighborhood: muslims_in_neighborhood,
           muslim_coworkers: muslim_coworkers,
           self_treated_unfairly: self_treated_unfairly,
@@ -449,8 +359,6 @@
           islamic_extremism: islamic_extremism,
           reducing_terrorism: reducing_terrorism
         }),
-      }).done(function() {
-        window.location.href = {% url "invest_game:finish" %}
       })
     } 
   });
