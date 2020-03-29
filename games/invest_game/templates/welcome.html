@@ -2,22 +2,39 @@
 
 {% block content %}
 <div class="row transBackground">
+  {% csrf_token %}
   <div class="col-md-8 col-md-offset-2">
     <h3>
       Next, we will ask you to play a game in which you have the opportunity to
-      earn a little bit of cash. You are an Investor, investing in another
-      person called the Responder. The Responder is someone from an American
-      city who has already played their part of the game.
+      earn a little bit of cash. You are playing with another person from an 
+      American city. They have been told about the game and have already made a 
+      decision about how to respond to every one of your potential actions.
     </h3>
     <div style="text-align:center;margin-top:24px;">
-      <a
-        href="{% url 'invest_game:select_respondent' %}"
+      <button
+        id="next-btn"
         class="btn btn-large btn-primary"
         style="font-size:1.5rem;padding:12px 20px 12px 20px;"
       >
         Begin Game
-      </a>
+      </button>
     </div>
   </div>
 </div>
 {% endblock content %}
+
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#next-btn").on("click", function() {
+      $.ajax({
+          url: "{% url 'invest_game:welcome' %}",
+          method: "POST",
+        }).done(function() {
+          window.location.href = '{% url "invest_game:select_respondent" %}'
+        })
+    })
+  });
+</script>
+{% endblock jscontent %}

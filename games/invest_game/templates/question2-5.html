@@ -6,7 +6,7 @@
 
 {% block leftcontent %}
 <div id="questionnaire_si0" class="questionnaire-content">
-  <form action={% url 'invest_game:question1_5' %} method="POST" id="questionform">
+  <form id="questionform">
     {% csrf_token %}
 
     <p>
@@ -69,44 +69,6 @@
       </label>
     </div>
 
-    <p><b>Are your political views generally closer to...</b></p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="democrats" />
-        The Democrats
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="republicans" />
-        The Republicans
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="other" />
-        Other
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="no_preference" />
-        No preference
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="dont_know" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="political_views" value="refuse_to_answer" />
-        Refuse to answer
-      </label>
-    </div>
-
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
       Next
     </button>
@@ -119,13 +81,24 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $("#questionform").submit(function(event) {
-      var q1answer = $("input[name=voted_last_election]:checked").val();
-      var q2answer = $("input[name=how_voted]:checked").val();
-      var q3answer = $("input[name=political_views]:checked").val();
+      event.preventDefault()
 
-      if (!q1answer || !q2answer || !q3answer) {
-        event.preventDefault();
+      var voted_last_election = $("input[name=voted_last_election]:checked").val();
+      var how_voted = $("input[name=how_voted]:checked").val();
+
+      if (!voted_last_election || !how_voted) {
         alert("Please check all the anwsers");
+      } else {
+        $.ajax({
+          url: "{% url 'invest_game:question2_5' %}",
+          method: "POST",
+          data: JSON.stringify({
+            voted_last_election: voted_last_election,
+            how_voted: how_voted
+          }),
+        }).done(function() {
+          window.location.href = {% url "invest_game:question3" %}
+        })
       } 
     });
   });

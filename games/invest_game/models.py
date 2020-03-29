@@ -14,8 +14,8 @@ class Investment(TimeStampedModel):
     STAGE_USER_INVESTMENT = "user_investment"
     STAGE_RESPONDENT_INVESTMENT = "respondent_investment"
     STAGE_QUESTION_1 = "question1"
-    STAGE_QUESTION_1_5 = "question1_5"
     STAGE_QUESTION_2 = "question2"
+    STAGE_QUESTION_2_5 = "question2_5"
     STAGE_QUESTION_3 = "question3"
     STAGE_COMPARE = "compare"
     STAGE_FINISH = "finish"
@@ -24,8 +24,8 @@ class Investment(TimeStampedModel):
         (STAGE_USER_INVESTMENT, "User reached user investment stage"),
         (STAGE_RESPONDENT_INVESTMENT, "User reached respondent investment stage"),
         (STAGE_QUESTION_1, "User reached question 1 stage"),
-        (STAGE_QUESTION_1_5, "User reached question 1.5 stage"),
         (STAGE_QUESTION_2, "User reached question 2 stage"),
+        (STAGE_QUESTION_2_5, "User reached question 2.5 stage"),
         (STAGE_QUESTION_3, "User reached question 3 stage"),
         (STAGE_COMPARE, "User reached compare stage"),
         (STAGE_FINISH, "User reached finish stage"),
@@ -85,201 +85,306 @@ class Investment(TimeStampedModel):
 
     # Valid question1 choices:
     # ------------------------
-    # Are you a U.S. citizen?
-    QUESTION_PAGE_1_Q1_OPTION_A = "yes"
-    QUESTION_PAGE_1_Q1_OPTION_B = "no"
-    QUESTION_PAGE_1_Q1_OPTION_C = "dont_know"
-    QUESTION_PAGE_1_Q1_OPTION_D = "refuse_to_answer"
-    QUESTION_PAGE_1_Q1_CHOICES = (
-        (QUESTION_PAGE_1_Q1_OPTION_A, "Yes"),
-        (QUESTION_PAGE_1_Q1_OPTION_B, "No"),
-        (QUESTION_PAGE_1_Q1_OPTION_C, "Don't know"),
-        (QUESTION_PAGE_1_Q1_OPTION_D, "Refuse to answer"),
-    )
-
-    # Valid question1_5 choices:
-    # --------------------------
-    # Did you vote for a presidential candidate in the last election?
-    QUESTION_PAGE_1_5_Q1_OPTION_A = "yes"
-    QUESTION_PAGE_1_5_Q1_OPTION_B = "no"
-    QUESTION_PAGE_1_5_Q1_OPTION_C = "dont_know"
-    QUESTION_PAGE_1_5_Q1_OPTION_D = "refuse_to_answer"
-    QUESTION_PAGE_1_5_Q1_CHOICES = (
-        (QUESTION_PAGE_1_5_Q1_OPTION_A, "Yes"),
-        (QUESTION_PAGE_1_5_Q1_OPTION_B, "No"),
-        (QUESTION_PAGE_1_5_Q1_OPTION_C, "Don't know"),
-        (QUESTION_PAGE_1_5_Q1_OPTION_D, "Refuse to answer"),
-    )
-
-    # Whom did you vote for?
-    QUESTION_PAGE_1_5_Q2_OPTION_A = "trump"
-    QUESTION_PAGE_1_5_Q2_OPTION_B = "clinton"
-    QUESTION_PAGE_1_5_Q2_OPTION_C = "other"
-    QUESTION_PAGE_1_5_Q2_OPTION_D = "dont_know"
-    QUESTION_PAGE_1_5_Q2_OPTION_E = "refuse_to_answer"
-    QUESTION_PAGE_1_5_Q2_CHOICES = (
-        (QUESTION_PAGE_1_5_Q2_OPTION_A, "Donald Trump"),
-        (QUESTION_PAGE_1_5_Q2_OPTION_B, "Hillary Clinton"),
-        (QUESTION_PAGE_1_5_Q2_OPTION_C, "Other"),
-        (QUESTION_PAGE_1_5_Q2_OPTION_D, "Don't know"),
-        (QUESTION_PAGE_1_5_Q2_OPTION_E, "Refuse to answer"),
-    )
-
-    # Are your political views closer to...
-    QUESTION_PAGE_1_5_Q3_OPTION_A = "democrats"
-    QUESTION_PAGE_1_5_Q3_OPTION_B = "republicans"
-    QUESTION_PAGE_1_5_Q3_OPTION_C = "other"
-    QUESTION_PAGE_1_5_Q3_OPTION_D = "no_preference"
-    QUESTION_PAGE_1_5_Q3_OPTION_E = "dont_know"
-    QUESTION_PAGE_1_5_Q3_OPTION_F = "refuse_to_answer"
-    QUESTION_PAGE_1_5_Q3_CHOICES = (
-        (QUESTION_PAGE_1_5_Q3_OPTION_A, "The Democrats"),
-        (QUESTION_PAGE_1_5_Q3_OPTION_B, "The Republicans"),
-        (QUESTION_PAGE_1_5_Q3_OPTION_C, "Other"),
-        (QUESTION_PAGE_1_5_Q3_OPTION_D, "No preference"),
-        (QUESTION_PAGE_1_5_Q3_OPTION_E, "Don't know"),
-        (QUESTION_PAGE_1_5_Q3_OPTION_F, "Refuse to answer"),
+    # TODO: This question is more complex than the others and is still in need
+    # of validation.
+    multiple_agreement_question = models.CharField(max_length=255, null=True)
+    multiple_agreement_question_type = models.CharField(
+        max_length=255, choices=MULTIPLE_AGREEMENT_CHOICES, null=True
     )
 
     # Valid question2 choices:
     # ------------------------
-    # TODO: This question is more complex than the others and is still in need
-    # of validation.
-
-    # Valid question3 choices:
-    # ------------------------
-    # Are there Muslims living in your neighborhood?
-    QUESTION_PAGE_3_Q2_OPTION_A = "many"
-    QUESTION_PAGE_3_Q2_OPTION_B = "some"
-    QUESTION_PAGE_3_Q2_OPTION_C = "none"
-    QUESTION_PAGE_3_Q2_OPTION_D = "dont_know"
-    QUESTION_PAGE_3_Q2_OPTION_E = "refuse_to_answer"
-    QUESTION_PAGE_3_Q2_CHOICES = (
-        (QUESTION_PAGE_3_Q2_OPTION_A, "Many"),
-        (QUESTION_PAGE_3_Q2_OPTION_B, "Some"),
-        (QUESTION_PAGE_3_Q2_OPTION_C, "None at all"),
-        (QUESTION_PAGE_3_Q2_OPTION_D, "Don't know"),
-        (QUESTION_PAGE_3_Q2_OPTION_E, "Refuse to answer"),
-    )
-
-    # Do you have Muslim co-workers
-    QUESTION_PAGE_3_Q3_OPTION_A = "many"
-    QUESTION_PAGE_3_Q3_OPTION_B = "some"
-    QUESTION_PAGE_3_Q3_OPTION_C = "none"
-    QUESTION_PAGE_3_Q3_OPTION_D = "dont_know"
-    QUESTION_PAGE_3_Q3_OPTION_E = "refuse_to_answer"
-    QUESTION_PAGE_3_Q3_CHOICES = (
-        (QUESTION_PAGE_3_Q3_OPTION_A, "Many"),
-        (QUESTION_PAGE_3_Q3_OPTION_B, "Some"),
-        (QUESTION_PAGE_3_Q3_OPTION_C, "None at all"),
-        (QUESTION_PAGE_3_Q3_OPTION_D, "Don't know"),
-        (QUESTION_PAGE_3_Q3_OPTION_E, "Refuse to answer"),
-    )
-
-    # Have you, personally, ever been treated unfairly due to your race,
-    # ethnicity, or religion?
-    QUESTION_PAGE_3_Q4_OPTION_A = "yes"
-    QUESTION_PAGE_3_Q4_OPTION_B = "no"
-    QUESTION_PAGE_3_Q4_OPTION_C = "dont_know"
-    QUESTION_PAGE_3_Q4_OPTION_D = "refuse_to_answer"
-    QUESTION_PAGE_3_Q4_CHOICES = (
-        (QUESTION_PAGE_3_Q4_OPTION_A, "Yes"),
-        (QUESTION_PAGE_3_Q4_OPTION_B, "No"),
-        (QUESTION_PAGE_3_Q4_OPTION_C, "Don't know"),
-        (QUESTION_PAGE_3_Q4_OPTION_D, "Refuse to answer"),
-    )
-
-    # Do you think people of your race or ethnicity are treated unfairly?
-    QUESTION_PAGE_3_Q5_OPTION_A = "often"
-    QUESTION_PAGE_3_Q5_OPTION_B = "sometimes"
-    QUESTION_PAGE_3_Q5_OPTION_C = "seldom"
-    QUESTION_PAGE_3_Q5_OPTION_D = "never"
-    QUESTION_PAGE_3_Q5_OPTION_E = "dont_know"
-    QUESTION_PAGE_3_Q5_OPTION_F = "refuse_to_answer"
-    QUESTION_PAGE_3_Q5_CHOICES = (
-        (QUESTION_PAGE_3_Q5_OPTION_A, "Often"),
-        (QUESTION_PAGE_3_Q5_OPTION_B, "Sometimes"),
-        (QUESTION_PAGE_3_Q5_OPTION_C, "Seldom"),
-        (QUESTION_PAGE_3_Q5_OPTION_D, "Never"),
-        (QUESTION_PAGE_3_Q5_OPTION_E, "Don't know"),
-        (QUESTION_PAGE_3_Q5_OPTION_F, "Refuse to answer"),
-    )
-
-    # Do you think people of your religion are treated unfairly?
-    QUESTION_PAGE_3_Q6_OPTION_A = "often"
-    QUESTION_PAGE_3_Q6_OPTION_B = "sometimes"
-    QUESTION_PAGE_3_Q6_OPTION_C = "seldom"
-    QUESTION_PAGE_3_Q6_OPTION_D = "never"
-    QUESTION_PAGE_3_Q6_OPTION_E = "dont_know"
-    QUESTION_PAGE_3_Q6_OPTION_F = "refuse_to_answer"
-    QUESTION_PAGE_3_Q6_CHOICES = (
-        (QUESTION_PAGE_3_Q6_OPTION_A, "Often"),
-        (QUESTION_PAGE_3_Q6_OPTION_B, "Sometimes"),
-        (QUESTION_PAGE_3_Q6_OPTION_C, "Seldom"),
-        (QUESTION_PAGE_3_Q6_OPTION_D, "Never"),
-        (QUESTION_PAGE_3_Q6_OPTION_E, "Don't know"),
-        (QUESTION_PAGE_3_Q6_OPTION_F, "Refuse to answer"),
+    # Where do you get most of your news?
+    news_source = models.CharField(
+        max_length=255, null=True, help_text="Where do you get most of your news?",
     )
 
     # Generally speaking, would you say that most people can be trusted or that
     # you can’t be too careful in dealing with people?
-    QUESTION_PAGE_3_Q7_OPTION_A = "most_people"
-    QUESTION_PAGE_3_Q7_OPTION_B = "cant_be_too_careful"
-    QUESTION_PAGE_3_Q7_OPTION_C = "dont_know"
-    QUESTION_PAGE_3_Q7_OPTION_D = "refuse_to_answer"
-    QUESTION_PAGE_3_Q7_CHOICES = (
-        (QUESTION_PAGE_3_Q7_OPTION_A, "Most people can be trusted"),
-        (QUESTION_PAGE_3_Q7_OPTION_B, "Can't be too careful"),
-        (QUESTION_PAGE_3_Q7_OPTION_C, "Don't know"),
-        (QUESTION_PAGE_3_Q7_OPTION_D, "Refuse to answer"),
+    TRUST_PEOPLE_OPTION_A = "most_people"
+    TRUST_PEOPLE_OPTION_B = "cant_be_too_careful"
+    TRUST_PEOPLE_OPTION_C = "dont_know"
+    TRUST_PEOPLE_OPTION_D = "refuse_to_answer"
+    TRUST_PEOPLE_CHOICES = (
+        (TRUST_PEOPLE_OPTION_A, "Most people can be trusted"),
+        (TRUST_PEOPLE_OPTION_B, "Can't be too careful"),
+        (TRUST_PEOPLE_OPTION_C, "Don't know"),
+        (TRUST_PEOPLE_OPTION_D, "Refuse to answer"),
+    )
+    general_trustworthiness = models.CharField(
+        max_length=255,
+        null=True,
+        choices=TRUST_PEOPLE_CHOICES,
+        help_text="Generally speaking, would you say that most people can be trusted or that you can’t be too careful in dealing with people?",
     )
 
-    # What about the next 12 months? Do you expect the national economy to get
+    # Are you a U.S. citizen?
+    US_CITIZEN_OPTION_A = "yes"
+    US_CITIZEN_OPTION_B = "no"
+    US_CITIZEN_OPTION_C = "dont_know"
+    US_CITIZEN_OPTION_D = "refuse_to_answer"
+    US_CITIZEN_CHOICES = (
+        (US_CITIZEN_OPTION_A, "Yes"),
+        (US_CITIZEN_OPTION_B, "No"),
+        (US_CITIZEN_OPTION_C, "Don't know"),
+        (US_CITIZEN_OPTION_D, "Refuse to answer"),
+    )
+    us_citizen = models.CharField(
+        max_length=255,
+        null=True,
+        choices=US_CITIZEN_CHOICES,
+        help_text="Are you a U.S. citizen?",
+    )
+
+    # Valid question2_5 choices:
+    # --------------------------
+    # Did you vote for a presidential candidate in the last election?
+    VOTED_PRESIDENT_OPTION_A = "yes"
+    VOTED_PRESIDENT_OPTION_B = "no"
+    VOTED_PRESIDENT_OPTION_C = "dont_know"
+    VOTED_PRESIDENT_OPTION_D = "refuse_to_answer"
+    VOTED_PRESIDENT_CHOICES = (
+        (VOTED_PRESIDENT_OPTION_A, "Yes"),
+        (VOTED_PRESIDENT_OPTION_B, "No"),
+        (VOTED_PRESIDENT_OPTION_C, "Don't know"),
+        (VOTED_PRESIDENT_OPTION_D, "Refuse to answer"),
+    )
+    voted_last_election = models.CharField(
+        max_length=255,
+        null=True,
+        choices=VOTED_PRESIDENT_CHOICES,
+        help_text="Did you vote for a presidential candidate in the last election?",
+    )
+
+    # Whom did you vote for?
+    HOW_VOTED_OPTION_A = "trump"
+    HOW_VOTED_OPTION_B = "clinton"
+    HOW_VOTED_OPTION_C = "other"
+    HOW_VOTED_OPTION_D = "dont_know"
+    HOW_VOTED_OPTION_E = "refuse_to_answer"
+    HOW_VOTED_CHOICES = (
+        (HOW_VOTED_OPTION_A, "Donald Trump"),
+        (HOW_VOTED_OPTION_B, "Hillary Clinton"),
+        (HOW_VOTED_OPTION_C, "Other"),
+        (HOW_VOTED_OPTION_D, "Don't know"),
+        (HOW_VOTED_OPTION_E, "Refuse to answer"),
+    )
+    how_voted = models.CharField(
+        max_length=255,
+        null=True,
+        choices=HOW_VOTED_CHOICES,
+        help_text="Whom did you vote for?",
+    )
+
+    # Are your political views closer to those of
+    POLITICAL_VIEWS_OPTION_A = "democrats"
+    POLITICAL_VIEWS_OPTION_B = "republicans"
+    POLITICAL_VIEWS_OPTION_C = "other"
+    POLITICAL_VIEWS_OPTION_D = "no_preference"
+    POLITICAL_VIEWS_OPTION_E = "dont_know"
+    POLITICAL_VIEWS_OPTION_F = "refuse_to_answer"
+    POLITICAL_VIEWS_CHOICES = (
+        (POLITICAL_VIEWS_OPTION_A, "The Democratic Party"),
+        (POLITICAL_VIEWS_OPTION_B, "The Republican Party"),
+        (POLITICAL_VIEWS_OPTION_C, "Other"),
+        (POLITICAL_VIEWS_OPTION_D, "No preference"),
+        (POLITICAL_VIEWS_OPTION_E, "Don't know"),
+        (POLITICAL_VIEWS_OPTION_F, "Refuse to answer"),
+    )
+    political_views = models.CharField(
+        max_length=255,
+        null=True,
+        choices=POLITICAL_VIEWS_CHOICES,
+        help_text="Are your political views generally closer to those of",
+    )
+
+    # Valid question3 choices:
+    # ------------------------
+    # Do you approve or disapprove of the way Donald Trump is handling his job as president?
+    APPROVE_OF_TRUMP_OPTION_A = "approve"
+    APPROVE_OF_TRUMP_OPTION_B = "disapprove"
+    APPROVE_OF_TRUMP_OPTION_C = "dont_know"
+    APPROVE_OF_TRUMP_OPTION_D = "refuse_to_answer"
+    APPROVE_OF_TRUMP_CHOICES = (
+        (APPROVE_OF_TRUMP_OPTION_A, "Approve"),
+        (APPROVE_OF_TRUMP_OPTION_B, "Disapprove"),
+        (APPROVE_OF_TRUMP_OPTION_C, "Don't know"),
+        (APPROVE_OF_TRUMP_OPTION_D, "Refuse to answer"),
+    )
+    approve_of_trump = models.CharField(
+        max_length=255,
+        null=True,
+        choices=APPROVE_OF_TRUMP_CHOICES,
+        help_text="Do you approve or disapprove of the way Donald Trump is handling his job as president?",
+    )
+
+    # Over the next 12 months, do you expect the national economy to get
     # better, get worse, or stay about the same?
-    QUESTION_PAGE_3_Q8_OPTION_A = "get_better"
-    QUESTION_PAGE_3_Q8_OPTION_B = "stay_the_same"
-    QUESTION_PAGE_3_Q8_OPTION_C = "get_worse"
-    QUESTION_PAGE_3_Q8_OPTION_D = "dont_know"
-    QUESTION_PAGE_3_Q8_OPTION_E = "refuse_to_answer"
-    QUESTION_PAGE_3_Q8_CHOICES = (
-        (QUESTION_PAGE_3_Q8_OPTION_A, "Get better"),
-        (QUESTION_PAGE_3_Q8_OPTION_B, "Stay the same"),
-        (QUESTION_PAGE_3_Q8_OPTION_C, "Get worse"),
-        (QUESTION_PAGE_3_Q8_OPTION_D, "Don't know"),
-        (QUESTION_PAGE_3_Q8_OPTION_E, "Refuse to answer"),
+    ECONOMIC_OUTLOOK_OPTION_A = "get_better"
+    ECONOMIC_OUTLOOK_OPTION_B = "stay_the_same"
+    ECONOMIC_OUTLOOK_OPTION_C = "get_worse"
+    ECONOMIC_OUTLOOK_OPTION_D = "dont_know"
+    ECONOMIC_OUTLOOK_OPTION_E = "refuse_to_answer"
+    ECONOMIC_OUTLOOK_CHOICES = (
+        (ECONOMIC_OUTLOOK_OPTION_A, "Get better"),
+        (ECONOMIC_OUTLOOK_OPTION_B, "Stay the same"),
+        (ECONOMIC_OUTLOOK_OPTION_C, "Get worse"),
+        (ECONOMIC_OUTLOOK_OPTION_D, "Don't know"),
+        (ECONOMIC_OUTLOOK_OPTION_E, "Refuse to answer"),
+    )
+    economic_outlook = models.CharField(
+        max_length=255,
+        null=True,
+        choices=ECONOMIC_OUTLOOK_CHOICES,
+        help_text="Over the next 12 months, do you expect the national economy to get better, get worse, or stay about the same?",
+    )
+
+    # Are there Muslims living in your neighborhood?
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_A = "many"
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_B = "some"
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_C = "none"
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_D = "dont_know"
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_E = "refuse_to_answer"
+    MUSLIMS_IN_NEIGHBORHOOD_CHOICES = (
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_A, "Many"),
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_B, "Some"),
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_C, "None at all"),
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_D, "Don't know"),
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_E, "Refuse to answer"),
+    )
+    muslims_in_neighborhood = models.CharField(
+        max_length=255,
+        null=True,
+        choices=MUSLIMS_IN_NEIGHBORHOOD_CHOICES,
+        help_text="Are there Muslims living in your neighborhood?",
+    )
+
+    # Do you have Muslim co-workers?
+    MUSLIM_COWORKERS_OPTION_A = "many"
+    MUSLIM_COWORKERS_OPTION_B = "some"
+    MUSLIM_COWORKERS_OPTION_C = "none"
+    MUSLIM_COWORKERS_OPTION_D = "dont_know"
+    MUSLIM_COWORKERS_OPTION_E = "refuse_to_answer"
+    MUSLIM_COWORKERS_CHOICES = (
+        (MUSLIM_COWORKERS_OPTION_A, "Many"),
+        (MUSLIM_COWORKERS_OPTION_B, "Some"),
+        (MUSLIM_COWORKERS_OPTION_C, "None at all"),
+        (MUSLIM_COWORKERS_OPTION_D, "Don't know"),
+        (MUSLIM_COWORKERS_OPTION_E, "Refuse to answer"),
+    )
+    muslim_coworkers = models.CharField(
+        max_length=255,
+        null=True,
+        choices=MUSLIM_COWORKERS_CHOICES,
+        help_text="Do you have Muslim co-workers?",
+    )
+
+    # Have you, personally, ever been treated unfairly due to your race,
+    # ethnicity, or religion?
+    SELF_TREATED_UNFAIRLY_OPTION_A = "yes"
+    SELF_TREATED_UNFAIRLY_OPTION_B = "no"
+    SELF_TREATED_UNFAIRLY_OPTION_C = "dont_know"
+    SELF_TREATED_UNFAIRLY_OPTION_D = "refuse_to_answer"
+    SELF_TREATED_UNFAIRLY_CHOICES = (
+        (SELF_TREATED_UNFAIRLY_OPTION_A, "Yes"),
+        (SELF_TREATED_UNFAIRLY_OPTION_B, "No"),
+        (SELF_TREATED_UNFAIRLY_OPTION_C, "Don't know"),
+        (SELF_TREATED_UNFAIRLY_OPTION_D, "Refuse to answer"),
+    )
+    self_treated_unfairly = models.CharField(
+        max_length=255,
+        null=True,
+        choices=SELF_TREATED_UNFAIRLY_CHOICES,
+        help_text="Have you, personally, ever been treated unfairly due to your race, ethnicity, or religion?",
+    )
+
+    # Do you think people of your race or ethnicity are treated unfairly?
+    RACE_TREATED_UNFAIRLY_OPTION_A = "often"
+    RACE_TREATED_UNFAIRLY_OPTION_B = "sometimes"
+    RACE_TREATED_UNFAIRLY_OPTION_C = "seldom"
+    RACE_TREATED_UNFAIRLY_OPTION_D = "never"
+    RACE_TREATED_UNFAIRLY_OPTION_E = "dont_know"
+    RACE_TREATED_UNFAIRLY_OPTION_F = "refuse_to_answer"
+    RACE_TREATED_UNFAIRLY_CHOICES = (
+        (RACE_TREATED_UNFAIRLY_OPTION_A, "Often"),
+        (RACE_TREATED_UNFAIRLY_OPTION_B, "Sometimes"),
+        (RACE_TREATED_UNFAIRLY_OPTION_C, "Seldom"),
+        (RACE_TREATED_UNFAIRLY_OPTION_D, "Never"),
+        (RACE_TREATED_UNFAIRLY_OPTION_E, "Don't know"),
+        (RACE_TREATED_UNFAIRLY_OPTION_F, "Refuse to answer"),
+    )
+    race_treated_unfairly = models.CharField(
+        max_length=255,
+        null=True,
+        choices=RACE_TREATED_UNFAIRLY_CHOICES,
+        help_text="Do you think people of your race or ethnicity are treated unfairly?",
+    )
+
+    # Do you think people of your religion are treated unfairly?
+    RELIGION_TREATED_UNFAIRLY_OPTION_A = "often"
+    RELIGION_TREATED_UNFAIRLY_OPTION_B = "sometimes"
+    RELIGION_TREATED_UNFAIRLY_OPTION_C = "seldom"
+    RELIGION_TREATED_UNFAIRLY_OPTION_D = "never"
+    RELIGION_TREATED_UNFAIRLY_OPTION_E = "dont_know"
+    RELIGION_TREATED_UNFAIRLY_OPTION_F = "refuse_to_answer"
+    RELIGION_TREATED_UNFAIRLY_CHOICES = (
+        (RELIGION_TREATED_UNFAIRLY_OPTION_A, "Often"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_B, "Sometimes"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_C, "Seldom"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_D, "Never"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_E, "Don't know"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_F, "Refuse to answer"),
+    )
+    religion_treated_unfairly = models.CharField(
+        max_length=255,
+        null=True,
+        choices=RELIGION_TREATED_UNFAIRLY_CHOICES,
+        help_text="Do you think people of your religion are treated unfairly?",
     )
 
     # How concerned are you about the rise of Islamic extremism in the U.S.?
-    QUESTION_PAGE_3_Q9_OPTION_A = "very_concerned"
-    QUESTION_PAGE_3_Q9_OPTION_B = "somewhat_concerned"
-    QUESTION_PAGE_3_Q9_OPTION_C = "not_too_concerned"
-    QUESTION_PAGE_3_Q9_OPTION_D = "not_concerned"
-    QUESTION_PAGE_3_Q9_OPTION_E = "dont_know"
-    QUESTION_PAGE_3_Q9_OPTION_F = "refuse_to_answer"
-    QUESTION_PAGE_3_Q9_CHOICES = (
-        (QUESTION_PAGE_3_Q9_OPTION_A, "Very concerned"),
-        (QUESTION_PAGE_3_Q9_OPTION_B, "Somewhat concerned"),
-        (QUESTION_PAGE_3_Q9_OPTION_C, "Not too concerned"),
-        (QUESTION_PAGE_3_Q9_OPTION_D, "Not concerned"),
-        (QUESTION_PAGE_3_Q9_OPTION_E, "Don't know"),
-        (QUESTION_PAGE_3_Q9_OPTION_F, "Refuse to answer"),
+    ISLAMIC_EXTREMISM_OPTION_A = "very_concerned"
+    ISLAMIC_EXTREMISM_OPTION_B = "somewhat_concerned"
+    ISLAMIC_EXTREMISM_OPTION_C = "not_too_concerned"
+    ISLAMIC_EXTREMISM_OPTION_D = "not_concerned"
+    ISLAMIC_EXTREMISM_OPTION_E = "dont_know"
+    ISLAMIC_EXTREMISM_OPTION_F = "refuse_to_answer"
+    ISLAMIC_EXTREMISM_CHOICES = (
+        (ISLAMIC_EXTREMISM_OPTION_A, "Very concerned"),
+        (ISLAMIC_EXTREMISM_OPTION_B, "Somewhat concerned"),
+        (ISLAMIC_EXTREMISM_OPTION_C, "Not too concerned"),
+        (ISLAMIC_EXTREMISM_OPTION_D, "Not concerned"),
+        (ISLAMIC_EXTREMISM_OPTION_E, "Don't know"),
+        (ISLAMIC_EXTREMISM_OPTION_F, "Refuse to answer"),
+    )
+    islamic_extremism = models.CharField(
+        max_length=255,
+        null=True,
+        choices=ISLAMIC_EXTREMISM_CHOICES,
+        help_text="How concerned are you about the rise of Islamic extremism in the U.S.?",
     )
 
     # In general, how well do you think the American government is doing in
     # reducing the threat of terrorism?
-    QUESTION_PAGE_3_Q10_OPTION_A = "very_well"
-    QUESTION_PAGE_3_Q10_OPTION_B = "fairly_well"
-    QUESTION_PAGE_3_Q10_OPTION_C = "not_very_well"
-    QUESTION_PAGE_3_Q10_OPTION_D = "not_well_at_all"
-    QUESTION_PAGE_3_Q10_OPTION_E = "dont_know"
-    QUESTION_PAGE_3_Q10_OPTION_F = "refuse_to_answer"
-    QUESTION_PAGE_3_Q10_CHOICES = (
-        (QUESTION_PAGE_3_Q10_OPTION_A, "Very well"),
-        (QUESTION_PAGE_3_Q10_OPTION_B, "Fairly well"),
-        (QUESTION_PAGE_3_Q10_OPTION_C, "Not very well"),
-        (QUESTION_PAGE_3_Q10_OPTION_D, "Not well at all"),
-        (QUESTION_PAGE_3_Q10_OPTION_E, "Don't know"),
-        (QUESTION_PAGE_3_Q10_OPTION_F, "Refuse to answer"),
+    REDUCING_TERRORISM_OPTION_A = "very_well"
+    REDUCING_TERRORISM_OPTION_B = "fairly_well"
+    REDUCING_TERRORISM_OPTION_C = "not_very_well"
+    REDUCING_TERRORISM_OPTION_D = "not_well_at_all"
+    REDUCING_TERRORISM_OPTION_E = "dont_know"
+    REDUCING_TERRORISM_OPTION_F = "refuse_to_answer"
+    REDUCING_TERRORISM_CHOICES = (
+        (REDUCING_TERRORISM_OPTION_A, "Very well"),
+        (REDUCING_TERRORISM_OPTION_B, "Fairly well"),
+        (REDUCING_TERRORISM_OPTION_C, "Not very well"),
+        (REDUCING_TERRORISM_OPTION_D, "Not well at all"),
+        (REDUCING_TERRORISM_OPTION_E, "Don't know"),
+        (REDUCING_TERRORISM_OPTION_F, "Refuse to answer"),
+    )
+    reducing_terrorism = models.CharField(
+        max_length=255,
+        null=True,
+        choices=REDUCING_TERRORISM_CHOICES,
+        help_text="In general, how well do you think the American government is doing in reducing the threat of terrorism?",
     )
     ###########################################################################
 
@@ -293,7 +398,7 @@ class Investment(TimeStampedModel):
         null=True, help_text="When the user landed on the welcome page"
     )
     reached_stage = models.CharField(
-        max_length=256, choices=STAGE_CHOICES, default=STAGE_SELECT_RESPONDENT,
+        max_length=256, choices=STAGE_CHOICES, null=True,
     )
     started_select_respondent = models.DateTimeField(
         null=True, help_text="When the user landed on the select respondent stage"
@@ -310,12 +415,12 @@ class Investment(TimeStampedModel):
     started_question_1 = models.DateTimeField(
         null=True, help_text="When the user landed on the question 1 stage"
     )
-    started_question_1_5 = models.DateTimeField(
-        null=True,
-        help_text="When the user landed on the question 1.5 stage (if relevant)",
-    )
     started_question_2 = models.DateTimeField(
         null=True, help_text="When the user landed on the question 2 stage"
+    )
+    started_question_2_5 = models.DateTimeField(
+        null=True,
+        help_text="When the user landed on the question 2.5 stage (if relevant)",
     )
     started_question_3 = models.DateTimeField(
         null=True, help_text="When the user landed on the question 3 stage"
@@ -331,95 +436,6 @@ class Investment(TimeStampedModel):
     respondent_investment = models.IntegerField(null=True)
     user_bonus = models.IntegerField(choices=USER_BONUS_CHOICES, null=True)
     user_received = models.IntegerField(null=True)
-
-    # Final qustionnaires
-    us_citizen = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_1_Q1_CHOICES,
-        help_text="Are you a U.S. citizen?",
-    )
-    voted_last_election = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_1_5_Q1_CHOICES,
-        help_text="Did you vote for a presidential candidate in the last election?",
-    )
-    how_voted = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_1_5_Q2_CHOICES,
-        help_text="Whom did you vote for?",
-    )
-    political_views = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_1_5_Q3_CHOICES,
-        help_text="Are your political views generally closer to...",
-    )
-    multiple_agreement_question = models.CharField(max_length=255, null=True)
-    multiple_agreement_question_type = models.CharField(
-        max_length=255, choices=MULTIPLE_AGREEMENT_CHOICES, null=True
-    )
-    news_source = models.CharField(
-        max_length=255,
-        null=True,
-        help_text="Which do you think is your main source of news?",
-    )
-    muslims_in_neighborhood = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q2_CHOICES,
-        help_text="Are there Muslims living in your neighborhood?",
-    )
-    muslim_coworkers = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q3_CHOICES,
-        help_text="Do you have Muslim co-workers?",
-    )
-    self_treated_unfairly = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q4_CHOICES,
-        help_text="Have you, personally, ever been treated unfairly due to your race, ethnicity, or religion?",
-    )
-    race_treated_unfairly = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q5_CHOICES,
-        help_text="Do you think people of your race or ethnicity are treated unfairly?",
-    )
-    religion_treated_unfairly = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q6_CHOICES,
-        help_text="Do you think people of your religion are treated unfairly?",
-    )
-    general_trustworthiness = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q7_CHOICES,
-        help_text="Generally speaking, would you say that most people can be trusted or that you can’t be too careful in dealing with people?",
-    )
-    economic_outlook = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q8_CHOICES,
-        help_text="What about the next 12 months? Do you expect the national economy to get better, get worse, or stay about the same?",
-    )
-    islamic_extremism = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q9_CHOICES,
-        help_text="How concerned are you about the rise of Islamic extremism in the U.S.?",
-    )
-    reducing_terrorism = models.CharField(
-        max_length=255,
-        null=True,
-        choices=QUESTION_PAGE_3_Q10_CHOICES,
-        help_text="In general, how well do you think the American government is doing in reducing the threat of terrorism?",
-    )
 
     def __str__(self):
         return self.user.username

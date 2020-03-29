@@ -5,34 +5,243 @@
 {% block title %}Welcome!{% endblock title %} 
 
 {% block leftcontent %}
-<div id="questionnaire_si0" class="questionnaire-content">
-  <form action={% url 'invest_game:question1' %} method="POST" id="questionform">
+<div id="questionnaire_si1">
+  <form action="{% url 'invest_game:question2' %}" method="post" id="questionform" class="questionnaire-content">
     {% csrf_token %}
 
-    <p><b>Are you a U.S. citizen?</b></p>
-    <div class="radio">
-      <label>
-        <input type="radio" name="us_citizen" value="yes" />
-        Yes
-      </label>
+    <div class="random">
+      {% csrf_token %}
+
+      <p>
+        <b>
+          Read each of the four statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="none" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="all_4" />
+          I agree with all 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
+          Refuse to answer.
+        </label>
+      </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="control">
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="us_citizen" value="no" />
-        No
-      </label>
+
+    <div class="random">
+      {% csrf_token %}
+      <p>
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="none" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="all_5" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
+          Refuse to answer.
+        </label>
+      </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="with_immigration">
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="us_citizen" value="dont_know" />
-        Don't know
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="us_citizen" value="refuse_to_answer" />
-        Refuse to answer
-      </label>
+
+    <div class="random">
+      {% csrf_token %}
+      <p>
+        <b
+          >Read each of the five statements below and indicate HOW MANY of them
+          you agree with. You are NOT being asked to indicate which ones you
+          agree with, just how many of them.
+        </b>
+      </p>
+      <ul>
+        <li>
+          Some corporal punishment (e.g., spanking) is an important element of
+          good child-rearing.
+        </li>
+        <li>
+          I remember when the first Star Wars movie ("A New Hope") was in movie
+          theaters.
+        </li>
+        <li>
+          Muslim immigration to the United States should be further reduced.
+        </li>
+        <li>
+          When I was in high school, I owned my own personal music player (e.g.,
+          a Walkman, portable CD player, MP3 player, iPod, smartphone, or
+          similar device that is usually used with earphones).
+        </li>
+        <li>
+          I have traveled to a country other than the United States.
+        </li>
+      </ul>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="none" />
+          I agree with none of the above.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_1" />
+          I agree with exactly 1 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_2" />
+          I agree with exactly 2 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_3" />
+          I agree with exactly 3 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="exactly_4" />
+          I agree with exactly 4 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="all_5" />
+          I agree with all 5 of the above statements.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="dont_know" />
+          Don't know.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="multiple_agreement_question" value="refuse_to_answer" />
+          Refuse to answer.
+        </label>
+      </div>
+      <input type="hidden" name="multiple_agreement_question_type" value="with_muslim_immigration">
     </div>
 
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
@@ -45,13 +254,37 @@
 {% block jscontent %}
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#questionform").submit(function(event) {
-      var answer = $("input[name=us_citizen]:checked").val();
+  var keep = Math.floor(Math.random() * 3);
+  console.log("Keeping", keep)
 
-      if (!answer) {
-        event.preventDefault();
+  $(document).ready(function() {
+    var elems = $(".random");
+
+    for (var i = 0; i < elems.length; ++i) {
+      if (i !== keep) {
+        $(elems[i]).remove();
+      }
+    }
+
+    $("#questionform").submit(function(event) {
+      event.preventDefault();
+      
+      var multiple_agreement_question = $("input[name=multiple_agreement_question]:checked").val();
+      var multiple_agreement_question_type = $("input[name=multiple_agreement_question_type]").val();
+
+      if (!multiple_agreement_question) {
         alert("Please check all the anwsers");
+      } else {
+        $.ajax({
+          url: "{% url 'invest_game:question1' %}",
+          method: "POST",
+          data: JSON.stringify({
+            multiple_agreement_question: multiple_agreement_question,
+            multiple_agreement_question_type: multiple_agreement_question_type
+          }),
+        }).done(function() {
+          window.location.href = {% url "invest_game:question2" %}
+        })
       } 
     });
   });
