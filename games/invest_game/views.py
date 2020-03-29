@@ -330,7 +330,7 @@ def question2(request, id=None):
         data = json.loads(request.body)
         investment.general_trustworthiness = data["general_trustworthiness"]
         investment.news_source = str(data["news_source"])
-        investment.political_views = request.POST.get("political_views")
+        investment.political_views = data["political_views"]
         investment.us_citizen = data["us_citizen"]
 
         investment.reached_stage = (
@@ -396,14 +396,14 @@ def question2_5(request, id=None):
         investment.voted_last_election = data["voted_last_election"]
         investment.how_voted = data["how_voted"]
         investment.reached_stage = Investment.STAGE_QUESTION_3
-        investment.started_question3 = timezone.now()
+        investment.started_question_3 = timezone.now()
 
         investment.save(
             update_fields=[
                 "voted_last_election",
                 "how_voted",
                 "reached_stage",
-                "started_question3",
+                "started_question_3",
             ]
         )
 

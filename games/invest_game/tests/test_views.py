@@ -1,3 +1,5 @@
+import json
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils.crypto import get_random_string
@@ -339,92 +341,19 @@ class TestQuestion1View(TestCase):
     def test_view_behaves_correctly_based_on_current_stage(self):
         set_session(self.client.session, self.other_stage_username)
         response = self.client.get("/question1/")
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_2)
-        )
 
         set_session(self.client.session, self.current_stage_username)
         response = self.client.get("/question1/")
         self.assertEqual(response.templates[0].name, "question1.html")
 
-    def test_post_request_redirects_correctly_based_on_us_citizen_answer(self):
-        # Users answering yes to the U.S. cirizen question should move to
-        # STAGE_QUESTION_1_5.
-        data = {"us_citizen": "yes"}
-        set_session(self.client.session, self.current_stage_username)
-        response = self.client.post("/question1/", data)
-        investment = Investment.objects.get(
-            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
-        )
-        self.assertEqual(
-            investment.reached_stage, Investment.STAGE_QUESTION_1_5,
-        )
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_1_5)
-        )
-
-        # Reset the stage for the current user:
-        investment = Investment.objects.get(
-            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
-        )
-        investment.reached_stage = Investment.STAGE_QUESTION_1
-        investment.save()
-        set_session(self.client.session, self.current_stage_username)
-
-        # Users answering no to the U.S. cirizen question should move to
-        # STAGE_QUESTION_2.
-        data = {"us_citizen": "no"}
-        response = self.client.post("/question1/", data)
-        investment = Investment.objects.get(
-            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
-        )
-        self.assertEqual(
-            investment.reached_stage, Investment.STAGE_QUESTION_2,
-        )
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_2)
-        )
-
-
-class TestQuestion1_5View(TestCase):
-    def setUp(self):
-        self.current_stage_username = get_new_unqiue_username()
-        self.other_stage_username = get_new_unqiue_username()
-        current_stage_user = InvestmentGameUser.objects.create(
-            username=self.current_stage_username
-        )
-        Investment.objects.create(
-            user=current_stage_user, reached_stage=Investment.STAGE_QUESTION_1_5,
-        )
-        other_stage_user = InvestmentGameUser.objects.create(
-            username=self.other_stage_username
-        )
-        Investment.objects.create(
-            user=other_stage_user, reached_stage=Investment.STAGE_QUESTION_2
-        )
-        self.client = Client()
-
-    def test_view_behaves_correctly_based_on_current_stage(self):
-        set_session(self.client.session, self.other_stage_username)
-        response = self.client.get("/question1-5/")
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_2)
-        )
-
-        set_session(self.client.session, self.current_stage_username)
-        response = self.client.get("/question1-5/")
-        self.assertEqual(response.templates[0].name, "question1-5.html")
-
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
-            "voted_last_election": "yes",
-            "how_voted": "other",
-            "political_views": "republicans",
+            "multiple_agreement_question": "exactly_3",
+            "multiple_agreement_question_type": "control",
         }
         set_session(self.client.session, self.current_stage_username)
-        response = self.client.post("/question1-5/", data)
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_2)
+        response = self.client.post(
+            "/question1/", json.dumps(data), content_type="application/json"
         )
 
         investment = Investment.objects.get(
@@ -433,9 +362,8 @@ class TestQuestion1_5View(TestCase):
         self.assertEqual(
             investment.reached_stage, Investment.STAGE_QUESTION_2,
         )
-        self.assertEqual(investment.voted_last_election, "yes")
-        self.assertEqual(investment.how_voted, "other")
-        self.assertEqual(investment.political_views, "republicans")
+        self.assertEqual(investment.multiple_agreement_question, "exactly_3")
+        self.assertEqual(investment.multiple_agreement_question_type, "control")
 
 
 class TestQuestion2View(TestCase):
@@ -469,13 +397,14 @@ class TestQuestion2View(TestCase):
 
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
-            "multiple_agreement_question": "exactly_3",
-            "multiple_agreement_question_type": "control",
+            "us_citizen": "no",
+            "general_trustworthiness": "most_people",
+            "news_source": ["cnn", "twitter", "facebook"],
+            "political_views": "no_preference",
         }
         set_session(self.client.session, self.current_stage_username)
-        response = self.client.post("/question2/", data)
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_3)
+        response = self.client.post(
+            "/question2/", json.dumps(data), content_type="application/json"
         )
 
         investment = Investment.objects.get(
@@ -484,8 +413,105 @@ class TestQuestion2View(TestCase):
         self.assertEqual(
             investment.reached_stage, Investment.STAGE_QUESTION_3,
         )
-        self.assertEqual(investment.multiple_agreement_question, "exactly_3")
-        self.assertEqual(investment.multiple_agreement_question_type, "control")
+        self.assertEqual(investment.us_citizen, "no")
+        self.assertEqual(investment.general_trustworthiness, "most_people")
+        self.assertEqual(investment.news_source, "['cnn', 'twitter', 'facebook']")
+        self.assertEqual(investment.political_views, "no_preference")
+
+    def test_post_request_redirects_correctly_based_on_us_citizen_answer(self):
+        # Users answering yes to the U.S. citizen question should move to
+        # STAGE_QUESTION_2_5.
+        data = {
+            "us_citizen": "yes",
+            "general_trustworthiness": "most_people",
+            "news_source": ["cnn", "twitter", "facebook"],
+            "political_views": "no_preference",
+        }
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.post(
+            "/question2/", json.dumps(data), content_type="application/json"
+        )
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_QUESTION_2_5,
+        )
+
+        # Reset the stage for the current user:
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        investment.reached_stage = Investment.STAGE_QUESTION_2
+        investment.save()
+        set_session(self.client.session, self.current_stage_username)
+
+        # Users answering no to the U.S. cirizen question should move to
+        # STAGE_QUESTION_3.
+        data = {
+            "us_citizen": "no",
+            "general_trustworthiness": "most_people",
+            "news_source": ["cnn", "twitter", "facebook"],
+            "political_views": "no_preference",
+        }
+        response = self.client.post(
+            "/question2/", json.dumps(data), content_type="application/json"
+        )
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_QUESTION_3,
+        )
+
+
+class TestQuestion2_5View(TestCase):
+    def setUp(self):
+        self.current_stage_username = get_new_unqiue_username()
+        self.other_stage_username = get_new_unqiue_username()
+        current_stage_user = InvestmentGameUser.objects.create(
+            username=self.current_stage_username
+        )
+        Investment.objects.create(
+            user=current_stage_user, reached_stage=Investment.STAGE_QUESTION_2_5,
+        )
+        other_stage_user = InvestmentGameUser.objects.create(
+            username=self.other_stage_username
+        )
+        Investment.objects.create(
+            user=other_stage_user, reached_stage=Investment.STAGE_QUESTION_3
+        )
+        self.client = Client()
+
+    def test_view_behaves_correctly_based_on_current_stage(self):
+        set_session(self.client.session, self.other_stage_username)
+        response = self.client.get("/question2-5/")
+        self.assertRedirects(
+            response, reverse("invest_game:%s" % Investment.STAGE_QUESTION_3)
+        )
+
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.get("/question2-5/")
+        self.assertEqual(response.templates[0].name, "question2-5.html")
+
+    def test_post_request_saves_data_and_sets_stage_correctly(self):
+        data = {
+            "voted_last_election": "yes",
+            "how_voted": "other",
+        }
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.post(
+            "/question2-5/", json.dumps(data), content_type="application/json"
+        )
+
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_QUESTION_3,
+        )
+        self.assertEqual(investment.voted_last_election, "yes")
+        self.assertEqual(investment.how_voted, "other")
 
 
 class TestQuestion3View(TestCase):
@@ -519,21 +545,19 @@ class TestQuestion3View(TestCase):
 
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
-            "news_source": ["cnn", "twitter", "facebook"],
+            "approve_of_trump": "approve",
             "muslims_in_neighborhood": "some",
             "muslim_coworkers": "many",
             "self_treated_unfairly": "no",
             "race_treated_unfairly": "refuse_to_answer",
             "religion_treated_unfairly": "sometimes",
-            "general_trustworthiness": "most_people",
             "economic_outlook": "stay_the_same",
             "islamic_extremism": "somewhat_concerned",
             "reducing_terrorism": "dont_know",
         }
         set_session(self.client.session, self.current_stage_username)
-        response = self.client.post("/question3/", data)
-        self.assertRedirects(
-            response, reverse("invest_game:%s" % Investment.STAGE_FINISH)
+        response = self.client.post(
+            "/question3/", json.dumps(data), content_type="application/json"
         )
 
         investment = Investment.objects.get(
@@ -542,19 +566,18 @@ class TestQuestion3View(TestCase):
         self.assertEqual(
             investment.reached_stage, Investment.STAGE_FINISH,
         )
-        self.assertEqual(investment.news_source, "cnn")
+        self.assertEqual(investment.approve_of_trump, "approve")
         self.assertEqual(investment.muslims_in_neighborhood, "some")
         self.assertEqual(investment.muslim_coworkers, "many")
         self.assertEqual(investment.self_treated_unfairly, "no")
         self.assertEqual(investment.race_treated_unfairly, "refuse_to_answer")
         self.assertEqual(investment.religion_treated_unfairly, "sometimes")
-        self.assertEqual(investment.general_trustworthiness, "most_people")
         self.assertEqual(investment.economic_outlook, "stay_the_same")
         self.assertEqual(investment.islamic_extremism, "somewhat_concerned")
         self.assertEqual(investment.reducing_terrorism, "dont_know")
 
 
-class TestQuestion3View(TestCase):
+class TestFinishView(TestCase):
     def setUp(self):
         self.current_stage_username = get_new_unqiue_username()
         self.other_stage_username = get_new_unqiue_username()
