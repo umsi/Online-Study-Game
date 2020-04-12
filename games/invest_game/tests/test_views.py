@@ -51,12 +51,12 @@ class TestWelcomeView(TestCase):
         )
 
         # Check if the next experiment stage is correctly set.
-        investment = Investment.objects.get(
-            user=InvestmentGameUser.objects.get(username="abc123")
-        )
-        self.assertEqual(
-            investment.reached_stage, Investment.STAGE_SELECT_RESPONDENT,
-        )
+        #investment = Investment.objects.get(
+        #    user=InvestmentGameUser.objects.get(username="abc123")
+        #)
+        #self.assertEqual(
+        #    investment.reached_stage, Investment.STAGE_SELECT_RESPONDENT,
+        #)
 
         # A duplicate id query param with no id session param should render the
         # error template.
@@ -93,6 +93,23 @@ class TestWelcomeView(TestCase):
         set_session(self.client.session, get_new_unqiue_username())
         response = self.client.get("/", {"id": get_new_unqiue_username()})
         self.assertEqual(response.templates[0].name, "error.html")
+
+    def test_post_request_updates_the_stage(self):
+        current_user = InvestmentGameUser.objects.create(
+            username="abc123"
+        )
+        Investment.objects.create(
+            user=current_user, reached_stage=None
+        )
+        set_session(self.client.session, "abc123")
+        response = self.client.post("/")
+
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username="abc123")
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_SELECT_RESPONDENT,
+        )
 
 
 class TestSelectRespondentView(TestCase):
@@ -575,6 +592,67 @@ class TestQuestion3View(TestCase):
         self.assertEqual(investment.economic_outlook, "stay_the_same")
         self.assertEqual(investment.islamic_extremism, "somewhat_concerned")
         self.assertEqual(investment.reducing_terrorism, "dont_know")
+
+
+class TestQuestion3View(TestCase):
+    def setUp(self):
+        self.current_stage_username = get_new_unqiue_username()
+        self.other_stage_username = get_new_unqiue_username()
+        current_stage_user = InvestmentGameUser.objects.create(
+            username=self.current_stage_username
+        )
+        Investment.objects.create(
+            user=current_stage_user, reached_stage=Investment.STAGE_QUESTION_4,
+        )
+        other_stage_user = InvestmentGameUser.objects.create(
+            username=self.other_stage_username
+        )
+        Investment.objects.create(
+            user=other_stage_user, reached_stage=Investment.STAGE_USER_INVESTMENT
+        )
+        self.client = Client()
+
+    def test_view_behaves_correctly_based_on_current_stage(self):
+        set_session(self.client.session, self.other_stage_username)
+        response = self.client.get("/question4/")
+        self.assertRedirects(
+            response, reverse("invest_game:%s" % Investment.STAGE_USER_INVESTMENT)
+        )
+
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.get("/question4/")
+        self.assertEqual(response.templates[0].name, "question4.html")
+
+    def test_post_request_saves_data_and_sets_stage_correctly(self):
+        data = {
+          "covid_bioweapon": "disagree",
+          "share_equipment": "dont_know",
+          "covid_blame": "refuse_to_answer",
+          "cooperate_treatment": "agree",
+          "over_65_ventilators": "always_ventilators",
+          "non_us_citizens_ventilators": "low_preference_ventilators",
+          "muslim_americans_ventilators": "dont_know",
+          "chinese_americans_ventilators": "refuse_to_answer"
+        }
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.post(
+            "/question4/", json.dumps(data), content_type="application/json"
+        )
+
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_FINISH,
+        )
+        self.assertEqual(investment.covid_bioweapon, "disagree")
+        self.assertEqual(investment.share_equipment, "dont_know")
+        self.assertEqual(investment.covid_blame, "refuse_to_answer")
+        self.assertEqual(investment.cooperate_treatment, "agree")
+        self.assertEqual(investment.over_65_ventilators, "always_ventilators")
+        self.assertEqual(investment.non_us_citizens_ventilators, "low_preference_ventilators")
+        self.assertEqual(investment.muslim_americans_ventilators, "dont_know")
+        self.assertEqual(investment.chinese_americans_ventilators, "refuse_to_answer")
 
 
 class TestFinishView(TestCase):

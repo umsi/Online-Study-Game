@@ -17,6 +17,7 @@ class Investment(TimeStampedModel):
     STAGE_QUESTION_2 = "question2"
     STAGE_QUESTION_2_5 = "question2_5"
     STAGE_QUESTION_3 = "question3"
+    STAGE_QUESTION_4 = "question4"
     STAGE_COMPARE = "compare"
     STAGE_FINISH = "finish"
     STAGE_CHOICES = (
@@ -27,6 +28,7 @@ class Investment(TimeStampedModel):
         (STAGE_QUESTION_2, "User reached question 2 stage"),
         (STAGE_QUESTION_2_5, "User reached question 2.5 stage"),
         (STAGE_QUESTION_3, "User reached question 3 stage"),
+        (STAGE_QUESTION_4, "User reached question 4 stage"),
         (STAGE_COMPARE, "User reached compare stage"),
         (STAGE_FINISH, "User reached finish stage"),
     )
@@ -179,17 +181,15 @@ class Investment(TimeStampedModel):
     # Are your political views closer to those of
     POLITICAL_VIEWS_OPTION_A = "democrats"
     POLITICAL_VIEWS_OPTION_B = "republicans"
-    POLITICAL_VIEWS_OPTION_C = "other"
-    POLITICAL_VIEWS_OPTION_D = "no_preference"
-    POLITICAL_VIEWS_OPTION_E = "dont_know"
-    POLITICAL_VIEWS_OPTION_F = "refuse_to_answer"
+    POLITICAL_VIEWS_OPTION_C = "no_preference"
+    POLITICAL_VIEWS_OPTION_D = "dont_know"
+    POLITICAL_VIEWS_OPTION_E = "refuse_to_answer"
     POLITICAL_VIEWS_CHOICES = (
         (POLITICAL_VIEWS_OPTION_A, "The Democratic Party"),
         (POLITICAL_VIEWS_OPTION_B, "The Republican Party"),
-        (POLITICAL_VIEWS_OPTION_C, "Other"),
-        (POLITICAL_VIEWS_OPTION_D, "No preference"),
-        (POLITICAL_VIEWS_OPTION_E, "Don't know"),
-        (POLITICAL_VIEWS_OPTION_F, "Refuse to answer"),
+        (POLITICAL_VIEWS_OPTION_C, "No preference"),
+        (POLITICAL_VIEWS_OPTION_D, "Don't know"),
+        (POLITICAL_VIEWS_OPTION_E, "Refuse to answer"),
     )
     political_views = models.CharField(
         max_length=255,
@@ -386,6 +386,196 @@ class Investment(TimeStampedModel):
         choices=REDUCING_TERRORISM_CHOICES,
         help_text="In general, how well do you think the American government is doing in reducing the threat of terrorism?",
     )
+
+    # Valid question4 choices:
+    # ------------------------
+    # Covid-19 was a bioweapon designed by China to wage war on the United States.
+    COVID_BIOWEAPON_OPTION_A = "strongly_disagree"
+    COVID_BIOWEAPON_OPTION_B = "disagree"
+    COVID_BIOWEAPON_OPTION_C = "neutral"
+    COVID_BIOWEAPON_OPTION_D = "agree"
+    COVID_BIOWEAPON_OPTION_E = "strongly_agree"
+    COVID_BIOWEAPON_OPTION_F = "dont_know"
+    COVID_BIOWEAPON_OPTION_G = "refuse_to_answer"
+    COVID_BIOWEAPON_CHOICES = (
+        (COVID_BIOWEAPON_OPTION_A, "Strongly disagree"),
+        (COVID_BIOWEAPON_OPTION_B, "Disagree"),
+        (COVID_BIOWEAPON_OPTION_C, "Neutral"),
+        (COVID_BIOWEAPON_OPTION_D, "Agree"),
+        (COVID_BIOWEAPON_OPTION_E, "Strongly agree"),
+        (COVID_BIOWEAPON_OPTION_F, "Don't know"),
+        (COVID_BIOWEAPON_OPTION_G, "Refuse to answer"),
+    )
+    covid_bioweapon = models.CharField(
+        max_length=255,
+        null=True,
+        choices=COVID_BIOWEAPON_CHOICES,
+        help_text="Covid-19 was a bioweapon designed by China to wage war on the United States.",
+    )
+    
+    # Who is more to blame for the coronavirus pandemic in the United States? 
+    COVID_BLAME_OPTION_A = "chinese_government"
+    COVID_BLAME_OPTION_B = "united_states_government"
+    COVID_BLAME_OPTION_C = "equally_responsible"
+    COVID_BLAME_OPTION_D = "dont_know"
+    COVID_BLAME_OPTION_E = "refuse_to_answer"
+    COVID_BLAME_CHOICES = (
+        (COVID_BLAME_OPTION_A, "The Chinese government"),
+        (COVID_BLAME_OPTION_B, "The United States government"),
+        (COVID_BLAME_OPTION_C, "They are equally responsible"),
+        (COVID_BLAME_OPTION_D, "Don't know"),
+        (COVID_BLAME_OPTION_E, "Refuse to answer"),
+    )
+    covid_blame = models.CharField(
+        max_length=255,
+        null=True,
+        choices=COVID_BLAME_CHOICES,
+        help_text="Who is more to blame for the coronavirus pandemic in the United States?",
+    )
+    
+    # Now that the U.S. has experienced shortages of medical equipment, we should share our masks, ventilators, and other lifesaving equipment with other countries after the virus subsides here.
+    SHARE_EQUIPMENT_OPTION_A = "strongly_disagree"
+    SHARE_EQUIPMENT_OPTION_B = "disagree"
+    SHARE_EQUIPMENT_OPTION_C = "neutral"
+    SHARE_EQUIPMENT_OPTION_D = "agree"
+    SHARE_EQUIPMENT_OPTION_E = "strongly_agree"
+    SHARE_EQUIPMENT_OPTION_F = "dont_know"
+    SHARE_EQUIPMENT_OPTION_G = "refuse_to_answer"
+    SHARE_EQUIPMENT_CHOICES = (
+        (SHARE_EQUIPMENT_OPTION_A, "Strongly disagree"),
+        (SHARE_EQUIPMENT_OPTION_B, "Disagree"),
+        (SHARE_EQUIPMENT_OPTION_C, "Neutral"),
+        (SHARE_EQUIPMENT_OPTION_D, "Agree"),
+        (SHARE_EQUIPMENT_OPTION_E, "Strongly agree"),
+        (SHARE_EQUIPMENT_OPTION_F, "Don't know"),
+        (SHARE_EQUIPMENT_OPTION_G, "Refuse to answer"),
+    )
+    share_equipment = models.CharField(
+        max_length=255,
+        null=True,
+        choices=SHARE_EQUIPMENT_CHOICES,
+        help_text="Now that the U.S. has experienced shortages of medical equipment, we should share our masks, ventilators, and other lifesaving equipment with other countries after the virus subsides here.",
+    )
+    
+    # Covid-19 can only be beaten if countries cooperate in finding treatments and a vaccine.
+    COOPERATE_TREATMENT_OPTION_A = "strongly_disagree"
+    COOPERATE_TREATMENT_OPTION_B = "disagree"
+    COOPERATE_TREATMENT_OPTION_C = "neutral"
+    COOPERATE_TREATMENT_OPTION_D = "agree"
+    COOPERATE_TREATMENT_OPTION_E = "strongly_agree"
+    COOPERATE_TREATMENT_OPTION_F = "dont_know"
+    COOPERATE_TREATMENT_OPTION_G = "refuse_to_answer"
+    COOPERATE_TREATMENT_CHOICES = (
+        (COOPERATE_TREATMENT_OPTION_A, "Strongly disagree"),
+        (COOPERATE_TREATMENT_OPTION_B, "Disagree"),
+        (COOPERATE_TREATMENT_OPTION_C, "Neutral"),
+        (COOPERATE_TREATMENT_OPTION_D, "Agree"),
+        (COOPERATE_TREATMENT_OPTION_E, "Strongly agree"),
+        (COOPERATE_TREATMENT_OPTION_F, "Don't know"),
+        (COOPERATE_TREATMENT_OPTION_G, "Refuse to answer"),
+    )
+    cooperate_treatment = models.CharField(
+        max_length=255,
+        null=True,
+        choices=COOPERATE_TREATMENT_CHOICES,
+        help_text="Covid-19 can only be beaten if countries cooperate in finding treatments and a vaccine.",
+    )
+
+    # Ventilators for patients over 65
+    OVER_65_VENTILATORS_OPTION_A = "no_ventilators"
+    OVER_65_VENTILATORS_OPTION_B = "low_preference_ventilators"
+    OVER_65_VENTILATORS_OPTION_C = "ventilators_if_available"
+    OVER_65_VENTILATORS_OPTION_D = "high_preference_ventilators"
+    OVER_65_VENTILATORS_OPTION_E = "always_ventilators"
+    OVER_65_VENTILATORS_OPTION_F = "dont_know"
+    OVER_65_VENTILATORS_OPTION_G = "refuse_to_answer"
+    OVER_65_VENTILATORS_CHOICES = (
+        (OVER_65_VENTILATORS_OPTION_A, "No ventilators"),
+        (OVER_65_VENTILATORS_OPTION_B, "Low preference for ventilators"),
+        (OVER_65_VENTILATORS_OPTION_C, "Ventilators, if available"),
+        (OVER_65_VENTILATORS_OPTION_D, "High preference for ventilators"),
+        (OVER_65_VENTILATORS_OPTION_E, "Always gets ventilators"),
+        (OVER_65_VENTILATORS_OPTION_F, "Don't know"),
+        (OVER_65_VENTILATORS_OPTION_G, "Refuse to answer"),
+    )
+    over_65_ventilators = models.CharField(
+        max_length=255,
+        null=True,
+        choices=OVER_65_VENTILATORS_CHOICES,
+        help_text="Ventilators for patients over 65",
+    )
+
+    # Ventilators for non-U.S. citizens
+    NON_US_CITIZENS_VENTILATORS_OPTION_A = "no_ventilators"
+    NON_US_CITIZENS_VENTILATORS_OPTION_B = "low_preference_ventilators"
+    NON_US_CITIZENS_VENTILATORS_OPTION_C = "ventilators_if_available"
+    NON_US_CITIZENS_VENTILATORS_OPTION_D = "high_preference_ventilators"
+    NON_US_CITIZENS_VENTILATORS_OPTION_E = "always_ventilators"
+    NON_US_CITIZENS_VENTILATORS_OPTION_F = "dont_know"
+    NON_US_CITIZENS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    NON_US_CITIZENS_VENTILATORS_CHOICES = (
+        (NON_US_CITIZENS_VENTILATORS_OPTION_A, "No ventilators"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_C, "Ventilators, if available"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_D, "High preference for ventilators"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_E, "Always gets ventilators"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_F, "Don't know"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_G, "Refuse to answer"),
+    )
+    non_us_citizens_ventilators = models.CharField(
+        max_length=255,
+        null=True,
+        choices=NON_US_CITIZENS_VENTILATORS_CHOICES,
+        help_text="Ventilators for non-U.S. citizens",
+    )
+
+    # Ventilators for Muslim-Americans
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_A = "no_ventilators"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_B = "low_preference_ventilators"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_C = "ventilators_if_available"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_D = "high_preference_ventilators"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_E = "always_ventilators"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_F = "dont_know"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    MUSLIM_AMERICANS_VENTILATORS_CHOICES = (
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_A, "No ventilators"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_C, "Ventilators, if available"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_D, "High preference for ventilators"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_E, "Always gets ventilators"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_F, "Don't know"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_G, "Refuse to answer"),
+    )
+    muslim_americans_ventilators = models.CharField(
+        max_length=255,
+        null=True,
+        choices=MUSLIM_AMERICANS_VENTILATORS_CHOICES,
+        help_text="Ventilators for Muslim Americans",
+    )
+
+    # Ventilators for Chinese-Americans
+    CHINESE_AMERICANS_VENTILATORS_OPTION_A = "no_ventilators"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_B = "low_preference_ventilators"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_C = "ventilators_if_available"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_D = "high_preference_ventilators"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_E = "always_ventilators"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_F = "dont_know"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    CHINESE_AMERICANS_VENTILATORS_CHOICES = (
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_A, "No ventilators"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_C, "Ventilators, if available"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_D, "High preference for ventilators"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_E, "Always gets ventilators"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_F, "Don't know"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_G, "Refuse to answer"),
+    )
+    chinese_americans_ventilators = models.CharField(
+        max_length=255,
+        null=True,
+        choices=CHINESE_AMERICANS_VENTILATORS_CHOICES,
+        help_text="Ventilators for Chinese Americans",
+    )
     ###########################################################################
 
     user = models.OneToOneField(
@@ -424,6 +614,9 @@ class Investment(TimeStampedModel):
     )
     started_question_3 = models.DateTimeField(
         null=True, help_text="When the user landed on the question 3 stage"
+    )
+    started_question_4 = models.DateTimeField(
+        null=True, help_text="When the user landed on the question 4 stage"
     )
     started_finish = models.DateTimeField(
         null=True,
