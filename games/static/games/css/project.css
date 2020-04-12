@@ -403,6 +403,10 @@ td.slim button {
   padding-left: 40px;
 }
 
+.questionnaire-header {
+  margin-bottom: 32px;
+}
+
 .questionnaire-content {
   margin: 40px 0 90px 30px;
 }
@@ -412,7 +416,18 @@ td.slim button {
   margin-left: 16px;
 }
 
+.questionnaire-content .radio-subgroup {
+  margin-top: 24px;
+  margin-left: 32px;
+}
+
 .questionnaire-content p:not(:first-of-type) {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+
+.questionnaire-content div.random:not(:first-of-type) {
   margin-top: 24px;
   padding-top: 12px;
   border-top: 1px solid #ddd;

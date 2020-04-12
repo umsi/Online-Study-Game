@@ -19,5 +19,6 @@ urlpatterns = [
     path("question2/", views.question2, name="question2"),
     path("question2-5/", views.question2_5, name="question2_5"),
     path("question3/", views.question3, name="question3"),
+    path("question4/", views.question4, name="question4"),
     path("finish/", views.finish, name="finish"),
 ]
