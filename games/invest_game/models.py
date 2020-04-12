@@ -181,17 +181,15 @@ class Investment(TimeStampedModel):
     # Are your political views closer to those of
     POLITICAL_VIEWS_OPTION_A = "democrats"
     POLITICAL_VIEWS_OPTION_B = "republicans"
-    POLITICAL_VIEWS_OPTION_C = "other"
-    POLITICAL_VIEWS_OPTION_D = "no_preference"
-    POLITICAL_VIEWS_OPTION_E = "dont_know"
-    POLITICAL_VIEWS_OPTION_F = "refuse_to_answer"
+    POLITICAL_VIEWS_OPTION_C = "no_preference"
+    POLITICAL_VIEWS_OPTION_D = "dont_know"
+    POLITICAL_VIEWS_OPTION_E = "refuse_to_answer"
     POLITICAL_VIEWS_CHOICES = (
         (POLITICAL_VIEWS_OPTION_A, "The Democratic Party"),
         (POLITICAL_VIEWS_OPTION_B, "The Republican Party"),
-        (POLITICAL_VIEWS_OPTION_C, "Other"),
-        (POLITICAL_VIEWS_OPTION_D, "No preference"),
-        (POLITICAL_VIEWS_OPTION_E, "Don't know"),
-        (POLITICAL_VIEWS_OPTION_F, "Refuse to answer"),
+        (POLITICAL_VIEWS_OPTION_C, "No preference"),
+        (POLITICAL_VIEWS_OPTION_D, "Don't know"),
+        (POLITICAL_VIEWS_OPTION_E, "Refuse to answer"),
     )
     political_views = models.CharField(
         max_length=255,
