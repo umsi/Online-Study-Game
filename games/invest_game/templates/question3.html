@@ -326,7 +326,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
-      End of Survey
+      Next
     </button>
   </form>
 </div>
@@ -335,61 +335,52 @@
 {% block jscontent %}
 <!-- JavaScript code for this template -->
 <script type="text/javascript">
-  var keep = Math.floor(Math.random() * 3);
-
   $(document).ready(function() {
-    var elems = $(".random");
-    for (var i = 0; i < elems.length; ++i) {
-      if (i !== keep) {
-        $(elems[i]).hide();
-      }
-    }
-  });
+    $("#questionform").submit(function(event) {
+      event.preventDefault();
 
-  $("#questionform").submit(function(event) {
-    event.preventDefault();
+      var approve_of_trump = $("input[name=approve_of_trump]:checked").val();
+      var muslims_in_neighborhood = $("input[name=muslims_in_neighborhood]:checked").val();
+      var muslim_coworkers = $("input[name=muslim_coworkers]:checked").val();
+      var self_treated_unfairly = $("input[name=self_treated_unfairly]:checked").val();
+      var race_treated_unfairly = $("input[name=race_treated_unfairly]:checked").val();
+      var religion_treated_unfairly = $("input[name=religion_treated_unfairly]:checked").val();
+      var economic_outlook = $("input[name=economic_outlook]:checked").val();
+      var islamic_extremism = $("input[name=islamic_extremism]:checked").val();
+      var reducing_terrorism = $("input[name=reducing_terrorism]:checked").val();
 
-    var approve_of_trump = $("input[name=approve_of_trump]:checked").val();
-    var muslims_in_neighborhood = $("input[name=muslims_in_neighborhood]:checked").val();
-    var muslim_coworkers = $("input[name=muslim_coworkers]:checked").val();
-    var self_treated_unfairly = $("input[name=self_treated_unfairly]:checked").val();
-    var race_treated_unfairly = $("input[name=race_treated_unfairly]:checked").val();
-    var religion_treated_unfairly = $("input[name=religion_treated_unfairly]:checked").val();
-    var economic_outlook = $("input[name=economic_outlook]:checked").val();
-    var islamic_extremism = $("input[name=islamic_extremism]:checked").val();
-    var reducing_terrorism = $("input[name=reducing_terrorism]:checked").val();
-
-    if (
-      !approve_of_trump ||
-      !muslims_in_neighborhood ||
-      !muslim_coworkers ||
-      !self_treated_unfairly ||
-      !race_treated_unfairly ||
-      !religion_treated_unfairly ||
-      !economic_outlook ||
-      !islamic_extremism ||
-      !reducing_terrorism
-    ) {
-      alert("Please check all the anwsers");
-    } else {
-      $.ajax({
-        url: "{% url 'invest_game:question3' %}",
-        method: "POST",
-        data: JSON.stringify({
-          approve_of_trump: approve_of_trump,
-          muslims_in_neighborhood: muslims_in_neighborhood,
-          muslim_coworkers: muslim_coworkers,
-          self_treated_unfairly: self_treated_unfairly,
-          race_treated_unfairly: race_treated_unfairly,
-          religion_treated_unfairly: religion_treated_unfairly,
-          economic_outlook: economic_outlook,
-          islamic_extremism: islamic_extremism,
-          reducing_terrorism: reducing_terrorism
-        }),
-      }).done(function() {
-        window.location.href = {% url "invest_game:finish" %}
-      })
-    } 
+      if (
+        !approve_of_trump ||
+        !muslims_in_neighborhood ||
+        !muslim_coworkers ||
+        !self_treated_unfairly ||
+        !race_treated_unfairly ||
+        !religion_treated_unfairly ||
+        !economic_outlook ||
+        !islamic_extremism ||
+        !reducing_terrorism
+      ) {
+        alert("Please check all the anwsers");
+      } else {
+        $.ajax({
+          url: "{% url 'invest_game:question3' %}",
+          method: "POST",
+          data: JSON.stringify({
+            approve_of_trump: approve_of_trump,
+            muslims_in_neighborhood: muslims_in_neighborhood,
+            muslim_coworkers: muslim_coworkers,
+            self_treated_unfairly: self_treated_unfairly,
+            race_treated_unfairly: race_treated_unfairly,
+            religion_treated_unfairly: religion_treated_unfairly,
+            economic_outlook: economic_outlook,
+            islamic_extremism: islamic_extremism,
+            reducing_terrorism: reducing_terrorism
+          })
+        }).done(function() {
+          window.location.href = {% url "invest_game:question4" %}
+        })
+      } 
+    });
   });
 </script>
 {% endblock jscontent %}

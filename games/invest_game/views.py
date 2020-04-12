@@ -432,7 +432,7 @@ def question3(request, id=None):
     GET
     ---
 
-    Render the template for the question2 (news consumption habits) phase.
+    Render the template for the question3 phase.
 
 
     POST
@@ -457,8 +457,8 @@ def question3(request, id=None):
         investment.economic_outlook = data["economic_outlook"]
         investment.islamic_extremism = data["islamic_extremism"]
         investment.reducing_terrorism = data["reducing_terrorism"]
-        investment.reached_stage = Investment.STAGE_FINISH
-        investment.started_finish = timezone.now()
+        investment.reached_stage = Investment.STAGE_QUESTION_4
+        investment.started_question_4 = timezone.now()
 
         investment.save(
             update_fields=[
@@ -471,6 +471,60 @@ def question3(request, id=None):
                 "economic_outlook",
                 "islamic_extremism",
                 "reducing_terrorism",
+                "reached_stage",
+                "started_question_4",
+            ]
+        )
+
+        return HttpResponse()
+
+
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_4)
+def question4(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question4 (COVID questions) phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
+    if request.method == "GET":
+        return render(request, "question4.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+        data = json.loads(request.body)
+
+        investment.covid_bioweapon = data["covid_bioweapon"]
+        investment.covid_blame = data["covid_blame"]
+        investment.share_equipment = data["share_equipment"]
+        investment.cooperate_treatment = data["cooperate_treatment"]
+        investment.over_65_ventilators = data["over_65_ventilators"]
+        investment.non_us_citizens_ventilators = data["non_us_citizens_ventilators"]
+        investment.muslim_americans_ventilators = data["muslim_americans_ventilators"]
+        investment.chinese_americans_ventilators = data["chinese_americans_ventilators"]
+        investment.reached_stage = Investment.STAGE_FINISH
+        investment.started_finish = timezone.now()
+
+        investment.save(
+            update_fields=[
+                "covid_bioweapon",
+                "covid_blame",
+                "share_equipment",
+                "cooperate_treatment",
+                "over_65_ventilators",
+                "non_us_citizens_ventilators",
+                "muslim_americans_ventilators",
+                "chinese_americans_ventilators",
                 "reached_stage",
                 "started_finish",
             ]

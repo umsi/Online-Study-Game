@@ -1,0 +1,445 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}Welcome!{% endblock title %} 
+
+{% block leftcontent %}
+<div id="questionnaire_si2">
+  <form id="questionform" class="questionnaire-content">
+    {% csrf_token %}
+
+    <div id="questions">
+      <div class="random">
+        <p><b>Covid-19 was a bioweapon designed by China to wage war on the United States.</b></p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="strongly_disagree" />
+            Strongly disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="disagree" />
+            Disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="neutral" />
+            Neutral
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="agree" />
+            Agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="strongly_agree" />
+            Strongly agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="dont_know" />
+            Don't know
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_bioweapon" value="refuse_to_answer" />
+            Refuse to answer
+          </label>
+        </div>
+      </div>
+
+      <div class="random">
+        <p><b>Who is more to blame for the coronavirus pandemic in the United States?</b></p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_blame" value="chinese_government" />
+            The Chinese government
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_blame" value="united_states_government" />
+            The United States government
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_blame" value="equally_responsible" />
+            They are equally responsible
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_blame" value="dont_know" />
+            Don't know
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="covid_blame" value="refuse_to_anaswer" />
+            Refuse to answer
+          </label>
+        </div>
+      </div>
+
+      <div class="random">
+        <p><b>Now that the U.S. has experienced shortages of medical equipment, we should share our masks, ventilators, and other lifesaving equipment with other countries after the virus subsides here.</b></p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="strongly_disagree" />
+            Strongly disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="disagree" />
+            Disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="neutral" />
+            Neutral
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="agree" />
+            Agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="strongly_agree" />
+            Strongly agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="dont_know" />
+            Don't know
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="share_equipment" value="refuse_to_answer" />
+            Refuse to answer
+          </label>
+        </div>
+      </div>
+
+      <div class="random">
+        <p><b>Covid-19 can only be beaten if countries cooperate in finding treatments and a vaccine.</b></p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="strongly_disagree" />
+            Strongly disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="disagree" />
+            Disagree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="neutral" />
+            Neutral
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="agree" />
+            Agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="strongly_agree" />
+            Strongly agree
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="dont_know" />
+            Don't know
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="cooperate_treatment" value="refuse_to_answer" />
+            Refuse to answer
+          </label>
+        </div>
+      </div>
+
+      <div class="random">
+        <p><b>Suppose you are in charge of the local hospital. You are beginning to see patients with severe cases of Covid-19. Unfortunately, the hospital has a limited supply of ventilators, and you know that you will have to make hard choices about who will get them very soon. How would you set hospital policy for members of the following groups...?</b></p>
+        <div class="radio-subgroup">
+          <p><em>Patients over 65</em></p>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="no_ventilators" />
+              No ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="low_preference_ventilators" />
+              Low preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="ventilators_if_available" />
+              Ventilators, if available
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="high_preference_ventilators" />
+              High preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="always_ventilators" />
+              Always gets ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="dont_know" />
+              Don't know
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="over_65_ventilators" value="refuse_to_answer" />
+              Refuse to answer
+            </label>
+          </div>
+        </div>
+        <div class="radio-subgroup">
+          <p><em>Non-U.S. citizens</em></p>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="no_ventilators" />
+              No ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="low_preference_ventilators" />
+              Low preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="ventilators_if_available" />
+              Ventilators, if available
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="high_preference_ventilators" />
+              High preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="always_ventilators" />
+              Always gets ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="dont_know" />
+              Don't know
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="non_us_citizens_ventilators" value="refuse_to_answer" />
+              Refuse to answer
+            </label>
+          </div>
+        </div>
+        <div class="radio-subgroup">
+          <p><em>Muslim Americans</em></p>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="no_ventilators" />
+              No ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="low_preference_ventilators" />
+              Low preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="ventilators_if_available" />
+              Ventilators, if available
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="high_preference_ventilators" />
+              High preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="always_ventilators" />
+              Always gets ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="dont_know" />
+              Don't know
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="muslim_americans_ventilators" value="refuse_to_answer" />
+              Refuse to answer
+            </label>
+          </div>
+        </div>
+        <div class="radio-subgroup">
+          <p><em>Chinese Americans</em></p>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="no_ventilators" />
+              No ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="low_preference_ventilators" />
+              Low preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="ventilators_if_available" />
+              Ventilators, if available
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="high_preference_ventilators" />
+              High preference for ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="always_ventilators" />
+              Always gets ventilators
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="dont_know" />
+              Don't know
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="chinese_americans_ventilators" value="refuse_to_answer" />
+              Refuse to answer
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      End of Survey
+    </button>
+  </form>
+</div>
+{% endblock leftcontent %} 
+
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
+  /**
+   * Shuffles array in place.
+   */
+  function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+    }
+
+    return a;
+  }
+
+  $(document).ready(function() {
+    var elems = shuffle($(".random"))
+    console.log("elems", elems)
+
+    $("#questions").html(elems)
+  });
+
+  $("#questionform").submit(function(event) {
+    event.preventDefault();
+
+    var covid_bioweapon = $("input[name=covid_bioweapon]:checked").val();
+    var covid_blame = $("input[name=covid_blame]:checked").val();
+    var share_equipment = $("input[name=share_equipment]:checked").val();
+    var cooperate_treatment = $("input[name=cooperate_treatment]:checked").val();
+    var over_65_ventilators = $("input[name=over_65_ventilators]:checked").val();
+    var non_us_citizens_ventilators = $("input[name=non_us_citizens_ventilators]:checked").val();
+    var muslim_americans_ventilators = $("input[name=muslim_americans_ventilators]:checked").val();
+    var chinese_americans_ventilators = $("input[name=chinese_americans_ventilators]:checked").val();
+
+    if (
+      !covid_bioweapon ||
+      !covid_blame ||
+      !share_equipment ||
+      !cooperate_treatment ||
+      !over_65_ventilators ||
+      !non_us_citizens_ventilators ||
+      !muslim_americans_ventilators ||
+      !chinese_americans_ventilators 
+    ) {
+      alert("Please check all the anwsers");
+    } else {
+      $.ajax({
+        url: "{% url 'invest_game:question4' %}",
+        method: "POST",
+        data: JSON.stringify({
+          covid_bioweapon: covid_bioweapon,
+          covid_blame: covid_blame,
+          share_equipment: share_equipment,
+          cooperate_treatment: cooperate_treatment,
+          over_65_ventilators: over_65_ventilators,
+          non_us_citizens_ventilators: non_us_citizens_ventilators,
+          muslim_americans_ventilators: muslim_americans_ventilators,
+          chinese_americans_ventilators: chinese_americans_ventilators
+        })
+      }).done(function() {
+        window.location.href = {% url "invest_game:finish" %}
+      })
+    } 
+  });
+</script>
+{% endblock jscontent %}
