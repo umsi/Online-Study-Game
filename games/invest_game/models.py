@@ -503,7 +503,7 @@ class Investment(TimeStampedModel):
     over_65_ventilators = models.CharField(
         max_length=255,
         null=True,
-        choices=OVER_65_VENTILATORS,
+        choices=OVER_65_VENTILATORS_CHOICES,
         help_text="Ventilators for patients over 65",
     )
 
@@ -527,7 +527,7 @@ class Investment(TimeStampedModel):
     non_us_citizens_ventilators = models.CharField(
         max_length=255,
         null=True,
-        choices=NON_US_CITIZENS_VENTILATORS,
+        choices=NON_US_CITIZENS_VENTILATORS_CHOICES,
         help_text="Ventilators for non-U.S. citizens",
     )
 
@@ -551,7 +551,7 @@ class Investment(TimeStampedModel):
     muslim_americans_ventilators = models.CharField(
         max_length=255,
         null=True,
-        choices=MUSLIM_AMERICANS_VENTILATORS,
+        choices=MUSLIM_AMERICANS_VENTILATORS_CHOICES,
         help_text="Ventilators for Muslim Americans",
     )
 
@@ -575,7 +575,7 @@ class Investment(TimeStampedModel):
     chinese_americans_ventilators = models.CharField(
         max_length=255,
         null=True,
-        choices=CHINESE_AMERICANS_VENTILATORS,
+        choices=CHINESE_AMERICANS_VENTILATORS_CHOICES,
         help_text="Ventilators for Chinese Americans",
     )
     ###########################################################################
