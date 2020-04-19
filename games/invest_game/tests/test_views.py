@@ -566,11 +566,11 @@ class TestQuestion3View(TestCase):
             "muslims_in_neighborhood": "some",
             "muslim_coworkers": "many",
             "self_treated_unfairly": "no",
-            "race_treated_unfairly": "refuse_to_answer",
+            "race_treated_unfairly": "dont_know_or_refuse",
             "religion_treated_unfairly": "sometimes",
             "economic_outlook": "stay_the_same",
             "islamic_extremism": "somewhat_concerned",
-            "reducing_terrorism": "dont_know",
+            "reducing_terrorism": "dont_know_or_refuse",
         }
         set_session(self.client.session, self.current_stage_username)
         response = self.client.post(
@@ -587,11 +587,11 @@ class TestQuestion3View(TestCase):
         self.assertEqual(investment.muslims_in_neighborhood, "some")
         self.assertEqual(investment.muslim_coworkers, "many")
         self.assertEqual(investment.self_treated_unfairly, "no")
-        self.assertEqual(investment.race_treated_unfairly, "refuse_to_answer")
+        self.assertEqual(investment.race_treated_unfairly, "dont_know_or_refuse")
         self.assertEqual(investment.religion_treated_unfairly, "sometimes")
         self.assertEqual(investment.economic_outlook, "stay_the_same")
         self.assertEqual(investment.islamic_extremism, "somewhat_concerned")
-        self.assertEqual(investment.reducing_terrorism, "dont_know")
+        self.assertEqual(investment.reducing_terrorism, "dont_know_or_refuse")
 
 
 class TestQuestion3View(TestCase):
@@ -626,13 +626,13 @@ class TestQuestion3View(TestCase):
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
           "covid_bioweapon": "disagree",
-          "share_equipment": "dont_know",
-          "covid_blame": "refuse_to_answer",
+          "share_equipment": "dont_know_or_refuse",
+          "covid_blame": "dont_know_or_refuse",
           "cooperate_treatment": "agree",
           "over_65_ventilators": "always_ventilators",
           "non_us_citizens_ventilators": "low_preference_ventilators",
-          "muslim_americans_ventilators": "dont_know",
-          "chinese_americans_ventilators": "refuse_to_answer"
+          "muslim_americans_ventilators": "dont_know_or_refuse",
+          "chinese_americans_ventilators": "dont_know_or_refuse"
         }
         set_session(self.client.session, self.current_stage_username)
         response = self.client.post(
@@ -646,13 +646,13 @@ class TestQuestion3View(TestCase):
             investment.reached_stage, Investment.STAGE_FINISH,
         )
         self.assertEqual(investment.covid_bioweapon, "disagree")
-        self.assertEqual(investment.share_equipment, "dont_know")
-        self.assertEqual(investment.covid_blame, "refuse_to_answer")
+        self.assertEqual(investment.share_equipment, "dont_know_or_refuse")
+        self.assertEqual(investment.covid_blame, "dont_know_or_refuse")
         self.assertEqual(investment.cooperate_treatment, "agree")
         self.assertEqual(investment.over_65_ventilators, "always_ventilators")
         self.assertEqual(investment.non_us_citizens_ventilators, "low_preference_ventilators")
-        self.assertEqual(investment.muslim_americans_ventilators, "dont_know")
-        self.assertEqual(investment.chinese_americans_ventilators, "refuse_to_answer")
+        self.assertEqual(investment.muslim_americans_ventilators, "dont_know_or_refuse")
+        self.assertEqual(investment.chinese_americans_ventilators, "dont_know_or_refuse")
 
 
 class TestFinishView(TestCase):
