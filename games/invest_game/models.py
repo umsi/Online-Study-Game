@@ -105,13 +105,11 @@ class Investment(TimeStampedModel):
     # you can’t be too careful in dealing with people?
     TRUST_PEOPLE_OPTION_A = "most_people"
     TRUST_PEOPLE_OPTION_B = "cant_be_too_careful"
-    TRUST_PEOPLE_OPTION_C = "dont_know"
-    TRUST_PEOPLE_OPTION_D = "refuse_to_answer"
+    TRUST_PEOPLE_OPTION_C = "dont_know_or_refuse"
     TRUST_PEOPLE_CHOICES = (
         (TRUST_PEOPLE_OPTION_A, "Most people can be trusted"),
         (TRUST_PEOPLE_OPTION_B, "Can't be too careful"),
-        (TRUST_PEOPLE_OPTION_C, "Don't know"),
-        (TRUST_PEOPLE_OPTION_D, "Refuse to answer"),
+        (TRUST_PEOPLE_OPTION_C, "Don't know/Refuse to answer"),
     )
     general_trustworthiness = models.CharField(
         max_length=255,
@@ -123,13 +121,11 @@ class Investment(TimeStampedModel):
     # Are you a U.S. citizen?
     US_CITIZEN_OPTION_A = "yes"
     US_CITIZEN_OPTION_B = "no"
-    US_CITIZEN_OPTION_C = "dont_know"
-    US_CITIZEN_OPTION_D = "refuse_to_answer"
+    US_CITIZEN_OPTION_C = "dont_know_or_refuse"
     US_CITIZEN_CHOICES = (
         (US_CITIZEN_OPTION_A, "Yes"),
         (US_CITIZEN_OPTION_B, "No"),
-        (US_CITIZEN_OPTION_C, "Don't know"),
-        (US_CITIZEN_OPTION_D, "Refuse to answer"),
+        (US_CITIZEN_OPTION_C, "Don't know/Refuse to answer"),
     )
     us_citizen = models.CharField(
         max_length=255,
@@ -143,13 +139,11 @@ class Investment(TimeStampedModel):
     # Did you vote for a presidential candidate in the last election?
     VOTED_PRESIDENT_OPTION_A = "yes"
     VOTED_PRESIDENT_OPTION_B = "no"
-    VOTED_PRESIDENT_OPTION_C = "dont_know"
-    VOTED_PRESIDENT_OPTION_D = "refuse_to_answer"
+    VOTED_PRESIDENT_OPTION_C = "dont_know_or_refuse"
     VOTED_PRESIDENT_CHOICES = (
         (VOTED_PRESIDENT_OPTION_A, "Yes"),
         (VOTED_PRESIDENT_OPTION_B, "No"),
-        (VOTED_PRESIDENT_OPTION_C, "Don't know"),
-        (VOTED_PRESIDENT_OPTION_D, "Refuse to answer"),
+        (VOTED_PRESIDENT_OPTION_C, "Don't know/Refuse to answer"),
     )
     voted_last_election = models.CharField(
         max_length=255,
@@ -162,14 +156,12 @@ class Investment(TimeStampedModel):
     HOW_VOTED_OPTION_A = "trump"
     HOW_VOTED_OPTION_B = "clinton"
     HOW_VOTED_OPTION_C = "other"
-    HOW_VOTED_OPTION_D = "dont_know"
-    HOW_VOTED_OPTION_E = "refuse_to_answer"
+    HOW_VOTED_OPTION_D = "dont_know_or_refuse"
     HOW_VOTED_CHOICES = (
         (HOW_VOTED_OPTION_A, "Donald Trump"),
         (HOW_VOTED_OPTION_B, "Hillary Clinton"),
         (HOW_VOTED_OPTION_C, "Other"),
-        (HOW_VOTED_OPTION_D, "Don't know"),
-        (HOW_VOTED_OPTION_E, "Refuse to answer"),
+        (HOW_VOTED_OPTION_D, "Don't know/Refuse to answer"),
     )
     how_voted = models.CharField(
         max_length=255,
@@ -182,14 +174,12 @@ class Investment(TimeStampedModel):
     POLITICAL_VIEWS_OPTION_A = "democrats"
     POLITICAL_VIEWS_OPTION_B = "republicans"
     POLITICAL_VIEWS_OPTION_C = "no_preference"
-    POLITICAL_VIEWS_OPTION_D = "dont_know"
-    POLITICAL_VIEWS_OPTION_E = "refuse_to_answer"
+    POLITICAL_VIEWS_OPTION_D = "dont_know_or_refuse"
     POLITICAL_VIEWS_CHOICES = (
         (POLITICAL_VIEWS_OPTION_A, "The Democratic Party"),
         (POLITICAL_VIEWS_OPTION_B, "The Republican Party"),
         (POLITICAL_VIEWS_OPTION_C, "No preference"),
-        (POLITICAL_VIEWS_OPTION_D, "Don't know"),
-        (POLITICAL_VIEWS_OPTION_E, "Refuse to answer"),
+        (POLITICAL_VIEWS_OPTION_D, "Don't know/Refuse to answer"),
     )
     political_views = models.CharField(
         max_length=255,
@@ -203,13 +193,11 @@ class Investment(TimeStampedModel):
     # Do you approve or disapprove of the way Donald Trump is handling his job as president?
     APPROVE_OF_TRUMP_OPTION_A = "approve"
     APPROVE_OF_TRUMP_OPTION_B = "disapprove"
-    APPROVE_OF_TRUMP_OPTION_C = "dont_know"
-    APPROVE_OF_TRUMP_OPTION_D = "refuse_to_answer"
+    APPROVE_OF_TRUMP_OPTION_C = "dont_know_or_refuse"
     APPROVE_OF_TRUMP_CHOICES = (
         (APPROVE_OF_TRUMP_OPTION_A, "Approve"),
         (APPROVE_OF_TRUMP_OPTION_B, "Disapprove"),
-        (APPROVE_OF_TRUMP_OPTION_C, "Don't know"),
-        (APPROVE_OF_TRUMP_OPTION_D, "Refuse to answer"),
+        (APPROVE_OF_TRUMP_OPTION_C, "Don't know/Refuse to answer"),
     )
     approve_of_trump = models.CharField(
         max_length=255,
@@ -223,14 +211,12 @@ class Investment(TimeStampedModel):
     ECONOMIC_OUTLOOK_OPTION_A = "get_better"
     ECONOMIC_OUTLOOK_OPTION_B = "stay_the_same"
     ECONOMIC_OUTLOOK_OPTION_C = "get_worse"
-    ECONOMIC_OUTLOOK_OPTION_D = "dont_know"
-    ECONOMIC_OUTLOOK_OPTION_E = "refuse_to_answer"
+    ECONOMIC_OUTLOOK_OPTION_D = "dont_know_or_refuse"
     ECONOMIC_OUTLOOK_CHOICES = (
         (ECONOMIC_OUTLOOK_OPTION_A, "Get better"),
         (ECONOMIC_OUTLOOK_OPTION_B, "Stay the same"),
         (ECONOMIC_OUTLOOK_OPTION_C, "Get worse"),
-        (ECONOMIC_OUTLOOK_OPTION_D, "Don't know"),
-        (ECONOMIC_OUTLOOK_OPTION_E, "Refuse to answer"),
+        (ECONOMIC_OUTLOOK_OPTION_D, "Don't know/Refuse to answer"),
     )
     economic_outlook = models.CharField(
         max_length=255,
@@ -243,14 +229,12 @@ class Investment(TimeStampedModel):
     MUSLIMS_IN_NEIGHBORHOOD_OPTION_A = "many"
     MUSLIMS_IN_NEIGHBORHOOD_OPTION_B = "some"
     MUSLIMS_IN_NEIGHBORHOOD_OPTION_C = "none"
-    MUSLIMS_IN_NEIGHBORHOOD_OPTION_D = "dont_know"
-    MUSLIMS_IN_NEIGHBORHOOD_OPTION_E = "refuse_to_answer"
+    MUSLIMS_IN_NEIGHBORHOOD_OPTION_D = "dont_know_or_refuse"
     MUSLIMS_IN_NEIGHBORHOOD_CHOICES = (
         (MUSLIMS_IN_NEIGHBORHOOD_OPTION_A, "Many"),
         (MUSLIMS_IN_NEIGHBORHOOD_OPTION_B, "Some"),
         (MUSLIMS_IN_NEIGHBORHOOD_OPTION_C, "None at all"),
-        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_D, "Don't know"),
-        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_E, "Refuse to answer"),
+        (MUSLIMS_IN_NEIGHBORHOOD_OPTION_D, "Don't know/Refuse to answer"),
     )
     muslims_in_neighborhood = models.CharField(
         max_length=255,
@@ -263,14 +247,12 @@ class Investment(TimeStampedModel):
     MUSLIM_COWORKERS_OPTION_A = "many"
     MUSLIM_COWORKERS_OPTION_B = "some"
     MUSLIM_COWORKERS_OPTION_C = "none"
-    MUSLIM_COWORKERS_OPTION_D = "dont_know"
-    MUSLIM_COWORKERS_OPTION_E = "refuse_to_answer"
+    MUSLIM_COWORKERS_OPTION_D = "dont_know_or_refuse"
     MUSLIM_COWORKERS_CHOICES = (
         (MUSLIM_COWORKERS_OPTION_A, "Many"),
         (MUSLIM_COWORKERS_OPTION_B, "Some"),
         (MUSLIM_COWORKERS_OPTION_C, "None at all"),
-        (MUSLIM_COWORKERS_OPTION_D, "Don't know"),
-        (MUSLIM_COWORKERS_OPTION_E, "Refuse to answer"),
+        (MUSLIM_COWORKERS_OPTION_D, "Don't know/Refuse to answer"),
     )
     muslim_coworkers = models.CharField(
         max_length=255,
@@ -283,13 +265,11 @@ class Investment(TimeStampedModel):
     # ethnicity, or religion?
     SELF_TREATED_UNFAIRLY_OPTION_A = "yes"
     SELF_TREATED_UNFAIRLY_OPTION_B = "no"
-    SELF_TREATED_UNFAIRLY_OPTION_C = "dont_know"
-    SELF_TREATED_UNFAIRLY_OPTION_D = "refuse_to_answer"
+    SELF_TREATED_UNFAIRLY_OPTION_C = "dont_know_or_refuse"
     SELF_TREATED_UNFAIRLY_CHOICES = (
         (SELF_TREATED_UNFAIRLY_OPTION_A, "Yes"),
         (SELF_TREATED_UNFAIRLY_OPTION_B, "No"),
-        (SELF_TREATED_UNFAIRLY_OPTION_C, "Don't know"),
-        (SELF_TREATED_UNFAIRLY_OPTION_D, "Refuse to answer"),
+        (SELF_TREATED_UNFAIRLY_OPTION_C, "Don't know/Refuse to answer"),
     )
     self_treated_unfairly = models.CharField(
         max_length=255,
@@ -303,15 +283,13 @@ class Investment(TimeStampedModel):
     RACE_TREATED_UNFAIRLY_OPTION_B = "sometimes"
     RACE_TREATED_UNFAIRLY_OPTION_C = "seldom"
     RACE_TREATED_UNFAIRLY_OPTION_D = "never"
-    RACE_TREATED_UNFAIRLY_OPTION_E = "dont_know"
-    RACE_TREATED_UNFAIRLY_OPTION_F = "refuse_to_answer"
+    RACE_TREATED_UNFAIRLY_OPTION_E = "dont_know_or_refuse"
     RACE_TREATED_UNFAIRLY_CHOICES = (
         (RACE_TREATED_UNFAIRLY_OPTION_A, "Often"),
         (RACE_TREATED_UNFAIRLY_OPTION_B, "Sometimes"),
         (RACE_TREATED_UNFAIRLY_OPTION_C, "Seldom"),
         (RACE_TREATED_UNFAIRLY_OPTION_D, "Never"),
-        (RACE_TREATED_UNFAIRLY_OPTION_E, "Don't know"),
-        (RACE_TREATED_UNFAIRLY_OPTION_F, "Refuse to answer"),
+        (RACE_TREATED_UNFAIRLY_OPTION_E, "Don't know/Refuse to answer"),
     )
     race_treated_unfairly = models.CharField(
         max_length=255,
@@ -325,15 +303,13 @@ class Investment(TimeStampedModel):
     RELIGION_TREATED_UNFAIRLY_OPTION_B = "sometimes"
     RELIGION_TREATED_UNFAIRLY_OPTION_C = "seldom"
     RELIGION_TREATED_UNFAIRLY_OPTION_D = "never"
-    RELIGION_TREATED_UNFAIRLY_OPTION_E = "dont_know"
-    RELIGION_TREATED_UNFAIRLY_OPTION_F = "refuse_to_answer"
+    RELIGION_TREATED_UNFAIRLY_OPTION_E = "dont_know_or_refuse"
     RELIGION_TREATED_UNFAIRLY_CHOICES = (
         (RELIGION_TREATED_UNFAIRLY_OPTION_A, "Often"),
         (RELIGION_TREATED_UNFAIRLY_OPTION_B, "Sometimes"),
         (RELIGION_TREATED_UNFAIRLY_OPTION_C, "Seldom"),
         (RELIGION_TREATED_UNFAIRLY_OPTION_D, "Never"),
-        (RELIGION_TREATED_UNFAIRLY_OPTION_E, "Don't know"),
-        (RELIGION_TREATED_UNFAIRLY_OPTION_F, "Refuse to answer"),
+        (RELIGION_TREATED_UNFAIRLY_OPTION_E, "Don't know/Refuse to answer"),
     )
     religion_treated_unfairly = models.CharField(
         max_length=255,
@@ -347,15 +323,13 @@ class Investment(TimeStampedModel):
     ISLAMIC_EXTREMISM_OPTION_B = "somewhat_concerned"
     ISLAMIC_EXTREMISM_OPTION_C = "not_too_concerned"
     ISLAMIC_EXTREMISM_OPTION_D = "not_concerned"
-    ISLAMIC_EXTREMISM_OPTION_E = "dont_know"
-    ISLAMIC_EXTREMISM_OPTION_F = "refuse_to_answer"
+    ISLAMIC_EXTREMISM_OPTION_E = "dont_know_or_refuse"
     ISLAMIC_EXTREMISM_CHOICES = (
         (ISLAMIC_EXTREMISM_OPTION_A, "Very concerned"),
         (ISLAMIC_EXTREMISM_OPTION_B, "Somewhat concerned"),
         (ISLAMIC_EXTREMISM_OPTION_C, "Not too concerned"),
         (ISLAMIC_EXTREMISM_OPTION_D, "Not concerned"),
-        (ISLAMIC_EXTREMISM_OPTION_E, "Don't know"),
-        (ISLAMIC_EXTREMISM_OPTION_F, "Refuse to answer"),
+        (ISLAMIC_EXTREMISM_OPTION_E, "Don't know/Refuse to answer"),
     )
     islamic_extremism = models.CharField(
         max_length=255,
@@ -370,15 +344,13 @@ class Investment(TimeStampedModel):
     REDUCING_TERRORISM_OPTION_B = "fairly_well"
     REDUCING_TERRORISM_OPTION_C = "not_very_well"
     REDUCING_TERRORISM_OPTION_D = "not_well_at_all"
-    REDUCING_TERRORISM_OPTION_E = "dont_know"
-    REDUCING_TERRORISM_OPTION_F = "refuse_to_answer"
+    REDUCING_TERRORISM_OPTION_E = "dont_know_or_refuse"
     REDUCING_TERRORISM_CHOICES = (
         (REDUCING_TERRORISM_OPTION_A, "Very well"),
         (REDUCING_TERRORISM_OPTION_B, "Fairly well"),
         (REDUCING_TERRORISM_OPTION_C, "Not very well"),
         (REDUCING_TERRORISM_OPTION_D, "Not well at all"),
-        (REDUCING_TERRORISM_OPTION_E, "Don't know"),
-        (REDUCING_TERRORISM_OPTION_F, "Refuse to answer"),
+        (REDUCING_TERRORISM_OPTION_E, "Don't know/Refuse to answer"),
     )
     reducing_terrorism = models.CharField(
         max_length=255,
@@ -395,16 +367,14 @@ class Investment(TimeStampedModel):
     COVID_BIOWEAPON_OPTION_C = "neutral"
     COVID_BIOWEAPON_OPTION_D = "agree"
     COVID_BIOWEAPON_OPTION_E = "strongly_agree"
-    COVID_BIOWEAPON_OPTION_F = "dont_know"
-    COVID_BIOWEAPON_OPTION_G = "refuse_to_answer"
+    COVID_BIOWEAPON_OPTION_F = "dont_know_or_refuse"
     COVID_BIOWEAPON_CHOICES = (
         (COVID_BIOWEAPON_OPTION_A, "Strongly disagree"),
         (COVID_BIOWEAPON_OPTION_B, "Disagree"),
         (COVID_BIOWEAPON_OPTION_C, "Neutral"),
         (COVID_BIOWEAPON_OPTION_D, "Agree"),
         (COVID_BIOWEAPON_OPTION_E, "Strongly agree"),
-        (COVID_BIOWEAPON_OPTION_F, "Don't know"),
-        (COVID_BIOWEAPON_OPTION_G, "Refuse to answer"),
+        (COVID_BIOWEAPON_OPTION_F, "Don't know/Refuse to answer"),
     )
     covid_bioweapon = models.CharField(
         max_length=255,
@@ -412,19 +382,17 @@ class Investment(TimeStampedModel):
         choices=COVID_BIOWEAPON_CHOICES,
         help_text="Covid-19 was a bioweapon designed by China to wage war on the United States.",
     )
-    
-    # Who is more to blame for the coronavirus pandemic in the United States? 
+
+    # Who is more to blame for the coronavirus pandemic in the United States?
     COVID_BLAME_OPTION_A = "chinese_government"
     COVID_BLAME_OPTION_B = "united_states_government"
     COVID_BLAME_OPTION_C = "equally_responsible"
-    COVID_BLAME_OPTION_D = "dont_know"
-    COVID_BLAME_OPTION_E = "refuse_to_answer"
+    COVID_BLAME_OPTION_D = "dont_know_or_refuse"
     COVID_BLAME_CHOICES = (
         (COVID_BLAME_OPTION_A, "The Chinese government"),
         (COVID_BLAME_OPTION_B, "The United States government"),
         (COVID_BLAME_OPTION_C, "They are equally responsible"),
-        (COVID_BLAME_OPTION_D, "Don't know"),
-        (COVID_BLAME_OPTION_E, "Refuse to answer"),
+        (COVID_BLAME_OPTION_D, "Don't know/Refuse to answer"),
     )
     covid_blame = models.CharField(
         max_length=255,
@@ -432,23 +400,21 @@ class Investment(TimeStampedModel):
         choices=COVID_BLAME_CHOICES,
         help_text="Who is more to blame for the coronavirus pandemic in the United States?",
     )
-    
+
     # Now that the U.S. has experienced shortages of medical equipment, we should share our masks, ventilators, and other lifesaving equipment with other countries after the virus subsides here.
     SHARE_EQUIPMENT_OPTION_A = "strongly_disagree"
     SHARE_EQUIPMENT_OPTION_B = "disagree"
     SHARE_EQUIPMENT_OPTION_C = "neutral"
     SHARE_EQUIPMENT_OPTION_D = "agree"
     SHARE_EQUIPMENT_OPTION_E = "strongly_agree"
-    SHARE_EQUIPMENT_OPTION_F = "dont_know"
-    SHARE_EQUIPMENT_OPTION_G = "refuse_to_answer"
+    SHARE_EQUIPMENT_OPTION_F = "dont_know_or_refuse"
     SHARE_EQUIPMENT_CHOICES = (
         (SHARE_EQUIPMENT_OPTION_A, "Strongly disagree"),
         (SHARE_EQUIPMENT_OPTION_B, "Disagree"),
         (SHARE_EQUIPMENT_OPTION_C, "Neutral"),
         (SHARE_EQUIPMENT_OPTION_D, "Agree"),
         (SHARE_EQUIPMENT_OPTION_E, "Strongly agree"),
-        (SHARE_EQUIPMENT_OPTION_F, "Don't know"),
-        (SHARE_EQUIPMENT_OPTION_G, "Refuse to answer"),
+        (SHARE_EQUIPMENT_OPTION_F, "Don't know/Refuse to answer"),
     )
     share_equipment = models.CharField(
         max_length=255,
@@ -456,23 +422,21 @@ class Investment(TimeStampedModel):
         choices=SHARE_EQUIPMENT_CHOICES,
         help_text="Now that the U.S. has experienced shortages of medical equipment, we should share our masks, ventilators, and other lifesaving equipment with other countries after the virus subsides here.",
     )
-    
+
     # Covid-19 can only be beaten if countries cooperate in finding treatments and a vaccine.
     COOPERATE_TREATMENT_OPTION_A = "strongly_disagree"
     COOPERATE_TREATMENT_OPTION_B = "disagree"
     COOPERATE_TREATMENT_OPTION_C = "neutral"
     COOPERATE_TREATMENT_OPTION_D = "agree"
     COOPERATE_TREATMENT_OPTION_E = "strongly_agree"
-    COOPERATE_TREATMENT_OPTION_F = "dont_know"
-    COOPERATE_TREATMENT_OPTION_G = "refuse_to_answer"
+    COOPERATE_TREATMENT_OPTION_F = "dont_know_or_refuse"
     COOPERATE_TREATMENT_CHOICES = (
         (COOPERATE_TREATMENT_OPTION_A, "Strongly disagree"),
         (COOPERATE_TREATMENT_OPTION_B, "Disagree"),
         (COOPERATE_TREATMENT_OPTION_C, "Neutral"),
         (COOPERATE_TREATMENT_OPTION_D, "Agree"),
         (COOPERATE_TREATMENT_OPTION_E, "Strongly agree"),
-        (COOPERATE_TREATMENT_OPTION_F, "Don't know"),
-        (COOPERATE_TREATMENT_OPTION_G, "Refuse to answer"),
+        (COOPERATE_TREATMENT_OPTION_F, "Don't know/Refuse to answer"),
     )
     cooperate_treatment = models.CharField(
         max_length=255,
@@ -482,21 +446,19 @@ class Investment(TimeStampedModel):
     )
 
     # Ventilators for patients over 65
-    OVER_65_VENTILATORS_OPTION_A = "no_ventilators"
-    OVER_65_VENTILATORS_OPTION_B = "low_preference_ventilators"
-    OVER_65_VENTILATORS_OPTION_C = "ventilators_if_available"
-    OVER_65_VENTILATORS_OPTION_D = "high_preference_ventilators"
-    OVER_65_VENTILATORS_OPTION_E = "always_ventilators"
-    OVER_65_VENTILATORS_OPTION_F = "dont_know"
-    OVER_65_VENTILATORS_OPTION_G = "refuse_to_answer"
+    OVER_65_VENTILATORS_OPTION_A = "1"
+    OVER_65_VENTILATORS_OPTION_B = "2"
+    OVER_65_VENTILATORS_OPTION_C = "3"
+    OVER_65_VENTILATORS_OPTION_D = "4"
+    OVER_65_VENTILATORS_OPTION_E = "5"
+    OVER_65_VENTILATORS_OPTION_F = "dont_know_or_refuse"
     OVER_65_VENTILATORS_CHOICES = (
-        (OVER_65_VENTILATORS_OPTION_A, "No ventilators"),
-        (OVER_65_VENTILATORS_OPTION_B, "Low preference for ventilators"),
-        (OVER_65_VENTILATORS_OPTION_C, "Ventilators, if available"),
-        (OVER_65_VENTILATORS_OPTION_D, "High preference for ventilators"),
-        (OVER_65_VENTILATORS_OPTION_E, "Always gets ventilators"),
-        (OVER_65_VENTILATORS_OPTION_F, "Don't know"),
-        (OVER_65_VENTILATORS_OPTION_G, "Refuse to answer"),
+        (OVER_65_VENTILATORS_OPTION_A, "Never gets a ventilator"),
+        (OVER_65_VENTILATORS_OPTION_B, "2"),
+        (OVER_65_VENTILATORS_OPTION_C, "3"),
+        (OVER_65_VENTILATORS_OPTION_D, "4"),
+        (OVER_65_VENTILATORS_OPTION_E, "Always gets a ventilator"),
+        (OVER_65_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
     )
     over_65_ventilators = models.CharField(
         max_length=255,
@@ -506,21 +468,19 @@ class Investment(TimeStampedModel):
     )
 
     # Ventilators for non-U.S. citizens
-    NON_US_CITIZENS_VENTILATORS_OPTION_A = "no_ventilators"
-    NON_US_CITIZENS_VENTILATORS_OPTION_B = "low_preference_ventilators"
-    NON_US_CITIZENS_VENTILATORS_OPTION_C = "ventilators_if_available"
-    NON_US_CITIZENS_VENTILATORS_OPTION_D = "high_preference_ventilators"
-    NON_US_CITIZENS_VENTILATORS_OPTION_E = "always_ventilators"
-    NON_US_CITIZENS_VENTILATORS_OPTION_F = "dont_know"
-    NON_US_CITIZENS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    NON_US_CITIZENS_VENTILATORS_OPTION_A = "1"
+    NON_US_CITIZENS_VENTILATORS_OPTION_B = "2"
+    NON_US_CITIZENS_VENTILATORS_OPTION_C = "3"
+    NON_US_CITIZENS_VENTILATORS_OPTION_D = "4"
+    NON_US_CITIZENS_VENTILATORS_OPTION_E = "5"
+    NON_US_CITIZENS_VENTILATORS_OPTION_F = "dont_know_or_refuse"
     NON_US_CITIZENS_VENTILATORS_CHOICES = (
-        (NON_US_CITIZENS_VENTILATORS_OPTION_A, "No ventilators"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_C, "Ventilators, if available"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_D, "High preference for ventilators"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_E, "Always gets ventilators"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_F, "Don't know"),
-        (NON_US_CITIZENS_VENTILATORS_OPTION_G, "Refuse to answer"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_A, "Never gets a ventilator"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_B, "2"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_C, "3"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_D, "4"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_E, "Always gets a ventilator"),
+        (NON_US_CITIZENS_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
     )
     non_us_citizens_ventilators = models.CharField(
         max_length=255,
@@ -530,21 +490,19 @@ class Investment(TimeStampedModel):
     )
 
     # Ventilators for Muslim-Americans
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_A = "no_ventilators"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_B = "low_preference_ventilators"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_C = "ventilators_if_available"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_D = "high_preference_ventilators"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_E = "always_ventilators"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_F = "dont_know"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_A = "1"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_B = "2"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_C = "3"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_D = "4"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_E = "5"
+    MUSLIM_AMERICANS_VENTILATORS_OPTION_F = "dont_know_or_refuse"
     MUSLIM_AMERICANS_VENTILATORS_CHOICES = (
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_A, "No ventilators"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_C, "Ventilators, if available"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_D, "High preference for ventilators"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_E, "Always gets ventilators"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_F, "Don't know"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_G, "Refuse to answer"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_A, "Never gets a ventilator"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_B, "2"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_C, "3"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_D, "4"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_E, "Always gets a ventilator"),
+        (MUSLIM_AMERICANS_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
     )
     muslim_americans_ventilators = models.CharField(
         max_length=255,
@@ -554,21 +512,19 @@ class Investment(TimeStampedModel):
     )
 
     # Ventilators for Chinese-Americans
-    CHINESE_AMERICANS_VENTILATORS_OPTION_A = "no_ventilators"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_B = "low_preference_ventilators"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_C = "ventilators_if_available"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_D = "high_preference_ventilators"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_E = "always_ventilators"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_F = "dont_know"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_G = "refuse_to_answer"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_A = "1"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_B = "2"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_C = "3"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_D = "4"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_E = "5"
+    CHINESE_AMERICANS_VENTILATORS_OPTION_F = "dont_know_or_refuse"
     CHINESE_AMERICANS_VENTILATORS_CHOICES = (
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_A, "No ventilators"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_B, "Low preference for ventilators"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_C, "Ventilators, if available"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_D, "High preference for ventilators"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_E, "Always gets ventilators"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_F, "Don't know"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_G, "Refuse to answer"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_A, "Never gets a ventilator"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_B, "2"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_C, "3"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_D, "4"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_E, "Always gets a ventilator"),
+        (CHINESE_AMERICANS_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
     )
     chinese_americans_ventilators = models.CharField(
         max_length=255,
@@ -587,9 +543,7 @@ class Investment(TimeStampedModel):
     started_experiment = models.DateTimeField(
         null=True, help_text="When the user landed on the welcome page"
     )
-    reached_stage = models.CharField(
-        max_length=256, choices=STAGE_CHOICES, null=True,
-    )
+    reached_stage = models.CharField(max_length=256, choices=STAGE_CHOICES, null=True,)
     started_select_respondent = models.DateTimeField(
         null=True, help_text="When the user landed on the select respondent stage"
     )

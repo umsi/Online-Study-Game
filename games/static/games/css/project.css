@@ -62,10 +62,6 @@ body {
   margin-bottom: 28px;
 }
 
-ul li {
-  font-size: 16px;
-}
-
 ul ul {
   margin-bottom: 10px;
 }
@@ -86,12 +82,6 @@ th {
 .text-center table {
   background-color: none;
   width: 100%;
-}
-
-h4,
-p,
-.alert {
-  line-height: 160%;
 }
 
 #copyright {
@@ -323,14 +313,15 @@ td.slim button {
 #InvestorCoinsLabel {
   position: absolute;
   top: 220px;
-  left: 13px;
+  width: 100px;
   color: green;
 }
 
 #RespondentCoinsLabel {
   position: absolute;
   top: 220px;
-  right: 7px;
+  width: 100px;
+  right: 0;
   color: blue;
 }
 
@@ -408,12 +399,30 @@ td.slim button {
 }
 
 .questionnaire-content {
+  font-size: 18px;
   margin: 40px 0 90px 30px;
+}
+
+.questionnaire-content ul {
+  font-size: 18px;
+  margin-bottom: 24px;
+  font-style: italic;
 }
 
 .questionnaire-content .radio,
 .questionnaire-content .checkbox {
   margin-left: 16px;
+}
+
+.questionnaire-content .radio label,
+.questionnaire-content .checkbox label {
+  line-height: 26px;
+  padding-left: 24px;
+}
+
+.questionnaire-content input[type=checkbox],
+.questionnaire-content input[type=radio] {
+  margin-left: -24px;
 }
 
 .questionnaire-content .radio-subgroup {
@@ -451,9 +460,6 @@ td.slim button {
   h3,
   h4,
   p {
-    font-size: 13px;
-  }
-  ul li {
     font-size: 13px;
   }
   .jumbotron p {
