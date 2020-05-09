@@ -46,6 +46,7 @@ def require_unique_id_query_param_and_disallow_id_session_param(view_func):
     def new_view_func(request, *args, **kwargs):
         session_id = request.session.get("id", None)
         id = request.GET.get("id", None)
+        pid = request.GET.get("pid", None)
 
         if request.method == "POST":
             kwargs["id"] = session_id
@@ -82,12 +83,14 @@ def require_unique_id_query_param_and_disallow_id_session_param(view_func):
                 user = InvestmentGameUser.objects.get(username=id)
             except InvestmentGameUser.DoesNotExist:
                 kwargs["id"] = id
+                kwargs["pid"] = pid
                 return view_func(request, *args, **kwargs)
 
             try:
                 investment = Investment.objects.get(user=user)
             except Investment.DoesNotExist:
                 kwargs["id"] = id
+                kwargs["pid"] = pid
                 return view_func(request, *args, **kwargs)
 
         return render(request, "error.html")
