@@ -34,13 +34,7 @@ To leave your virtual environment when you've finished working on the project, r
 
 ## Deployment
 
-The application is configured to be deployed to an Elastic Beanstalk environment in AWS. This readme assumes that the EB environment is already set up. The environment should have a Postgres database instance connected to it, and should define the following environment variables:
-```
-ADMIN_PASSWORD=<chosen_admin_panel_password>
-ADMIN_USERNAME=<chosen_admin_panel_username>
-DEBUG=False
-DJANGO_SETTINGS_MODULE=config.settings
-```
+The application is configured to be deployed to an Elastic Beanstalk environment in AWS. This readme assumes that the EB environment is already set up. The environment should have a Postgres database instance connected to it.
 
 Assuming such an environment exists, the application can be deployed by running:
 ```
@@ -52,7 +46,7 @@ If you need to create an environment, use the `eb create` command, documented [h
 
 ## Admin panel
 
-The standard Django admin application can be accessed at `<application_url>/admin`. The username and password are set using the `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables.
+The standard Django admin application can be accessed at `<application_url>/admin`. The username and password are set using a database fixture found in `games/invest_game/fixtures/users.json`.
 
 From the admin panel, you can export study data to a CSV file.
 

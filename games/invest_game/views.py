@@ -29,15 +29,16 @@ INITIAL_USER_COINS_NUM = 5
 
 @require_unique_id_query_param_and_disallow_id_session_param
 @require_http_methods(["GET", "POST"])
-def welcome(request, id=None):
+def welcome(request, id=None, pid=None):
     if request.method == "GET":
         request.session["id"] = id
+        request.session["pid"] = pid
         # TODO: I'm not sure it's ideal to be altering the database on a GET
         # request as we do here, though this view is guarded somewhat by the
         # decorators above. But maybe there's a better way to handle this?
         user = InvestmentGameUser.objects.create(username=id)
         Investment.objects.create(
-            user=user, started_experiment=timezone.now(),
+            user=user, started_experiment=timezone.now(), pid=pid
         )
 
         return render(request, "welcome.html")
@@ -544,7 +545,11 @@ def finish(request, id=None):
 
     Render the template for the finish phase and reset the id session param.
     """
+    user = InvestmentGameUser.objects.get(username=id)
+    investment = Investment.objects.get(user=user)
+    pid = investment.pid
+
     request.session["id"] = None
     request.session["started_experiment"] = None
 
-    return render(request, "finish.html")
+    return redirect("https://dkr1.ssisurveys.com/projects/end?rst=1&psid={0}&pid={1}&basic=79570".format(id, pid))

@@ -534,6 +534,7 @@ class Investment(TimeStampedModel):
     )
     ###########################################################################
 
+    pid = models.CharField(max_length=256, null=True)
     user = models.OneToOneField(
         InvestmentGameUser, on_delete=models.CASCADE, primary_key=True
     )
