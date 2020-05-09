@@ -1,0 +1,21 @@
+[
+{
+    "model": "core.gamesuser",
+    "fields": {
+        "password": "pbkdf2_sha256$150000$FnX0fGnnv4kO$QGRYoifeXEcL7/SFz3pNWeiQgIUgTSFBVq1CFjVZFm0=",
+        "last_login": "2020-05-09T09:03:44.328Z",
+        "is_superuser": true,
+        "username": "umsi_admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-05-09T09:02:45.906Z",
+        "created": "2020-05-09T09:02:46.051Z",
+        "updated": "2020-05-09T09:02:46.051Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
