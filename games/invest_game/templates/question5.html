@@ -1,0 +1,155 @@
+{% extends "base.html" %} 
+
+{% load static %} 
+
+{% block title %}Welcome!{% endblock title %} 
+
+{% block leftcontent %}
+<div id="questionnaire_si0" class="questionnaire-content">
+  <form id="questionform">
+    {% csrf_token %}
+
+    <p class="questionnaire-header">
+      <b>Finally, we need your name and address to reimburse you. This information will be used only for the purposes of mailing you a check for the amount you received. We will NOT use your name or address for purposes other than to address and mail the check. After the check is redeemed, we will delete your name and address from our records. Your personal information will NOT be used as data in our research.</b>
+    </p>
+    <div class="text">
+      <label>
+        <span class="text-label">Name:</span>
+        <input type="text" name="user_name" />
+      </label>
+    </div>
+    <div class="text">
+      <label>
+        <span class="text-label">Street Address:</span>
+        <input type="text" name="user_address_1" />
+      </label>
+    </div>
+    <div class="text">
+      <label>
+        <span class="text-label">Street Address 2:</span>
+        <input type="text" name="user_address_2" />
+      </label>
+    </div>
+    <div class="text">
+      <label>
+        <span class="text-label">City:</span>
+        <input type="text" name="user_city" />
+      </label>
+    </div>
+    <div class="text">
+      <label>
+        <span class="text-label">State:</span>
+        <select name="user_state">
+          <option value=""></option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Deleware</option>
+          <option value="DC">District of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+          <option value="AS">American Samoa</option>
+          <option value="GU">Guam</option>
+          <option value="MH">Marshall Islands</option>
+          <option value="FM">Micronesia</option>
+          <option value="MP">Northern Marianas</option>
+          <option value="PW">Palau</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="VI">Virgin Islands</option>
+        </select>
+      </label>
+    </div>
+    <div class="text">
+      <label>
+        <span class="text-label">Zip Code:</span>
+        <input type="text" name="user_zip" />
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary questionnaire-submit-btn">
+      Next
+    </button>
+  </form>
+</div>
+{% endblock leftcontent %} 
+
+{% block jscontent %}
+<!-- JavaScript code for this template -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#questionform").submit(function(event) {
+      event.preventDefault()
+
+      var user_name = $("input[name=user_name]").val();
+      var user_address_1 = $("input[name=user_address_1]").val();
+      var user_address_2 = $("input[name=user_address_2]").val();
+      var user_city = $("input[name=user_city]").val();
+      var user_state = $("select[name=user_state]").val();
+      var user_zip = $("input[name=user_zip]").val();
+
+      // NOTE: user_address_2 is optional.
+      if (!user_name || !user_address_1 || !user_city || !user_state || !user_zip) {
+        alert("Please fill out remaining questions");
+      } else {
+        $.ajax({
+          url: "{% url 'invest_game:question5' %}",
+          method: "POST",
+          data: JSON.stringify({
+            user_name: user_name,
+            user_address_1: user_address_1,
+            user_address_2: user_address_2,
+            user_city: user_city,
+            user_state: user_state,
+            user_zip: user_zip
+          }),
+        }).done(function() {
+          window.location.href = {% url "invest_game:finish" %}
+        })
+      } 
+    });
+  });
+</script>
+{% endblock jscontent %}

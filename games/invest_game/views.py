@@ -37,9 +37,7 @@ def welcome(request, id=None, pid=None):
         # request as we do here, though this view is guarded somewhat by the
         # decorators above. But maybe there's a better way to handle this?
         user = InvestmentGameUser.objects.create(username=id)
-        Investment.objects.create(
-            user=user, started_experiment=timezone.now(), pid=pid
-        )
+        Investment.objects.create(user=user, started_experiment=timezone.now(), pid=pid)
 
         return render(request, "welcome.html")
 
@@ -49,9 +47,7 @@ def welcome(request, id=None, pid=None):
         investment.started_select_respondent = timezone.now()
         investment.reached_stage = Investment.STAGE_SELECT_RESPONDENT
 
-        investment.save(
-            update_fields=["started_user_investment", "reached_stage"]
-        )
+        investment.save(update_fields=["started_user_investment", "reached_stage"])
 
         return HttpResponse()
 
@@ -513,8 +509,8 @@ def question4(request, id=None):
         investment.non_us_citizens_ventilators = data["non_us_citizens_ventilators"]
         investment.muslim_americans_ventilators = data["muslim_americans_ventilators"]
         investment.chinese_americans_ventilators = data["chinese_americans_ventilators"]
-        investment.reached_stage = Investment.STAGE_FINISH
-        investment.started_finish = timezone.now()
+        investment.reached_stage = Investment.STAGE_QUESTION_5
+        investment.started_question_5 = timezone.now()
 
         investment.save(
             update_fields=[
@@ -526,6 +522,56 @@ def question4(request, id=None):
                 "non_us_citizens_ventilators",
                 "muslim_americans_ventilators",
                 "chinese_americans_ventilators",
+                "reached_stage",
+                "started_question_5",
+            ]
+        )
+
+        return HttpResponse()
+
+
+@require_id_session_param
+@require_http_methods(["GET", "POST"])
+@require_stage(Investment.STAGE_QUESTION_5)
+def question5(request, id=None):
+    """
+    
+    GET
+    ---
+
+    Render the template for the question5 (address questions) phase.
+
+
+    POST
+    ----
+
+    Record questionnaire responses and redirect to next stage.
+    """
+    if request.method == "GET":
+        return render(request, "question5.html")
+
+    if request.method == "POST":
+        user = InvestmentGameUser.objects.get(username=id)
+        investment = Investment.objects.get(user=user)
+        data = json.loads(request.body)
+
+        investment.user_name = data["user_name"]
+        investment.user_address_1 = data["user_address_1"]
+        investment.user_address_2 = data["user_address_2"]
+        investment.user_city = data["user_city"]
+        investment.user_state = data["user_state"]
+        investment.user_zip = data["user_zip"]
+        investment.reached_stage = Investment.STAGE_FINISH
+        investment.started_finish = timezone.now()
+
+        investment.save(
+            update_fields=[
+                "user_name",
+                "user_address_1",
+                "user_address_2",
+                "user_city",
+                "user_state",
+                "user_zip",
                 "reached_stage",
                 "started_finish",
             ]
@@ -552,4 +598,8 @@ def finish(request, id=None):
     request.session["id"] = None
     request.session["started_experiment"] = None
 
-    return redirect("https://dkr1.ssisurveys.com/projects/end?rst=1&psid={0}&pid={1}&basic=79570".format(id, pid))
+    return redirect(
+        "https://dkr1.ssisurveys.com/projects/end?rst=1&psid={0}&pid={1}&basic=79570".format(
+            id, pid
+        )
+    )
