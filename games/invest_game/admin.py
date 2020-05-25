@@ -1,7 +1,9 @@
 import csv
 
 from django.contrib import admin
+from django.db import models
 from django.http import HttpResponse
+from django.forms import Textarea
 
 from .models import InvestmentGameUser, Investment
 
@@ -12,6 +14,9 @@ class InvestmentGameUserAdmin(admin.ModelAdmin):
 
 class InvestmentAdmin(admin.ModelAdmin):
     actions = ["download_csv"]
+    formfield_overrides = {
+        models.TextField: {"widget": Textarea(attrs={"rows": 1, "cols": 40})}
+    }
 
     def download_csv(self, request, queryset):
         meta = self.model._meta

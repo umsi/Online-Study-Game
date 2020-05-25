@@ -18,6 +18,7 @@ class Investment(TimeStampedModel):
     STAGE_QUESTION_2_5 = "question2_5"
     STAGE_QUESTION_3 = "question3"
     STAGE_QUESTION_4 = "question4"
+    STAGE_QUESTION_5 = "question5"
     STAGE_COMPARE = "compare"
     STAGE_FINISH = "finish"
     STAGE_CHOICES = (
@@ -532,6 +533,136 @@ class Investment(TimeStampedModel):
         choices=CHINESE_AMERICANS_VENTILATORS_CHOICES,
         help_text="Ventilators for Chinese Americans",
     )
+
+    # Stage 5 choices
+    STATE_AL = "AL"
+    STATE_AK = "AK"
+    STATE_AZ = "AZ"
+    STATE_AR = "AR"
+    STATE_CA = "CA"
+    STATE_CO = "CO"
+    STATE_CT = "CT"
+    STATE_DE = "DE"
+    STATE_DC = "DC"
+    STATE_FL = "FL"
+    STATE_GA = "GA"
+    STATE_ID = "ID"
+    STATE_IL = "IL"
+    STATE_IN = "IN"
+    STATE_IA = "IA"
+    STATE_KS = "KS"
+    STATE_KY = "KY"
+    STATE_LA = "LA"
+    STATE_ME = "ME"
+    STATE_MD = "MD"
+    STATE_MA = "MA"
+    STATE_MI = "MI"
+    STATE_MN = "MN"
+    STATE_MS = "MS"
+    STATE_MO = "MO"
+    STATE_MT = "MT"
+    STATE_NE = "NE"
+    STATE_NV = "NV"
+    STATE_NH = "NH"
+    STATE_NJ = "NJ"
+    STATE_NM = "NM"
+    STATE_NY = "NY"
+    STATE_NC = "NC"
+    STATE_ND = "ND"
+    STATE_OH = "OH"
+    STATE_OK = "OK"
+    STATE_OR = "OR"
+    STATE_PA = "PA"
+    STATE_RI = "RI"
+    STATE_SC = "SC"
+    STATE_SD = "SD"
+    STATE_TN = "TN"
+    STATE_TX = "TX"
+    STATE_UT = "UT"
+    STATE_VT = "VT"
+    STATE_VA = "VA"
+    STATE_WA = "WA"
+    STATE_WV = "WV"
+    STATE_WI = "WI"
+    STATE_WY = "WY"
+    TERR_AS = "AS"
+    TERR_GU = "GU"
+    TERR_MH = "MH"
+    TERR_FM = "FM"
+    TERR_MP = "MP"
+    TERR_PW = "PW"
+    TERR_PR = "PR"
+    TERR_VI = "VI"
+    STATE_TERR_CHOICES = (
+        (STATE_AL, "Alabama"),
+        (STATE_AK, "Alaska"),
+        (STATE_AZ, "Arizona"),
+        (STATE_AR, "Arkansas"),
+        (STATE_CA, "California"),
+        (STATE_CO, "Colorado"),
+        (STATE_CT, "Connecticut"),
+        (STATE_DE, "Deleware"),
+        (STATE_DC, "District of Columbia"),
+        (STATE_FL, "Florida"),
+        (STATE_GA, "Georgia"),
+        (STATE_ID, "Idaho"),
+        (STATE_IL, "Illinois"),
+        (STATE_IN, "Indiana"),
+        (STATE_IA, "Iowa"),
+        (STATE_KS, "Kansas"),
+        (STATE_KY, "Kentucky"),
+        (STATE_LA, "Louisiana"),
+        (STATE_ME, "Maine"),
+        (STATE_MD, "Maryland"),
+        (STATE_MA, "Massachusetts"),
+        (STATE_MI, "Michigan"),
+        (STATE_MN, "Minnesota"),
+        (STATE_MS, "Mississippi"),
+        (STATE_MO, "Missouri"),
+        (STATE_MT, "Montana"),
+        (STATE_NE, "Nebraska"),
+        (STATE_NV, "Nevada"),
+        (STATE_NH, "New Hampshire"),
+        (STATE_NJ, "New Jersey"),
+        (STATE_NM, "New Mexico"),
+        (STATE_NY, "New York"),
+        (STATE_NC, "North Carolina"),
+        (STATE_ND, "North Dakota"),
+        (STATE_OH, "Ohio"),
+        (STATE_OK, "Oklahoma"),
+        (STATE_OR, "Oregon"),
+        (STATE_PA, "Pennsylvania"),
+        (STATE_RI, "Rhode Island"),
+        (STATE_SC, "South Carolina"),
+        (STATE_SD, "South Dakota"),
+        (STATE_TN, "Tennessee"),
+        (STATE_TX, "Texas"),
+        (STATE_UT, "Utah"),
+        (STATE_VT, "Vermont"),
+        (STATE_VA, "Virginia"),
+        (STATE_WA, "Washington"),
+        (STATE_WV, "West Virginia"),
+        (STATE_WI, "Wisconsin"),
+        (STATE_WY, "Wyoming"),
+        (TERR_AS, "American Samoa"),
+        (TERR_GU, "Guam"),
+        (TERR_MH, "Marshall Islands"),
+        (TERR_FM, "Micronesia"),
+        (TERR_MP, "Northern Marianas"),
+        (TERR_PW, "Palau"),
+        (TERR_PR, "Puerto Rico"),
+        (TERR_VI, "Virgin Islands"),
+    )
+    user_name = models.TextField(null=True, help_text="Name")
+    user_address_1 = models.TextField(null=True, help_text="Street Address")
+    user_address_2 = models.TextField(null=True, help_text="Street Address 2")
+    user_city = models.TextField(null=True, help_text="User City")
+    user_state = models.CharField(
+        max_length=4, null=True, choices=STATE_TERR_CHOICES, help_text="User State"
+    )
+    user_zip = models.TextField(null=True, help_text="User Zip Code")
+
+
     ###########################################################################
 
     pid = models.CharField(max_length=256, null=True)
@@ -572,6 +703,9 @@ class Investment(TimeStampedModel):
     )
     started_question_4 = models.DateTimeField(
         null=True, help_text="When the user landed on the question 4 stage"
+    )
+    started_question_5 = models.DateTimeField(
+        null=True, help_text="When the user landed on the question 5 stage"
     )
     started_finish = models.DateTimeField(
         null=True,
