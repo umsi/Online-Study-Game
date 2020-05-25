@@ -596,6 +596,7 @@ def finish(request, id=None):
     pid = investment.pid
 
     request.session["id"] = None
+    request.session["pid"] = None
     request.session["started_experiment"] = None
 
     return redirect(

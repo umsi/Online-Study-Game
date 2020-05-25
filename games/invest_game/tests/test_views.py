@@ -51,12 +51,12 @@ class TestWelcomeView(TestCase):
         )
 
         # Check if the next experiment stage is correctly set.
-        #investment = Investment.objects.get(
+        # investment = Investment.objects.get(
         #    user=InvestmentGameUser.objects.get(username="abc123")
-        #)
-        #self.assertEqual(
+        # )
+        # self.assertEqual(
         #    investment.reached_stage, Investment.STAGE_SELECT_RESPONDENT,
-        #)
+        # )
 
         # A duplicate id query param with no id session param should render the
         # error template.
@@ -95,12 +95,8 @@ class TestWelcomeView(TestCase):
         self.assertEqual(response.templates[0].name, "error.html")
 
     def test_post_request_updates_the_stage(self):
-        current_user = InvestmentGameUser.objects.create(
-            username="abc123"
-        )
-        Investment.objects.create(
-            user=current_user, reached_stage=None
-        )
+        current_user = InvestmentGameUser.objects.create(username="abc123")
+        Investment.objects.create(user=current_user, reached_stage=None)
         set_session(self.client.session, "abc123")
         response = self.client.post("/")
 
@@ -581,7 +577,7 @@ class TestQuestion3View(TestCase):
             user=InvestmentGameUser.objects.get(username=self.current_stage_username)
         )
         self.assertEqual(
-            investment.reached_stage, Investment.STAGE_FINISH,
+            investment.reached_stage, Investment.STAGE_QUESTION_4,
         )
         self.assertEqual(investment.approve_of_trump, "approve")
         self.assertEqual(investment.muslims_in_neighborhood, "some")
@@ -594,7 +590,7 @@ class TestQuestion3View(TestCase):
         self.assertEqual(investment.reducing_terrorism, "dont_know_or_refuse")
 
 
-class TestQuestion3View(TestCase):
+class TestQuestion4View(TestCase):
     def setUp(self):
         self.current_stage_username = get_new_unqiue_username()
         self.other_stage_username = get_new_unqiue_username()
@@ -625,14 +621,14 @@ class TestQuestion3View(TestCase):
 
     def test_post_request_saves_data_and_sets_stage_correctly(self):
         data = {
-          "covid_bioweapon": "disagree",
-          "share_equipment": "dont_know_or_refuse",
-          "covid_blame": "dont_know_or_refuse",
-          "cooperate_treatment": "agree",
-          "over_65_ventilators": "always_ventilators",
-          "non_us_citizens_ventilators": "low_preference_ventilators",
-          "muslim_americans_ventilators": "dont_know_or_refuse",
-          "chinese_americans_ventilators": "dont_know_or_refuse"
+            "covid_bioweapon": "disagree",
+            "share_equipment": "dont_know_or_refuse",
+            "covid_blame": "dont_know_or_refuse",
+            "cooperate_treatment": "agree",
+            "over_65_ventilators": "always_ventilators",
+            "non_us_citizens_ventilators": "low_preference_ventilators",
+            "muslim_americans_ventilators": "dont_know_or_refuse",
+            "chinese_americans_ventilators": "dont_know_or_refuse",
         }
         set_session(self.client.session, self.current_stage_username)
         response = self.client.post(
@@ -643,16 +639,77 @@ class TestQuestion3View(TestCase):
             user=InvestmentGameUser.objects.get(username=self.current_stage_username)
         )
         self.assertEqual(
-            investment.reached_stage, Investment.STAGE_FINISH,
+            investment.reached_stage, Investment.STAGE_QUESTION_5,
         )
         self.assertEqual(investment.covid_bioweapon, "disagree")
         self.assertEqual(investment.share_equipment, "dont_know_or_refuse")
         self.assertEqual(investment.covid_blame, "dont_know_or_refuse")
         self.assertEqual(investment.cooperate_treatment, "agree")
         self.assertEqual(investment.over_65_ventilators, "always_ventilators")
-        self.assertEqual(investment.non_us_citizens_ventilators, "low_preference_ventilators")
+        self.assertEqual(
+            investment.non_us_citizens_ventilators, "low_preference_ventilators"
+        )
         self.assertEqual(investment.muslim_americans_ventilators, "dont_know_or_refuse")
-        self.assertEqual(investment.chinese_americans_ventilators, "dont_know_or_refuse")
+        self.assertEqual(
+            investment.chinese_americans_ventilators, "dont_know_or_refuse"
+        )
+
+
+class TestQuestion5View(TestCase):
+    def setUp(self):
+        self.current_stage_username = get_new_unqiue_username()
+        self.other_stage_username = get_new_unqiue_username()
+        current_stage_user = InvestmentGameUser.objects.create(
+            username=self.current_stage_username
+        )
+        Investment.objects.create(
+            user=current_stage_user, reached_stage=Investment.STAGE_QUESTION_5,
+        )
+        other_stage_user = InvestmentGameUser.objects.create(
+            username=self.other_stage_username
+        )
+        Investment.objects.create(
+            user=other_stage_user, reached_stage=Investment.STAGE_USER_INVESTMENT
+        )
+        self.client = Client()
+
+    def test_view_behaves_correctly_based_on_current_stage(self):
+        set_session(self.client.session, self.other_stage_username)
+        response = self.client.get("/question5/")
+        self.assertRedirects(
+            response, reverse("invest_game:%s" % Investment.STAGE_USER_INVESTMENT)
+        )
+
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.get("/question5/")
+        self.assertEqual(response.templates[0].name, "question5.html")
+
+    def test_post_request_saves_data_and_sets_stage_correctly(self):
+        data = {
+            "user_name": "Mary McGee",
+            "user_address_1": "1234 Main St.",
+            "user_address_2": "Apt. 22",
+            "user_city": "Centerville",
+            "user_state": "AL",
+            "user_zip": "12345",
+        }
+        set_session(self.client.session, self.current_stage_username)
+        response = self.client.post(
+            "/question5/", json.dumps(data), content_type="application/json"
+        )
+
+        investment = Investment.objects.get(
+            user=InvestmentGameUser.objects.get(username=self.current_stage_username)
+        )
+        self.assertEqual(
+            investment.reached_stage, Investment.STAGE_FINISH,
+        )
+        self.assertEqual(investment.user_name, "Mary McGee")
+        self.assertEqual(investment.user_address_1, "1234 Main St.")
+        self.assertEqual(investment.user_address_2, "Apt. 22")
+        self.assertEqual(investment.user_city, "Centerville")
+        self.assertEqual(investment.user_state, "AL")
+        self.assertEqual(investment.user_zip, "12345")
 
 
 class TestFinishView(TestCase):
@@ -663,7 +720,7 @@ class TestFinishView(TestCase):
             username=self.current_stage_username
         )
         Investment.objects.create(
-            user=current_stage_user, reached_stage=Investment.STAGE_FINISH,
+            user=current_stage_user, reached_stage=Investment.STAGE_FINISH, pid="54321"
         )
         other_stage_user = InvestmentGameUser.objects.create(
             username=self.other_stage_username
@@ -682,7 +739,14 @@ class TestFinishView(TestCase):
 
         set_session(self.client.session, self.current_stage_username)
         response = self.client.get("/finish/")
-        self.assertEqual(response.templates[0].name, "finish.html")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            "https://dkr1.ssisurveys.com/projects/end?rst=1&psid={0}&pid=54321&basic=79570".format(
+                self.current_stage_username
+            ),
+        )
 
     def test_view_resets_id_session_param(self):
         self.assertEqual(self.client.session.get("id"), None)
