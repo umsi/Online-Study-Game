@@ -238,89 +238,11 @@
             </label>
           </div>
         </div>
-        <div class="radio-subgroup">
-          <p><em>Muslim Americans</em></p>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="1" />
-              1: Never gets a ventilator
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="2" />
-              2
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="3" />
-              3
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="4" />
-              4
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="5" />
-              5: Always gets a ventilator
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="muslim_americans_ventilators" value="dont_know_or_refuse" />
-              Don't know/Refuse to answer
-            </label>
-          </div>
-        </div>
-        <div class="radio-subgroup">
-          <p><em>Chinese Americans</em></p>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="1" />
-              1: Never gets a ventilator
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="2" />
-              2
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="3" />
-              3
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="4" />
-              4
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="5" />
-              5: Always gets a ventilator
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="chinese_americans_ventilators" value="dont_know_or_refuse" />
-              Don't know/Refuse to answer
-            </label>
-          </div>
-        </div>
       </div>
     </div>
     
     <button type="submit" class="btn btn-primary questionnaire-submit-btn">
-      End of Survey
+      Next
     </button>
   </form>
 </div>
@@ -360,8 +282,6 @@
     var cooperate_treatment = $("input[name=cooperate_treatment]:checked").val();
     var over_65_ventilators = $("input[name=over_65_ventilators]:checked").val();
     var non_us_citizens_ventilators = $("input[name=non_us_citizens_ventilators]:checked").val();
-    var muslim_americans_ventilators = $("input[name=muslim_americans_ventilators]:checked").val();
-    var chinese_americans_ventilators = $("input[name=chinese_americans_ventilators]:checked").val();
 
     if (
       !covid_bioweapon ||
@@ -369,9 +289,7 @@
       !share_equipment ||
       !cooperate_treatment ||
       !over_65_ventilators ||
-      !non_us_citizens_ventilators ||
-      !muslim_americans_ventilators ||
-      !chinese_americans_ventilators 
+      !non_us_citizens_ventilators
     ) {
       alert("Please check all the anwsers");
     } else {
@@ -384,9 +302,7 @@
           share_equipment: share_equipment,
           cooperate_treatment: cooperate_treatment,
           over_65_ventilators: over_65_ventilators,
-          non_us_citizens_ventilators: non_us_citizens_ventilators,
-          muslim_americans_ventilators: muslim_americans_ventilators,
-          chinese_americans_ventilators: chinese_americans_ventilators
+          non_us_citizens_ventilators: non_us_citizens_ventilators
         })
       }).done(function() {
         window.location.href = {% url "invest_game:finish" %}

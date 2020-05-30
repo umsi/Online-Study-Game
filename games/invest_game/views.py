@@ -507,8 +507,6 @@ def question4(request, id=None):
         investment.cooperate_treatment = data["cooperate_treatment"]
         investment.over_65_ventilators = data["over_65_ventilators"]
         investment.non_us_citizens_ventilators = data["non_us_citizens_ventilators"]
-        investment.muslim_americans_ventilators = data["muslim_americans_ventilators"]
-        investment.chinese_americans_ventilators = data["chinese_americans_ventilators"]
         investment.reached_stage = Investment.STAGE_QUESTION_5
         investment.started_question_5 = timezone.now()
 
@@ -520,8 +518,6 @@ def question4(request, id=None):
                 "cooperate_treatment",
                 "over_65_ventilators",
                 "non_us_citizens_ventilators",
-                "muslim_americans_ventilators",
-                "chinese_americans_ventilators",
                 "reached_stage",
                 "started_question_5",
             ]
