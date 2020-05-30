@@ -68,7 +68,7 @@ If you need to create an environment, use the `eb create` command, documented [h
 
 ## Production deployment
 
-The production application will automatically when new commits are merged and pushed to the `master` branch of the `umsi/Online-Study-Game` repository.
+The production application will deploy automatically when new commits are merged and pushed to the `master` branch of the `umsi/Online-Study-Game` repository.
 
 ## Admin panel
 
