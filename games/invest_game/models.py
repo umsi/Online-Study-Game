@@ -490,50 +490,6 @@ class Investment(TimeStampedModel):
         help_text="Ventilators for non-U.S. citizens",
     )
 
-    # Ventilators for Muslim-Americans
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_A = "1"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_B = "2"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_C = "3"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_D = "4"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_E = "5"
-    MUSLIM_AMERICANS_VENTILATORS_OPTION_F = "dont_know_or_refuse"
-    MUSLIM_AMERICANS_VENTILATORS_CHOICES = (
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_A, "Never gets a ventilator"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_B, "2"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_C, "3"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_D, "4"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_E, "Always gets a ventilator"),
-        (MUSLIM_AMERICANS_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
-    )
-    muslim_americans_ventilators = models.CharField(
-        max_length=255,
-        null=True,
-        choices=MUSLIM_AMERICANS_VENTILATORS_CHOICES,
-        help_text="Ventilators for Muslim Americans",
-    )
-
-    # Ventilators for Chinese-Americans
-    CHINESE_AMERICANS_VENTILATORS_OPTION_A = "1"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_B = "2"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_C = "3"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_D = "4"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_E = "5"
-    CHINESE_AMERICANS_VENTILATORS_OPTION_F = "dont_know_or_refuse"
-    CHINESE_AMERICANS_VENTILATORS_CHOICES = (
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_A, "Never gets a ventilator"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_B, "2"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_C, "3"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_D, "4"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_E, "Always gets a ventilator"),
-        (CHINESE_AMERICANS_VENTILATORS_OPTION_F, "Don't know/Refuse to answer"),
-    )
-    chinese_americans_ventilators = models.CharField(
-        max_length=255,
-        null=True,
-        choices=CHINESE_AMERICANS_VENTILATORS_CHOICES,
-        help_text="Ventilators for Chinese Americans",
-    )
-
     # Stage 5 choices
     STATE_AL = "AL"
     STATE_AK = "AK"
