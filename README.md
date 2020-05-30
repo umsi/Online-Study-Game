@@ -32,6 +32,28 @@ You can then run the application at `localhost:8000?id=<some_id>`.
 
 To leave your virtual environment when you've finished working on the project, run: `deactivate`.
 
+## Migrating the database
+
+If any changes are made to Django models, you'll need to make a migrations file and run migrations locally to see those changes reflected in the database. To make a new migrations file, run:
+```
+python manage.py makemigrations
+```
+
+To apply new migrations, run:
+```
+python manage.py migrate
+```
+
+In the production environment, new migrations will be automatically applied.
+
+## Creating a superuser
+
+In the local environment, you can create a superuser that will have access to the admin panel. Run:
+```
+python manage.py createsuperuser
+```
+and follow the prompts.
+
 ## Deployment
 
 The application is configured to be deployed to an Elastic Beanstalk environment in AWS. This readme assumes that the EB environment is already set up. The environment should have a Postgres database instance connected to it.
@@ -43,6 +65,10 @@ eb deploy <environment_name>
 where `<environment_name>` is the name of the EB environment. If no `<environment_name>` is supplied, the deployment will default to an environment called `Online-Study-Game`. It's intended that the default environment name be used for the production application.
 
 If you need to create an environment, use the `eb create` command, documented [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.environments.html).
+
+## Production deployment
+
+The production application will automatically when new commits are merged and pushed to the `master` branch of the `umsi/Online-Study-Game` repository.
 
 ## Admin panel
 
