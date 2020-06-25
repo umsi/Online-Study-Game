@@ -56,7 +56,7 @@ and follow the prompts.
 
 ## Deployment
 
-The application is configured to be deployed to an Elastic Beanstalk environment in AWS. This readme assumes that the EB environment is already set up. The environment should have a Postgres database instance connected to it.
+The application is configured to be deployed to an Elastic Beanstalk environment in AWS. This readme assumes that the EB environment is already set up. The environment should have a Postgres database instance connected to it. Database configuration can be managed via the Elastic Beanstalk console.
 
 Assuming such an environment exists, the application can be deployed by running:
 ```
